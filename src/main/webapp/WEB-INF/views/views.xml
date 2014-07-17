@@ -1,0 +1,51 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="template"
+                template="/WEB-INF/views/main_template.jsp">
+        <put-attribute name="header"
+                       value="/WEB-INF/views/parts/header.jsp" />
+        <put-attribute name="side"
+                       value="/WEB-INF/views/parts/sidebar.jsp" />
+    </definition>
+
+    <definition name="home" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/home.jsp" />
+    </definition>
+
+    <definition name="post" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/post.jsp" />
+    </definition>
+
+    <definition name="editPost" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/editPost.jsp" />
+    </definition>
+
+    <definition name="signup" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/signup.jsp" />
+    </definition>
+
+    <definition name="signin" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/signin.jsp" />
+    </definition>
+
+    <definition name="user" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/user.jsp" />
+    </definition>
+
+    <definition name="mailbox" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/mailbox.jsp" />
+    </definition>
+
+    <definition name="message" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/message.jsp" />
+    </definition>
+
+    <definition name="sendMessage" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/sendMessage.jsp" />
+    </definition>
+
+</tiles-definitions>
