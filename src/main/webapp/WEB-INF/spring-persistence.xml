@@ -4,7 +4,10 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- Connection properties -->
     <context:property-placeholder location="classpath:jdbc.property"/>
+
+    <!-- Persistence config -->
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -39,5 +42,20 @@
         <property name="defaultReadOnly" value="false"/>
         <property name="minIdle" value="5"/>
     </bean>
+
+    <!-- Dao beans -->
+
+    <bean id="messageDao" class="com.my.dao.MessageDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="postDao" class="com.my.dao.PostDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="userDao" class="com.my.dao.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 
 </beans>
