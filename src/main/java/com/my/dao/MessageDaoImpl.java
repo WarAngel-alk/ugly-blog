@@ -3,11 +3,12 @@ package com.my.dao;
 import com.my.dao.interfaces.MessageDao;
 import com.my.model.Message;
 import com.my.model.User;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MessageDaoImpl implements MessageDao {
+public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao {
 
     @Override
     public List<Message> getIncomingMessages(User user) {

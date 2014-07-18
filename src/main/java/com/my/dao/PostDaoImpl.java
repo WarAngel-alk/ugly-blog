@@ -2,11 +2,12 @@ package com.my.dao;
 
 import com.my.dao.interfaces.PostDao;
 import com.my.model.Post;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class PostDaoImpl implements PostDao {
+public class PostDaoImpl extends HibernateDaoSupport implements PostDao {
 
     @Override
     public List<Post> getRecentPosts() {
