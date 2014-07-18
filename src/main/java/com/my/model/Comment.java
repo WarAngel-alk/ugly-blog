@@ -1,25 +1,41 @@
 package com.my.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Comment {
+@Entity
+@Table(name = "comment")
+public class Comment implements Serializable {
 
+    @Column(name = "comment_id")
+    @GeneratedValue
+    @Id
     private long id;
 
+    @ManyToOne()
     private Post post;
 
+    @Column(name = "postDate", nullable = false, unique = false)
     private Date postDate;
 
+    @Column(name = "text", nullable = false, unique = false)
     private String text;
 
+    @ManyToOne()
     private User author;
 
-    private List<User> votedUsers;
+    @OneToMany(mappedBy = "comment")
+    private List<UserCommentMark> marks;
 
-    private int positiveMarks;
-
-    private int negativeMarks;
+//    // TODO: fill query!
+//    @Formula("")
+//    private int positiveMarks;
+//
+//    // TODO: fill query!
+//    @Formula("")
+//    private int negativeMarks;
 
     public long getId() {
         return id;
@@ -61,28 +77,12 @@ public class Comment {
         this.author = author;
     }
 
-    public List<User> getVotedUsers() {
-        return votedUsers;
+    public List<UserCommentMark> getMarks() {
+        return marks;
     }
 
-    public void setVotedUsers(List<User> votedUsers) {
-        this.votedUsers = votedUsers;
-    }
-
-    public int getPositiveMarks() {
-        return positiveMarks;
-    }
-
-    public void setPositiveMarks(int positiveMarks) {
-        this.positiveMarks = positiveMarks;
-    }
-
-    public int getNegativeMarks() {
-        return negativeMarks;
-    }
-
-    public void setNegativeMarks(int negativeMarks) {
-        this.negativeMarks = negativeMarks;
+    public void setMarks(List<UserCommentMark> marks) {
+        this.marks = marks;
     }
 
 }

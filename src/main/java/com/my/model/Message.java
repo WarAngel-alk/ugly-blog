@@ -1,25 +1,40 @@
 package com.my.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+
+@Entity
+@Table(name = "message")
 public class Message {
 
+    @Column(name = "message_id")
+    @GeneratedValue
+    @Id
     private long id;
 
+    @ManyToOne
     private User sender;
 
+    @ManyToOne
     private User receiver;
 
+    @Column(name = "date", nullable = false, unique = false)
     private Date date;
 
+    @Column(name = "subject", nullable = true, unique = false)
     private String subject;
 
+    @Column(name = "text", nullable = false, unique = false)
     private String text;
 
+    @Column(name = "isRead", nullable = true, unique = false)
     private boolean isRead;
 
+    @Column(name = "deletedBySender", nullable = true, unique = false)
     private boolean deletedBySender;
 
+    @Column(name = "deletedByReceiver", nullable = true, unique = false)
     private boolean deletedByReceiver;
 
     public long getId() {

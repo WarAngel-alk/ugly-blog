@@ -1,26 +1,41 @@
 package com.my.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class User {
+@Entity
+@Table(name = "user")
+public class User implements Serializable {
 
+    @Column(name = "user_id")
+    @GeneratedValue
+    @Id
     private long id;
 
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    private String passHash;
+    @Column(name = "pass", nullable = false, unique = false)
+    private String pass;
 
+    @Column(name = "regDate", nullable = false, unique = false)
     private Date registrationDate;
 
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "avatarPath", nullable = true, unique = false)
     private String avatarPath;
 
-    private List<Post> votedPosts;
+    @OneToMany(mappedBy = "user")
+    private List<UserPostMark> postMarks;
 
-    private List<Comment> votedComments;
+    @OneToMany(mappedBy = "user")
+    private List<UserCommentMark> commentMarks;
 
+    @OneToMany
     private List<Comment> hisComments;
 
     public long getId() {
@@ -39,12 +54,12 @@ public class User {
         this.name = name;
     }
 
-    public String getPassHash() {
-        return passHash;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassHash(String passHash) {
-        this.passHash = passHash;
+    public void setPass(String passHash) {
+        this.pass = passHash;
     }
 
     public Date getRegistrationDate() {
@@ -71,20 +86,20 @@ public class User {
         this.avatarPath = avatarPath;
     }
 
-    public List<Post> getVotedPosts() {
-        return votedPosts;
+    public List<UserPostMark> getPostMarks() {
+        return postMarks;
     }
 
-    public void setVotedPosts(List<Post> votedPosts) {
-        this.votedPosts = votedPosts;
+    public void setPostMarks(List<UserPostMark> marks) {
+        this.postMarks = marks;
     }
 
-    public List<Comment> getVotedComments() {
-        return votedComments;
+    public List<UserCommentMark> getCommentMarks() {
+        return commentMarks;
     }
 
-    public void setVotedComments(List<Comment> votedComments) {
-        this.votedComments = votedComments;
+    public void setCommentMarks(List<UserCommentMark> commentMarks) {
+        this.commentMarks = commentMarks;
     }
 
     public List<Comment> getHisComments() {

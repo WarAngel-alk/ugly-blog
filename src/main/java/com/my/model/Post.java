@@ -1,27 +1,44 @@
 package com.my.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Post {
+@Entity
+@Table(name = "post")
+public class Post implements Serializable {
 
+    @Column(name = "post_id", length = 11)
+    @GeneratedValue
+    @Id
     private long id;
 
+    @Column(name = "postDate", unique = false, nullable = false)
     private Date postDate;
 
+    @Column(name = "title", unique = false, nullable = false)
     private String title;
 
+    @Column(name = "text", nullable = false, unique = false)
     private String text;
 
+    @ManyToMany(mappedBy = "posts")
     private List<Tag> tags;
 
-    private List<User> votedUsers;
+    @OneToMany(mappedBy = "post")
+    private List<UserPostMark> marks;
 
+    @OneToMany
     private List<Comment> comments;
 
-    private int positiveMarks;
+    // TODO: fill query!
+//    @Formula("")
+//    private int positiveMarks;
 
-    private int negativeMarks;
+    // TODO: fill query!
+//    @Formula("")
+//    private int negativeMarks;
 
     public long getId() {
         return id;
@@ -63,14 +80,6 @@ public class Post {
         this.tags = tags;
     }
 
-    public List<User> getVotedUsers() {
-        return votedUsers;
-    }
-
-    public void setVotedUsers(List<User> votedUsers) {
-        this.votedUsers = votedUsers;
-    }
-
     public List<Comment> getComments() {
         return comments;
     }
@@ -79,20 +88,12 @@ public class Post {
         this.comments = comments;
     }
 
-    public int getPositiveMarks() {
-        return positiveMarks;
+    public List<UserPostMark> getMarks() {
+        return marks;
     }
 
-    public void setPositiveMarks(int positiveMarks) {
-        this.positiveMarks = positiveMarks;
-    }
-
-    public int getNegativeMarks() {
-        return negativeMarks;
-    }
-
-    public void setNegativeMarks(int negativeMarks) {
-        this.negativeMarks = negativeMarks;
+    public void setMarks(List<UserPostMark> marks) {
+        this.marks = marks;
     }
 
 }

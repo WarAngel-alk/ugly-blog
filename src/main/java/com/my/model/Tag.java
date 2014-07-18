@@ -1,13 +1,21 @@
 package com.my.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity()
+@Table(name = "tag")
 public class Tag {
 
+    @Column(name = "tag_id", length = 11)
+    @GeneratedValue
+    @Id
     private long id;
 
+    @Column(name = "name", length = 100)
     private String name;
 
+    @ManyToMany
     private List<Post> posts;
 
     public long getId() {
