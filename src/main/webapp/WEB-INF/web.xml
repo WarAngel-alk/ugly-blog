@@ -10,6 +10,7 @@
         <param-value>
             WEB-INF/spring-tiles.xml
             WEB-INF/spring-config.xml
+            WEB-INF/spring-persistence.xml
         </param-value>
     </context-param>
     

@@ -11,5 +11,6 @@
 
     <beans:import resource="spring-tiles.xml" />
     <beans:import resource="spring-config.xml" />
+    <beans:import resource="spring-persistence.xml" />
 
 </beans>
