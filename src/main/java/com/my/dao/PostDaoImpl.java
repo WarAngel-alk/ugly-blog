@@ -2,12 +2,12 @@ package com.my.dao;
 
 import com.my.dao.interfaces.PostDao;
 import com.my.model.Post;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class PostDaoImpl extends HibernateDaoSupport implements PostDao {
+public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     @Override
     public List<Post> getPosts() {
