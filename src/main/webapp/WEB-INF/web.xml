@@ -8,9 +8,9 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            WEB-INF/spring-tiles.xml
-            WEB-INF/spring-config.xml
-            WEB-INF/spring-persistence.xml
+            classpath:spring-tiles.xml
+            classpath:spring-config.xml
+            classpath:spring-persistence.xml
         </param-value>
     </context-param>
     
@@ -21,6 +21,10 @@
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-dispatcher.xml</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
