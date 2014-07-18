@@ -14,6 +14,7 @@
                 <value>com.my.model.Post</value>
                 <value>com.my.model.Message</value>
                 <value>com.my.model.Comment</value>
+                <value>com.my.model.Tag</value>
             </list>
         </property>
         <!--TODO: Why doesn't it works?-->
