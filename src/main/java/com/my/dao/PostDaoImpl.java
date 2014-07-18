@@ -10,7 +10,7 @@ import java.util.List;
 public class PostDaoImpl extends HibernateDaoSupport implements PostDao {
 
     @Override
-    public List<Post> getRecentPosts() {
+    public List<Post> getPosts() {
         return Arrays.asList();
     }
 

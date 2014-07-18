@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PostDao {
 
-    public List<Post> getRecentPosts();
+    public List<Post> getPosts();
 
     public List<Post> getPostsForPage(int page);
 
