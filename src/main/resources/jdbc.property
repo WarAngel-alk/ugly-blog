@@ -1,0 +1,4 @@
+jdbc.url                = jdbc:mysql://ubuntu-server/ugly_blog_db
+jdbc.driver_class       = com.mysql.jdbc.Driver
+jdbc.username           = ugly_blog
+jdbc.password           = BlogDefPass
