@@ -2,22 +2,28 @@ package com.my.dao;
 
 import com.my.dao.interfaces.UserDao;
 import com.my.model.User;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.DigestUtils;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:spring-dispatcher.xml")
 public class UserDaoTest {
 
     @Autowired
     private UserDao userDao;
+
     private String STANDARD_NAME;
     private String STANDARD_PASS;
     private String STANDARD_EMAIL;
     private String STANDARD_PASS_HASH;
 
-    @BeforeMethod
+    @BeforeClass
     public void setUp() throws Exception {
         STANDARD_NAME = "user_1";
         STANDARD_PASS = "pass_1";
