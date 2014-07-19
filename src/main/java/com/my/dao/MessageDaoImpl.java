@@ -36,8 +36,8 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
     }
 
     @Override
-    public void sendMessage(Message message) {
-
+    public long sendMessage(Message message) {
+        return -1L;
     }
 
 }
