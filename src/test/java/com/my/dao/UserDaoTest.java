@@ -3,7 +3,7 @@ package com.my.dao;
 import com.my.dao.interfaces.UserDao;
 import com.my.model.User;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.DigestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-dispatcher.xml")
+@ContextConfiguration("classpath:test-spring-config.xml")
 public class UserDaoTest {
 
     @Autowired
@@ -23,7 +23,7 @@ public class UserDaoTest {
     private String STANDARD_EMAIL;
     private String STANDARD_PASS_HASH;
 
-    @BeforeClass
+    @Before
     public void setUp() throws Exception {
         STANDARD_NAME = "user_1";
         STANDARD_PASS = "pass_1";

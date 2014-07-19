@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config />
+
+    <context:component-scan base-package="com.my"/>
+
+    <!-- Connection properties -->
+    <context:property-placeholder location="classpath:jdbc.property"/>
+
+    <!-- Persistence config -->
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.my.model.User</value>
+                <value>com.my.model.Post</value>
+                <value>com.my.model.Message</value>
+                <value>com.my.model.Comment</value>
+                <value>com.my.model.Tag</value>
+                <value>com.my.model.UserPostMark</value>
+                <value>com.my.model.UserCommentMark</value>
+            </list>
+        </property>
+        <!--TODO: Why doesn't it works?-->
+        <!--<property name="annotatedPackages" value="com.my.model"/>-->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driver_class}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <property name="maxTotal" value="10"/>
+        <property name="defaultReadOnly" value="false"/>
+        <property name="minIdle" value="5"/>
+    </bean>
+
+    <!-- Dao beans -->
+
+    <bean id="messageDao" class="com.my.dao.MessageDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="postDao" class="com.my.dao.PostDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="userDao" class="com.my.dao.UserDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>
