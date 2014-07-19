@@ -8,10 +8,10 @@
     <version>1.0</version>
 
     <repositories>
-    <repository>
-        <id>JBoss repository</id>
-        <url>http://repository.jboss.com/maven2/</url>
-    </repository>
+        <repository>
+            <id>JBoss repository</id>
+            <url>http://repository.jboss.com/maven2/</url>
+        </repository>
     </repositories>
 
     <properties>
@@ -76,9 +76,9 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8</version>
             <scope>test</scope>
         </dependency>
         <dependency>
