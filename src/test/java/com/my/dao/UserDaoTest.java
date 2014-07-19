@@ -3,13 +3,14 @@ package com.my.dao;
 import com.my.dao.interfaces.UserDao;
 import com.my.model.User;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.DigestUtils;
+
+import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:test-spring-config.xml")
@@ -18,24 +19,12 @@ public class UserDaoTest {
     @Autowired
     private UserDao userDao;
 
-    private String STANDARD_NAME;
-    private String STANDARD_PASS;
-    private String STANDARD_EMAIL;
-    private String STANDARD_PASS_HASH;
-
-    @Before
-    public void setUp() throws Exception {
-        STANDARD_NAME = "user_1";
-        STANDARD_PASS = "pass_1";
-        STANDARD_EMAIL = "email_1";
-        STANDARD_PASS_HASH = DigestUtils.md5DigestAsHex(STANDARD_PASS.getBytes());
-    }
-
     private User getStandardUser() {
+        Random random = new Random();
         User user = new User();
-        user.setName(STANDARD_NAME);
-        user.setPass(STANDARD_PASS);
-        user.setEmail(STANDARD_EMAIL);
+        user.setName("user_" + random.nextInt());
+        user.setPass("pass_" + random.nextInt());
+        user.setEmail("email_" + random.nextInt());
 
         return user;
     }
@@ -50,24 +39,28 @@ public class UserDaoTest {
 
     @Test
     public void testUserAddAndGet() throws Exception {
-        long id = userDao.addUser(getStandardUser());
+        User savedUser = getStandardUser();
+        long id = userDao.addUser(savedUser);
 
-        User user = userDao.getUser(id);
+        User readUser = userDao.getUser(id);
 
-        Assert.assertEquals(user.getName(), STANDARD_NAME);
-        Assert.assertEquals(user.getEmail(), STANDARD_EMAIL);
+        Assert.assertEquals(readUser.getName(), savedUser.getName());
+        Assert.assertEquals(readUser.getEmail(), savedUser.getEmail());
     }
 
     @Test
     public void testPasswordHashGenerating() throws Exception {
-        long returnedId = userDao.addUser(getStandardUser());
-        User user = userDao.getUser(returnedId);
+        User savedUser = getStandardUser();
+        String savedPass = savedUser.getPass();
+        long returnedId = userDao.addUser(savedUser);
+        User readUser = userDao.getUser(returnedId);
 
-        Assert.assertEquals(user.getPass(), STANDARD_PASS_HASH);
+        Assert.assertEquals(readUser.getPass(),
+                DigestUtils.md5DigestAsHex(savedPass.getBytes()));
     }
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-    
+
 }
