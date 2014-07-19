@@ -32,7 +32,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         long returnedId = userDao.addUser(getStandardUser());
         long receivedId = userDao.getUser(returnedId).getId();
 
-        Assert.assertEquals(returnedId, receivedId);
+        Assert.assertEquals(receivedId, returnedId);
     }
 
     @Test
@@ -53,8 +53,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         long returnedId = userDao.addUser(savedUser);
         User readUser = userDao.getUser(returnedId);
 
-        Assert.assertEquals(readUser.getPass(),
-                DigestUtils.md5DigestAsHex(savedPass.getBytes()));
+        Assert.assertEquals(DigestUtils.md5DigestAsHex(savedPass.getBytes()), readUser.getPass());
     }
 
     public void setUserDao(UserDao userDao) {
