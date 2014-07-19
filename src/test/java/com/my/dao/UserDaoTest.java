@@ -2,19 +2,17 @@ package com.my.dao;
 
 import com.my.dao.interfaces.UserDao;
 import com.my.model.User;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.util.DigestUtils;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.util.Random;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:test-spring-config.xml")
-public class UserDaoTest {
+@ContextConfiguration(locations = {"classpath:test-spring-config.xml"})
+public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private UserDao userDao;
@@ -30,7 +28,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testCorrectIdReturned() throws Exception {
+    public void testIdReturned() throws Exception {
         long returnedId = userDao.addUser(getStandardUser());
         long receivedId = userDao.getUser(returnedId).getId();
 
