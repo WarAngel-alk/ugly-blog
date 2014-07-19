@@ -28,13 +28,13 @@ public class Message {
     @Column(name = "text", nullable = false, unique = false)
     private String text;
 
-    @Column(name = "isRead", nullable = true, unique = false)
+    @Column(name = "isRead", nullable = false, unique = false)
     private boolean isRead;
 
-    @Column(name = "deletedBySender", nullable = true, unique = false)
+    @Column(name = "deletedBySender", nullable = false, unique = false)
     private boolean deletedBySender;
 
-    @Column(name = "deletedByReceiver", nullable = true, unique = false)
+    @Column(name = "deletedByReceiver", nullable = false, unique = false)
     private boolean deletedByReceiver;
 
     public long getId() {
