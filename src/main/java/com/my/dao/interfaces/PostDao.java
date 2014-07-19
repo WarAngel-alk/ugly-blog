@@ -10,6 +10,8 @@ public interface PostDao {
 
     public List<Post> getPostsForPage(int page);
 
+    public List<Post> getPostsForPage(int page, int postsPerPage);
+
     public Post getPost(long id);
 
     public long addPost(Post post);
