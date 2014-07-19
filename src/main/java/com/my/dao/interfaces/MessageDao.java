@@ -11,9 +11,13 @@ public interface MessageDao {
 
     public List<Message> getIncomingMessagesForPage(User user, int page);
 
+    public List<Message> getIncomingMessagesForPage(User user, int page, int messagePerPage);
+
     public List<Message> getOutcomingMessages(User user);
 
     public List<Message> getOutcomingMessagesForPage(User user, int page);
+
+    public List<Message> getOutcomingMessagesForPage(User user, int page, int messagePerPage);
 
     public Message getMessage(long id);
 
