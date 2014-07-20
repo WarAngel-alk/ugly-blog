@@ -37,6 +37,24 @@ public class Comment implements Serializable {
 //    @Formula("")
 //    private int negativeMarks;
 
+    public Comment() {
+    }
+
+    public Comment(User author) {
+        this.author = author;
+    }
+
+    public Comment(User author, Post post) {
+        this.author = author;
+        this.post = post;
+    }
+
+    public Comment(User author, Post post, String text) {
+        this.author = author;
+        this.post = post;
+        this.text = text;
+    }
+
     public long getId() {
         return id;
     }
