@@ -38,6 +38,12 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author")
     private List<Comment> hisComments;
 
+    @OneToMany(mappedBy = "receiver")
+    private List<Message> incomingMessages;
+
+    @OneToMany(mappedBy = "sender")
+    private List<Message> outcomingMessages;
+
     public long getId() {
         return id;
     }
@@ -108,6 +114,22 @@ public class User implements Serializable {
 
     public void setHisComments(List<Comment> hisComments) {
         this.hisComments = hisComments;
+    }
+
+    public List<Message> getIncomingMessages() {
+        return incomingMessages;
+    }
+
+    public void setIncomingMessages(List<Message> incomingMessages) {
+        this.incomingMessages = incomingMessages;
+    }
+
+    public List<Message> getOutcomingMessages() {
+        return outcomingMessages;
+    }
+
+    public void setOutcomingMessages(List<Message> outcomingMessages) {
+        this.outcomingMessages = outcomingMessages;
     }
 
 }
