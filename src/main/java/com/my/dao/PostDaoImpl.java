@@ -4,18 +4,16 @@ import com.my.dao.interfaces.PostDao;
 import com.my.model.Post;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     private static final int DEFAULT_POSTS_PER_PAGE = 10;
 
-    private static final List<Post> EMPTY_POST_LIST = new ArrayList<>();
-
     @Override
     public List<Post> getPosts() {
-        return EMPTY_POST_LIST;
+        return loadAll(Post.class);
     }
 
     @Override
@@ -25,22 +23,28 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     @Override
     public List<Post> getPostsForPage(int page, int postsPerPage) {
-        return EMPTY_POST_LIST;
+        return this.<List<Post>>executeWithNativeSession(
+                session -> session
+                        .createQuery("from Post")
+                        .setFirstResult((page - 1) * postsPerPage)
+                        .setMaxResults(postsPerPage)
+                        .list());
     }
 
     @Override
     public Post getPost(long id) {
-        return new Post();
+        return get(Post.class, id);
     }
 
     @Override
     public long addPost(Post post) {
-        return -1L;
+        post.setPostDate(new Date());
+        return (Long) save(post);
     }
 
     @Override
     public void updatePost(Post post) {
-
+        merge(post);
     }
 
 }

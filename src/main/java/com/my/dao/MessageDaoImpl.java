@@ -5,18 +5,16 @@ import com.my.model.Message;
 import com.my.model.User;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
 
     private static final int DEFAULT_MESSAGES_PER_PAGE = 20;
 
-    private static final List<Message> EMPTY_MESSAGE_LIST = new ArrayList<>();
-
     @Override
     public List<Message> getIncomingMessages(User user) {
-        return EMPTY_MESSAGE_LIST;
+        return (List<Message>) find("from Message where receiver = ?", user);
     }
 
     @Override
@@ -26,12 +24,18 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
 
     @Override
     public List<Message> getIncomingMessagesForPage(User user, int page, int messagePerPage) {
-        return EMPTY_MESSAGE_LIST;
+        return this.<List<Message>>executeWithNativeSession(
+                session -> session
+                        .createQuery("from Message where receiver = :receiver")
+                        .setParameter("receiver", user)
+                        .setFirstResult((page - 1) * messagePerPage)
+                        .setMaxResults(messagePerPage)
+                        .list());
     }
 
     @Override
     public List<Message> getOutcomingMessages(User user) {
-        return EMPTY_MESSAGE_LIST;
+        return (List<Message>) find("from Message where sender = ?", user);
     }
 
     @Override
@@ -41,17 +45,28 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
 
     @Override
     public List<Message> getOutcomingMessagesForPage(User user, int page, int messagePerPage) {
-        return EMPTY_MESSAGE_LIST;
+        return this.<List<Message>>executeWithNativeSession(
+                session -> session
+                        .createQuery("from Message where sender = :sender")
+                        .setParameter("sender", user)
+                        .setFirstResult((page - 1) * messagePerPage)
+                        .setMaxResults(messagePerPage)
+                        .list());
     }
 
     @Override
     public Message getMessage(long id) {
-        return new Message();
+        return get(Message.class, id);
     }
 
     @Override
     public long sendMessage(Message message) {
-        return -1L;
+        message.setDeletedBySender(false);
+        message.setDeletedByReceiver(false);
+        message.setRead(false);
+        message.setDate(new Date());
+
+        return (Long) save(message);
     }
 
 }
