@@ -8,7 +8,7 @@
 
     <!-- Persistence config -->
 
-    <bean id="testSessionFactory"
+    <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
@@ -40,17 +40,22 @@
     <!-- Dao beans -->
 
     <bean id="messageDao" class="com.my.dao.MessageDaoImpl">
-        <property name="sessionFactory" ref="testSessionFactory"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
         <property name="checkWriteOperations" value="false"/>
     </bean>
 
     <bean id="postDao" class="com.my.dao.PostDaoImpl">
-        <property name="sessionFactory" ref="testSessionFactory"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
         <property name="checkWriteOperations" value="false"/>
     </bean>
 
     <bean id="userDao" class="com.my.dao.UserDaoImpl">
-        <property name="sessionFactory" ref="testSessionFactory"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
         <property name="checkWriteOperations" value="false"/>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>
