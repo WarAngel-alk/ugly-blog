@@ -18,6 +18,15 @@ public class UserPostMark implements Serializable {
     @Column(name = "mark", nullable = false, unique = false)
     private boolean mark;
 
+    public UserPostMark() {
+    }
+
+    public UserPostMark(User user, Post post, boolean mark) {
+        this.user = user;
+        this.post = post;
+        this.mark = mark;
+    }
+
     public Post getPost() {
         return post;
     }
