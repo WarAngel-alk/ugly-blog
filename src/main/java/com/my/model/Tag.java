@@ -18,6 +18,13 @@ public class Tag {
     @ManyToMany
     private List<Post> posts;
 
+    public Tag() {
+    }
+
+    public Tag(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }
