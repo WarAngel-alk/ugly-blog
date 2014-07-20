@@ -37,6 +37,30 @@ public class Message {
     @Column(name = "deletedByReceiver", nullable = false, unique = false)
     private boolean deletedByReceiver;
 
+    public Message() {
+    }
+
+    public Message(String subject) {
+        this.subject = subject;
+    }
+
+    public Message(String subject, String text) {
+        this.subject = subject;
+        this.text = text;
+    }
+
+    public Message(User sender, User receiver) {
+        this.sender = sender;
+        this.receiver = receiver;
+    }
+
+    public Message(String subject, String text, User sender, User receiver) {
+        this.subject = subject;
+        this.text = text;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
+
     public long getId() {
         return id;
     }
