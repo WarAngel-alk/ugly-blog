@@ -44,6 +44,31 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "sender")
     private List<Message> outcomingMessages;
 
+    public User() {
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public User(String name, String pass) {
+        this.name = name;
+        this.pass = pass;
+    }
+
+    public User(String name, String pass, String email) {
+        this.name = name;
+        this.pass = pass;
+        this.email = email;
+    }
+
+    public User(String name, String pass, String email, String avatarPath) {
+        this.name = name;
+        this.pass = pass;
+        this.email = email;
+        this.avatarPath = avatarPath;
+    }
+
     public long getId() {
         return id;
     }
