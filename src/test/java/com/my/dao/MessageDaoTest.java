@@ -6,7 +6,7 @@ import com.my.model.Message;
 import com.my.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,7 +16,7 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 
 @ContextConfiguration("classpath:test-spring-config.xml")
-public class MessageDaoTest extends AbstractTestNGSpringContextTests {
+public class MessageDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
     private UserDao userDao;
@@ -29,20 +29,20 @@ public class MessageDaoTest extends AbstractTestNGSpringContextTests {
 
     @BeforeClass
     public void setUp() throws Exception {
-        sender = new User();
-        sender.setName("sender");
-        sender.setPass("sender");
-        sender.setEmail("sender@email.em");
-        sender.setAvatarPath("/1234.png");
+        sender = createUser("sender", "sender", "sender@send.er");
 
-        receiver = new User();
-        receiver.setName("receiver");
-        receiver.setPass("receiver");
-        receiver.setEmail("receiver@email.em");
-        receiver.setAvatarPath("/4321.png");
+        receiver = createUser("receiver", "receiver", "receiver@email.em");
 
         userDao.addUser(sender);
         userDao.addUser(receiver);
+    }
+
+    private User createUser(String name, String pass, String email) {
+        User user = new User();
+        user.setName(name);
+        user.setPass(pass);
+        user.setEmail(email);
+        return user;
     }
 
     @Test
@@ -151,7 +151,8 @@ public class MessageDaoTest extends AbstractTestNGSpringContextTests {
             messageDao.sendMessage(sentMsg);
         }
 
-        List<Message> messageList = messageDao.getIncomingMessagesForPage(receiver, 2, 20);
+
+        List<Message> messageList = messageDao.getIncomingMessagesForPage(receiver, 2, 10);
 
         assertEquals(messageList.size(), 10);
 
@@ -182,14 +183,6 @@ public class MessageDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(msg.getSender().getId(), sender.getId());
         assertEquals(msg.getReceiver().getId(), receiver.getId());
         assertEquals(msg.getText(), "Message text");
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setMessageDao(MessageDao messageDao) {
-        this.messageDao = messageDao;
     }
 
 }

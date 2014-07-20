@@ -4,7 +4,7 @@ import com.my.dao.interfaces.UserDao;
 import com.my.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.util.DigestUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.util.Random;
 
 @ContextConfiguration(locations = {"classpath:test-spring-config.xml"})
-public class UserDaoTest extends AbstractTestNGSpringContextTests {
+public class UserDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
     private UserDao userDao;
@@ -54,10 +54,6 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         User readUser = userDao.getUser(returnedId);
 
         Assert.assertEquals(DigestUtils.md5DigestAsHex(savedPass.getBytes()), readUser.getPass());
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
     }
 
 }
