@@ -40,6 +40,42 @@ public class Post implements Serializable {
 //    @Formula("")
 //    private int negativeMarks;
 
+    public int getRating() {
+        int rating = 0;
+        for (UserPostMark mark : marks) {
+            if (mark.isMark()) ++rating;
+            else --rating;
+        }
+
+        return rating;
+    }
+
+    public int getPositiveMarks() {
+        int marks = 0;
+        for (UserPostMark mark : this.marks) {
+            if (mark.isMark()) ++marks;
+        }
+
+        return marks;
+    }
+
+    public int getNegativeMarks() {
+        int marks = 0;
+        for (UserPostMark mark : this.marks) {
+            if (!mark.isMark()) ++marks;
+        }
+
+        return marks;
+    }
+
+    public boolean isUserVoted(User user) {
+        for (UserPostMark mark : marks) {
+            if (mark.getUser().getId() == user.getId())
+                return true;
+        }
+        return false;
+    }
+
     public long getId() {
         return id;
     }
