@@ -1,0 +1,30 @@
+#header {
+    background-color: #a9ffc4;
+}
+
+.header_logo {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.header_icons {
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+
+.header_image {
+    float: right;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+#header_title {
+    font: 30pt bold italic;
+    line-height: 64px;
+    color: #1f35a0;
+    vertical-align: middle;
+    padding-left: 30px;
+}
