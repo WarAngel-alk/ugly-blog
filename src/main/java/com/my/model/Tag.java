@@ -1,11 +1,12 @@
 package com.my.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity()
 @Table(name = "tag")
-public class Tag {
+public class Tag implements Serializable, DomainObject {
 
     @Column(name = "tag_id", length = 11)
     @GeneratedValue

@@ -1,12 +1,13 @@
 package com.my.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Entity
 @Table(name = "message")
-public class Message {
+public class Message implements Serializable, DomainObject {
 
     @Column(name = "message_id")
     @GeneratedValue
@@ -49,12 +50,13 @@ public class Message {
         this.text = text;
     }
 
-    public Message(User sender, User receiver) {
+    public Message(User sender, User receiver, String text) {
         this.sender = sender;
         this.receiver = receiver;
+        this.text = text;
     }
 
-    public Message(String subject, String text, User sender, User receiver) {
+    public Message(User sender, User receiver, String subject, String text) {
         this.subject = subject;
         this.text = text;
         this.sender = sender;

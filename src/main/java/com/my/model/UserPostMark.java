@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "user_post_mark")
-public class UserPostMark implements Serializable {
+public class UserPostMark implements Serializable, DomainObject {
 
     @ManyToOne
     @Id

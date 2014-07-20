@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements Serializable, DomainObject {
 
     @Column(name = "user_id")
     @GeneratedValue
