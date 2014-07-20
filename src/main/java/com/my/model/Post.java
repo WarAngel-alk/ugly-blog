@@ -40,6 +40,18 @@ public class Post implements Serializable {
 //    @Formula("")
 //    private int negativeMarks;
 
+    public Post() {
+    }
+
+    public Post(String title) {
+        this.title = title;
+    }
+
+    public Post(String text, String title) {
+        this.text = text;
+        this.title = title;
+    }
+
     public long getId() {
         return id;
     }
