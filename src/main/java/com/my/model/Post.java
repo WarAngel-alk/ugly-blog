@@ -47,7 +47,7 @@ public class Post implements Serializable, DomainObject {
         this.title = title;
     }
 
-    public Post(String text, String title) {
+    public Post(String title, String text) {
         this.text = text;
         this.title = title;
     }

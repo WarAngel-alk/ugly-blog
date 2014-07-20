@@ -26,6 +26,11 @@ public class Tag implements Serializable, DomainObject {
         this.name = name;
     }
 
+    public Tag(String name, List<Post> posts) {
+        this.name = name;
+        this.posts = posts;
+    }
+
     public long getId() {
         return id;
     }
