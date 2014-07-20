@@ -1,3 +1,3 @@
-<div id="header">
+<div id="sidebar">
 
 </div>
