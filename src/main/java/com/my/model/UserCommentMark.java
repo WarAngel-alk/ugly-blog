@@ -18,6 +18,15 @@ public class UserCommentMark implements Serializable {
     @Column(name = "mark", nullable = false, unique = false)
     private boolean mark;
 
+    public UserCommentMark() {
+    }
+
+    public UserCommentMark(User user, Comment comment, boolean mark) {
+        this.user = user;
+        this.comment = comment;
+        this.mark = mark;
+    }
+
     public Comment getComment() {
         return comment;
     }
