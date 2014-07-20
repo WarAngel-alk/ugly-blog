@@ -35,7 +35,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<UserCommentMark> commentMarks;
 
-    @OneToMany
+    @OneToMany(mappedBy = "author")
     private List<Comment> hisComments;
 
     public long getId() {

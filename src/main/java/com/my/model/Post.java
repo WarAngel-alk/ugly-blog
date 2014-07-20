@@ -29,7 +29,7 @@ public class Post implements Serializable {
     @OneToMany(mappedBy = "post")
     private List<UserPostMark> marks;
 
-    @OneToMany
+    @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
     // TODO: fill query!
