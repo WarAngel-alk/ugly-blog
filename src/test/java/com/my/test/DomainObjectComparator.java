@@ -1,9 +1,6 @@
 package com.my.test;
 
-import com.my.model.DomainObject;
-import com.my.model.Message;
-import com.my.model.Post;
-import com.my.model.User;
+import com.my.model.*;
 
 import java.util.Date;
 
@@ -33,6 +30,18 @@ public class DomainObjectComparator {
         } else {
             throw new IllegalArgumentException("There is not methods for class " + actual.getClass());
         }
+    }
+
+    public static void assertDeepEquals(UserPostMark actual, UserPostMark expected) {
+        assertEquals(actual.getUser(), expected.getUser());
+        assertEquals(actual.getPost(), expected.getPost());
+        assertEquals(actual.isMark(), expected.isMark());
+    }
+
+    public static void assertDeepEquals(UserCommentMark actual, UserCommentMark expected) {
+        assertEquals(actual.getUser(), expected.getUser());
+        assertEquals(actual.getComment(), expected.getComment());
+        assertEquals(actual.isMark(), expected.isMark());
     }
 
     public static void assertDeepEquals(Message actual, Message expected) {
