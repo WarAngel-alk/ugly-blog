@@ -63,6 +63,45 @@ public class Message implements Serializable, DomainObject {
         this.receiver = receiver;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message = (Message) o;
+
+        if (id != message.id) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + sender.hashCode();
+        result = 31 * result + receiver.hashCode();
+        result = 31 * result + date.hashCode();
+        result = 31 * result + text.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Message");
+        sb.append("{id=").append(id);
+        sb.append(", senderId=").append(sender.getId());
+        sb.append(", receiverId=").append(receiver.getId());
+        sb.append(", date=").append(date);
+        sb.append(", subject='").append(subject).append('\'');
+        sb.append(", text='").append(text).append('\'');
+        sb.append(", isRead=").append(isRead);
+        sb.append(", deletedBySender=").append(deletedBySender);
+        sb.append(", deletedByReceiver=").append(deletedByReceiver);
+        sb.append('}');
+        return sb.toString();
+    }
+
     public long getId() {
         return id;
     }
