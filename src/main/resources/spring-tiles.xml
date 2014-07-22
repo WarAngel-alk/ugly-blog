@@ -4,14 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="tilesViewResolver"
-          class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-        <property name="definitions">
-            <list>
-                <value>/WEB-INF/views/views.xml</value>
-            </list>
-        </property>
+        <property name="definitions" value="/WEB-INF/views/tiles.xml"/>
     </bean>
 
 </beans>
