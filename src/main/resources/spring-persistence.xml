@@ -2,10 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- Connection properties -->
     <context:property-placeholder location="classpath:jdbc.property"/>
+
+    <tx:annotation-driven/>
 
     <!-- Persistence config -->
 
@@ -37,28 +40,25 @@
         <property name="driverClassName" value="${jdbc.driver_class}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
-
-        <property name="maxTotal" value="10"/>
-        <property name="defaultReadOnly" value="false"/>
-        <property name="minIdle" value="5"/>
     </bean>
 
     <!-- Dao beans -->
 
     <bean id="messageDao" class="com.my.dao.MessageDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="checkWriteOperations" value="false"/>
     </bean>
 
     <bean id="postDao" class="com.my.dao.PostDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="checkWriteOperations" value="false"/>
     </bean>
 
     <bean id="userDao" class="com.my.dao.UserDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="checkWriteOperations" value="false"/>
     </bean>
 
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
 </beans>
