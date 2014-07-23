@@ -28,3 +28,43 @@
     vertical-align: middle;
     padding-left: 30px;
 }
+
+#content {
+    margin: 5px;
+}
+
+.post {
+    border: 2px solid #c2cfbc;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 15px;
+}
+
+.post_date {
+    font-style: italic;
+    font-size: 10pt;
+    color: #b3b0b6;
+    padding-left: 15px;
+}
+
+.post_title {
+    font-weight: bold;
+    font-size: 18pt;
+    text-decoration-line: underline;
+    text-decoration-color: black;
+
+    padding-left: 15px;
+}
+
+.post_text {
+    font-size: 12pt;
+}
+
+.post_info {
+    border: 2px ridge #b9b8a9;
+}
+
+.post_read_full_btn {
+    margin-left: 15px;
+}
