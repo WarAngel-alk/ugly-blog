@@ -16,7 +16,7 @@ public class Tag implements Serializable, DomainObject {
     @Column(name = "name", length = 100)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Post> posts;
 
     public Tag() {

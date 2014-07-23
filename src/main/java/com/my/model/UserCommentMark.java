@@ -7,11 +7,11 @@ import java.io.Serializable;
 @Table(name = "user_comment_mark")
 public class UserCommentMark implements Serializable, DomainObject {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @Id
     private Comment comment;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @Id
     private User user;
 

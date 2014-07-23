@@ -14,7 +14,7 @@ public class Comment implements Serializable, DomainObject {
     @Id
     private long id;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     private Post post;
 
     @Column(name = "postDate", nullable = false, unique = false)
@@ -23,10 +23,10 @@ public class Comment implements Serializable, DomainObject {
     @Column(name = "text", nullable = false, unique = false)
     private String text;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     private User author;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<UserCommentMark> marks;
 
 //    // TODO: fill query!

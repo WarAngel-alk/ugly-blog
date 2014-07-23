@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
 @Entity
 @Table(name = "message")
 public class Message implements Serializable, DomainObject {
@@ -14,10 +13,10 @@ public class Message implements Serializable, DomainObject {
     @Id
     private long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User sender;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private User receiver;
 
     @Column(name = "date", nullable = false, unique = false)

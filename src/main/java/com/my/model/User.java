@@ -29,19 +29,19 @@ public class User implements Serializable, DomainObject {
     @Column(name = "avatarPath", nullable = true, unique = false)
     private String avatarPath;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserPostMark> postMarks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCommentMark> commentMarks;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Comment> hisComments;
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<Message> incomingMessages;
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     private List<Message> outcomingMessages;
 
     public User() {

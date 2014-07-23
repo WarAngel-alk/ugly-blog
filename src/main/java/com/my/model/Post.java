@@ -23,22 +23,22 @@ public class Post implements Serializable, DomainObject {
     @Column(name = "text", nullable = false, unique = false)
     private String text;
 
-    @ManyToMany(mappedBy = "posts")
+    @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
     private List<Tag> tags;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<UserPostMark> marks;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     // TODO: fill query!
-//    @Formula("")
+//    @Formula("select count(*) from Post.marks as marks where marks.mark = true")
 //    private int positiveMarks;
 
-    // TODO: fill query!
-//    @Formula("")
-//    private int negativeMarks;
+    //    TODO: fill query!
+//    @Formula("select count(*) from Post.marks as marks where marks.mark = false")
+    private int negativeMarks;
 
     public Post() {
     }
