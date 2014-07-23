@@ -45,7 +45,7 @@
 
         <dependency>
             <groupId>org.apache.tiles</groupId>
-            <artifactId>tiles-jsp</artifactId>
+            <artifactId>tiles-api</artifactId>
             <version>${tiles.version}</version>
         </dependency>
         <dependency>
@@ -57,11 +57,6 @@
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-extras</artifactId>
             <version>${tiles.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
