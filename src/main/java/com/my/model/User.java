@@ -14,16 +14,16 @@ public class User implements Serializable, DomainObject {
     @Id
     private long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;
 
-    @Column(name = "pass", nullable = false, unique = false)
+    @Column(name = "pass", nullable = false, unique = false, length = 32)
     private String pass;
 
     @Column(name = "regDate", nullable = false, unique = false)
     private Date registrationDate;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(name = "avatarPath", nullable = true, unique = false)

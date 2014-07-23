@@ -17,10 +17,10 @@ public class Post implements Serializable, DomainObject {
     @Column(name = "postDate", unique = false, nullable = false)
     private Date postDate;
 
-    @Column(name = "title", unique = false, nullable = false)
+    @Column(name = "title", unique = false, nullable = false, length = 255)
     private String title;
 
-    @Column(name = "text", nullable = false, unique = false)
+    @Column(name = "text", nullable = false, unique = false, length = 10000)
     private String text;
 
     @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)

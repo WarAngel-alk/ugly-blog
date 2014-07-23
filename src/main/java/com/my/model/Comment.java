@@ -20,7 +20,7 @@ public class Comment implements Serializable, DomainObject {
     @Column(name = "postDate", nullable = false, unique = false)
     private Date postDate;
 
-    @Column(name = "text", nullable = false, unique = false)
+    @Column(name = "text", nullable = false, unique = false, length = 5000)
     private String text;
 
     @ManyToOne(cascade = CascadeType.ALL)
