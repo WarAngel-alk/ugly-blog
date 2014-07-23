@@ -7,13 +7,13 @@ import com.my.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import static com.my.test.DomainObjectComparator.assertDeepEquals;
+import static org.testng.Assert.*;
 
 @ContextConfiguration("classpath:test-spring-config.xml")
 public class MessageDaoTest extends AbstractTransactionalTestNGSpringContextTests {
@@ -24,88 +24,62 @@ public class MessageDaoTest extends AbstractTransactionalTestNGSpringContextTest
     @Autowired
     private MessageDao messageDao;
 
-    private static User sender;
-    private static User receiver;
+    private User sender;
+    private User receiver;
 
-    @BeforeClass
-    public void setUp() throws Exception {
-        sender = createUser("sender", "sender", "sender@send.er");
-
-        receiver = createUser("receiver", "receiver", "receiver@email.em");
+    @BeforeMethod
+    public void userCreating() throws Exception {
+        sender = new User("sender", "sender", "sender@send.er");
+        receiver = new User("receiver", "receiver", "receiver@email.em");
 
         userDao.addUser(sender);
         userDao.addUser(receiver);
     }
 
-    private User createUser(String name, String pass, String email) {
-        User user = new User();
-        user.setName(name);
-        user.setPass(pass);
-        user.setEmail(email);
-        return user;
-    }
-
     @Test
     public void testIdReturned() throws Exception {
-        Message sentMsg = new Message();
-        sentMsg.setSender(sender);
-        sentMsg.setReceiver(receiver);
-        sentMsg.setText("Message text");
+        Message sentMsg = new Message(sender, receiver, "Message text");
 
         long sentId = messageDao.sendMessage(sentMsg);
-        long receivedId = messageDao.getMessage(sentId).getId();
+        Message receivedMsg = messageDao.getMessage(sentId);
 
-        assertEquals(receivedId, sentId);
+        assertDeepEquals(receivedMsg, sentMsg);
     }
 
     @Test
     public void testSendAndReceiveMessage() throws Exception {
-        Message sentMsg = new Message();
-        sentMsg.setSender(sender);
-        sentMsg.setReceiver(receiver);
-        sentMsg.setText("Message text");
+        Message sentMsg = new Message(sender, receiver, "Message text");
 
         long id = messageDao.sendMessage(sentMsg);
 
         Message receivedMsg = messageDao.getMessage(id);
 
-        assertEquals(receivedMsg.getSender().getId(), sender.getId());
-        assertEquals(receivedMsg.getReceiver().getId(), receiver.getId());
-        assertEquals(receivedMsg.getText(), "Message text");
+        assertDeepEquals(receivedMsg, sentMsg);
     }
 
     @Test
     public void testFlagsSet() throws Exception {
-        Message sentMsg = new Message();
-        sentMsg.setSender(sender);
-        sentMsg.setReceiver(receiver);
-        sentMsg.setText("Message text");
+        Message sentMsg = new Message(sender, receiver, "Message text");
 
         messageDao.sendMessage(sentMsg);
 
-        Assert.assertFalse(sentMsg.isDeletedBySender());
-        Assert.assertFalse(sentMsg.isDeletedByReceiver());
-        Assert.assertFalse(sentMsg.isRead());
+        assertFalse(sentMsg.isDeletedBySender());
+        assertFalse(sentMsg.isDeletedByReceiver());
+        assertFalse(sentMsg.isRead());
     }
 
     @Test
     public void testDateNotNull() throws Exception {
-        Message sentMsg = new Message();
-        sentMsg.setSender(sender);
-        sentMsg.setReceiver(receiver);
-        sentMsg.setText("Message text");
+        Message sentMsg = new Message(sender, receiver, "Message text");
 
         messageDao.sendMessage(sentMsg);
 
-        Assert.assertNotNull(sentMsg.getDate());
+        assertNotNull(sentMsg.getDate());
     }
 
     @Test
     public void testGetIncomingMessages() throws Exception {
-        Message sentMsg = new Message();
-        sentMsg.setSender(sender);
-        sentMsg.setReceiver(receiver);
-        sentMsg.setText("Message text");
+        Message sentMsg = new Message(sender, receiver, "Message text");
 
         messageDao.sendMessage(sentMsg);
 
@@ -115,17 +89,12 @@ public class MessageDaoTest extends AbstractTransactionalTestNGSpringContextTest
 
         Message msg = messageList.get(0);
 
-        assertEquals(msg.getSender().getId(), sender.getId());
-        assertEquals(msg.getReceiver().getId(), receiver.getId());
-        assertEquals(msg.getText(), "Message text");
+        assertDeepEquals(msg, sentMsg);
     }
 
     @Test
     public void testGetOutcomingMessages() throws Exception {
-        Message sentMsg = new Message();
-        sentMsg.setSender(sender);
-        sentMsg.setReceiver(receiver);
-        sentMsg.setText("Message text");
+        Message sentMsg = new Message(sender, receiver, "Message text");
 
         messageDao.sendMessage(sentMsg);
 
@@ -133,44 +102,37 @@ public class MessageDaoTest extends AbstractTransactionalTestNGSpringContextTest
 
         assertEquals(messageList.size(), 1);
 
-        Message msg = messageList.get(0);
+        Message receivedMsg = messageList.get(0);
 
-        assertEquals(msg.getSender().getId(), sender.getId());
-        assertEquals(msg.getReceiver().getId(), receiver.getId());
-        assertEquals(msg.getText(), "Message text");
+        assertDeepEquals(receivedMsg, sentMsg);
     }
 
     @Test
     public void testGetIncomingMessagesByPage() throws Exception {
-        for (int i = 0; i < 30; ++i) {
-            Message sentMsg = new Message();
-            sentMsg.setSender(sender);
-            sentMsg.setReceiver(receiver);
-            sentMsg.setText("Message text");
+        Message sentFirstMsg = new Message(sender, receiver, "Message text");
+        messageDao.sendMessage(sentFirstMsg);
 
+        for (int i = 1; i < 30; ++i) {
+            Message sentMsg = new Message(sender, receiver, "Message text");
             messageDao.sendMessage(sentMsg);
         }
 
-
-        List<Message> messageList = messageDao.getIncomingMessagesForPage(receiver, 2, 10);
+        List<Message> messageList = messageDao.getIncomingMessagesForPage(receiver, 2, 20);
 
         assertEquals(messageList.size(), 10);
 
-        Message msg = messageList.get(0);
+        Message receivedFirstMsg = messageList.get(0);
 
-        assertEquals(msg.getSender().getId(), sender.getId());
-        assertEquals(msg.getReceiver().getId(), receiver.getId());
-        assertEquals(msg.getText(), "Message text");
+        assertDeepEquals(receivedFirstMsg, sentFirstMsg);
     }
 
     @Test
     public void testGetOutcomingMessagesByPage() throws Exception {
-        for (int i = 0; i < 30; ++i) {
-            Message sentMsg = new Message();
-            sentMsg.setSender(sender);
-            sentMsg.setReceiver(receiver);
-            sentMsg.setText("Message text");
+        Message sentFirstMsg = new Message(sender, receiver, "Message text");
+        messageDao.sendMessage(sentFirstMsg);
 
+        for (int i = 1; i < 30; ++i) {
+            Message sentMsg = new Message(sender, receiver, "Message text");
             messageDao.sendMessage(sentMsg);
         }
 
@@ -178,11 +140,9 @@ public class MessageDaoTest extends AbstractTransactionalTestNGSpringContextTest
 
         assertEquals(messageList.size(), 10);
 
-        Message msg = messageList.get(0);
+        Message receivedFirstMsg = messageList.get(0);
 
-        assertEquals(msg.getSender().getId(), sender.getId());
-        assertEquals(msg.getReceiver().getId(), receiver.getId());
-        assertEquals(msg.getText(), "Message text");
+        assertDeepEquals(receivedFirstMsg, sentFirstMsg);
     }
 
 }

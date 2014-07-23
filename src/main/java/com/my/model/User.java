@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements Serializable, DomainObject {
 
     @Column(name = "user_id")
     @GeneratedValue
@@ -29,14 +29,79 @@ public class User implements Serializable {
     @Column(name = "avatarPath", nullable = true, unique = false)
     private String avatarPath;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserPostMark> postMarks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCommentMark> commentMarks;
 
-    @OneToMany
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Comment> hisComments;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<Message> incomingMessages;
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<Message> outcomingMessages;
+
+    public User() {
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public User(String name, String pass) {
+        this.name = name;
+        this.pass = pass;
+    }
+
+    public User(String name, String pass, String email) {
+        this.name = name;
+        this.pass = pass;
+        this.email = email;
+    }
+
+    public User(String name, String pass, String email, String avatarPath) {
+        this.name = name;
+        this.pass = pass;
+        this.email = email;
+        this.avatarPath = avatarPath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + pass.hashCode();
+        result = 31 * result + registrationDate.hashCode();
+        result = 31 * result + email.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("User");
+        sb.append("{id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", pass='").append(pass).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", registrationDate=").append(registrationDate);
+        sb.append(", avatarPath='").append(avatarPath).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 
     public long getId() {
         return id;
@@ -108,6 +173,22 @@ public class User implements Serializable {
 
     public void setHisComments(List<Comment> hisComments) {
         this.hisComments = hisComments;
+    }
+
+    public List<Message> getIncomingMessages() {
+        return incomingMessages;
+    }
+
+    public void setIncomingMessages(List<Message> incomingMessages) {
+        this.incomingMessages = incomingMessages;
+    }
+
+    public List<Message> getOutcomingMessages() {
+        return outcomingMessages;
+    }
+
+    public void setOutcomingMessages(List<Message> outcomingMessages) {
+        this.outcomingMessages = outcomingMessages;
     }
 
 }

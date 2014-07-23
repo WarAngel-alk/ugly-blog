@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "post")
-public class Post implements Serializable {
+public class Post implements Serializable, DomainObject {
 
     @Column(name = "post_id", length = 11)
     @GeneratedValue
@@ -23,22 +23,65 @@ public class Post implements Serializable {
     @Column(name = "text", nullable = false, unique = false)
     private String text;
 
-    @ManyToMany(mappedBy = "posts")
+    @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
     private List<Tag> tags;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<UserPostMark> marks;
 
-    @OneToMany
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     // TODO: fill query!
-//    @Formula("")
+//    @Formula("select count(*) from Post.marks as marks where marks.mark = true")
 //    private int positiveMarks;
 
-    // TODO: fill query!
-//    @Formula("")
-//    private int negativeMarks;
+    //    TODO: fill query!
+//    @Formula("select count(*) from Post.marks as marks where marks.mark = false")
+    private int negativeMarks;
+
+    public Post() {
+    }
+
+    public Post(String title) {
+        this.title = title;
+    }
+
+    public Post(String title, String text) {
+        this.text = text;
+        this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Post post = (Post) o;
+
+        return id == post.id;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + postDate.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + text.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Post");
+        sb.append("{id=").append(id);
+        sb.append(", postDate=").append(postDate);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", text='").append(text).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 
     public int getRating() {
         int rating = 0;

@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static com.my.test.DomainObjectComparator.assertDeepEquals;
 import static org.testng.Assert.assertEquals;
 
 @ContextConfiguration(locations = {"classpath:test-spring-config.xml"})
@@ -17,24 +18,9 @@ public class PostDaoTest extends AbstractTransactionalTestNGSpringContextTests {
     @Autowired
     private PostDao postDao;
 
-    private Post createPost() {
-        Post post = new Post();
-        post.setTitle("Post title");
-        post.setText("Post text");
-
-        return post;
-    }
-
-    private void checkPostParametersEqual(Post post1, Post post2) {
-        assertEquals(post1.getTitle(), post2.getTitle());
-        assertEquals(post1.getText(), post2.getText());
-        // TODO: add date checking
-//        assertEquals(post1.getPostDate(), post2.getPostDate());
-    }
-
     @Test
     public void testReturnedId() throws Exception {
-        Post post = createPost();
+        Post post = new Post("Post title", "Post text");
 
         long savedId = postDao.addPost(post);
         long receivedId = postDao.getPost(savedId).getId();
@@ -44,19 +30,21 @@ public class PostDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Test
     public void testAddAndGet() throws Exception {
-        Post savedPost = createPost();
+        Post savedPost = new Post("Post title", "Post text");
 
         postDao.addPost(savedPost);
 
         Post receivedPost = postDao.getPost(savedPost.getId());
 
-        checkPostParametersEqual(savedPost, receivedPost);
+        assertDeepEquals(savedPost, receivedPost);
     }
 
     @Test
     public void testGetAllPosts() throws Exception {
-        for (int i = 0; i < 5; ++i) {
-            Post post = createPost();
+        Post sentFirstPost = new Post("Post title", "Post text");
+        postDao.addPost(sentFirstPost);
+        for (int i = 1; i < 5; ++i) {
+            Post post = new Post("Post title", "Post text");
             postDao.addPost(post);
         }
 
@@ -64,14 +52,14 @@ public class PostDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
         assertEquals(postList.size(), 5);
 
-        Post receivedPost = postList.get(0);
+        Post receivedFirstPost = postList.get(0);
 
-        checkPostParametersEqual(receivedPost, createPost());
+        assertDeepEquals(receivedFirstPost, sentFirstPost);
     }
 
     @Test
     public void testUpdatePost() throws Exception {
-        Post startPost = createPost();
+        Post startPost = new Post("Post title", "Post text");
 
         postDao.addPost(startPost);
 
@@ -83,13 +71,15 @@ public class PostDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
         Post receivedUpdatedPost = postDao.getPost(updatedPost.getId());
 
-        checkPostParametersEqual(receivedUpdatedPost, updatedPost);
+        assertDeepEquals(receivedUpdatedPost, updatedPost);
     }
 
     @Test
     public void testGetPostsForPage() throws Exception {
-        for (int i = 0; i < 15; ++i) {
-            Post post = createPost();
+        Post sentFirstPost = new Post("Post title", "Post text");
+        postDao.addPost(sentFirstPost);
+        for (int i = 1; i < 15; ++i) {
+            Post post = new Post("Post title", "Post text");
             postDao.addPost(post);
         }
 
@@ -97,9 +87,8 @@ public class PostDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
         assertEquals(postList.size(), 5);
 
-        Post receivedPost = postList.get(0);
+        Post receivedFirstPost = postList.get(0);
 
-        checkPostParametersEqual(receivedPost, createPost());
-
+        assertDeepEquals(receivedFirstPost, sentFirstPost);
     }
 }
