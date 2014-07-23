@@ -38,7 +38,7 @@ public class Post implements Serializable, DomainObject {
 
     //    TODO: fill query!
 //    @Formula("select count(*) from Post.marks as marks where marks.mark = false")
-    private int negativeMarks;
+//    private int negativeMarks;
 
     public Post() {
     }
