@@ -9,10 +9,12 @@ public class UserPostMark implements Serializable, DomainObject {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @Id
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @Id
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "mark", nullable = false, unique = false)

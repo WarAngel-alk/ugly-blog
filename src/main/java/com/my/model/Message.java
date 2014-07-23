@@ -22,10 +22,10 @@ public class Message implements Serializable, DomainObject {
     @Column(name = "date", nullable = false, unique = false)
     private Date date;
 
-    @Column(name = "subject", nullable = true, unique = false)
+    @Column(name = "subject", nullable = true, unique = false, length = 255)
     private String subject;
 
-    @Column(name = "text", nullable = false, unique = false)
+    @Column(name = "text", nullable = false, unique = false, length = 10000)
     private String text;
 
     @Column(name = "isRead", nullable = false, unique = false)

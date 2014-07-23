@@ -9,10 +9,12 @@ public class UserCommentMark implements Serializable, DomainObject {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @Id
+    @JoinColumn(name = "comment_id")
     private Comment comment;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @Id
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "mark", nullable = false, unique = false)
