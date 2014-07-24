@@ -68,3 +68,7 @@
 .post_read_full_btn {
     margin-left: 15px;
 }
+
+.bordered_element {
+    border: 1px solid black;
+}
