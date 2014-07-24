@@ -88,6 +88,25 @@ public class Comment implements Serializable, DomainObject {
         return sb.toString();
     }
 
+
+    public int getPositiveMarks() {
+        int marks = 0;
+        for (UserCommentMark mark : this.marks) {
+            if (mark.isMark()) ++marks;
+        }
+
+        return marks;
+    }
+
+    public int getNegativeMarks() {
+        int marks = 0;
+        for (UserCommentMark mark : this.marks) {
+            if (!mark.isMark()) ++marks;
+        }
+
+        return marks;
+    }
+
     public long getId() {
         return id;
     }
