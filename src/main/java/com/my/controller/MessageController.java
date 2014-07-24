@@ -36,7 +36,7 @@ public class MessageController {
         return "sendMessage";
     }
 
-    @RequestMapping(value = "/mail/send", method = RequestMethod.PUT)
+    @RequestMapping(value = "/mail/send", method = RequestMethod.POST)
     public String sendMessage(@ModelAttribute("message") Message message, Model model) {
         return "redirect:/mail/out";
     }
