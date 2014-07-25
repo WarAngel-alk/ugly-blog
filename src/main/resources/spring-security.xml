@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+                 http://www.springframework.org/schema/security 
+                 http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+
+    <http access-denied-page="/error/403">
+        <intercept-url pattern="/" access="ROLE_USER,ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/post" method="GET" access="ROLE_USER,ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/post/*" method="GET" access="ROLE_USER,ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/mail/**" method="GET" access="ROLE_USER"/>
+        <intercept-url pattern="/post/*/comment" access="ROLE_USER"/>
+        <intercept-url pattern="/user/*" access="ROLE_USER"/>
+        <intercept-url pattern="/signup" method="GET" access="ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/**" access="ROLE_ADMIN"/>
+
+        <form-login login-page="/login" default-target-url="/"
+                    authentication-failure-url="/login.jsp"/>
+        <logout logout-url="/logout" logout-success-url="/"/>
+
+        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
+        <remember-me user-service-ref="userService"/>
+    </http>
+
+    <global-method-security secured-annotations="enabled"/>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="userService"/>
+    </authentication-manager>
+
+    <jdbc-user-service
+            id="userService"
+            data-source-ref="dataSource"
+            users-by-username-query=
+                    "SELECT
+                        name, pass, true
+                    FROM user
+                    WHERE name = ?"
+            authorities-by-username-query=
+                    "SELECT
+                        U.name, R.role
+                    FROM user as U
+                        INNER JOIN role as R
+                        ON R.user_id = U.user_id
+                        AND U.name = ?"/>
+</beans:beans> 
