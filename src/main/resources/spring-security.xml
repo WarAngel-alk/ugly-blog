@@ -19,7 +19,7 @@
         <intercept-url pattern="/**" access="ROLE_ADMIN"/>
 
         <form-login login-page="/login" default-target-url="/"
-                    authentication-failure-url="/login.jsp"/>
+                    authentication-failure-url="/login"/>
         <logout logout-url="/logout" logout-success-url="/"/>
 
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
