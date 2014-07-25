@@ -118,5 +118,14 @@ INSERT INTO `ugly_blog_db`.`user_post_mark`
   (FALSE, 2, 2),
   (TRUE, 3, 2);
 
+INSERT INTO `ugly_blog_db`.`role`
+(`id`,
+ `role`,
+ `user_id`)
+  VALUES
+  (1, "ROLE_ADMIN", 1),
+  (2, "ROLE_USER", 1),
+  (3, "ROLE_USER", 2),
+  (4, "ROLE_USER", 3);
 
 COMMIT;

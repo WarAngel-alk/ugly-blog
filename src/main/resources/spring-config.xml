@@ -14,5 +14,6 @@
     <beans:import resource="spring-tiles.xml"/>
     <beans:import resource="spring-mvc.xml"/>
     <beans:import resource="spring-persistence.xml"/>
+    <beans:import resource="spring-security.xml"/>
 
 </beans>
