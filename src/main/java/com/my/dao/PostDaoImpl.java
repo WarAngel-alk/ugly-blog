@@ -53,4 +53,9 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
         merge(post);
     }
 
+    @Override
+    public void deletePost(Post post) {
+        delete(post);
+    }
+
 }
