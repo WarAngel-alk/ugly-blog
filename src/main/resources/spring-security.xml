@@ -10,6 +10,7 @@
     <http pattern="/" security="none"/>
     <http pattern="/post" security="none"/>
     <http pattern="/post/*" security="none"/>
+    <http pattern="/resources/**" security="none"/>
 
     <http access-denied-page="/error/403">
         <intercept-url pattern="/mail/**" method="GET" access="ROLE_USER"/>
