@@ -9,6 +9,7 @@
 
 
     <http access-denied-page="/error/403">
+        <intercept-url pattern="/resources/**" access="ROLE_USER,ROLE_ANONYMOUS"/>
         <intercept-url pattern="/" access="ROLE_USER,ROLE_ANONYMOUS"/>
         <intercept-url pattern="/post" method="GET" access="ROLE_USER,ROLE_ANONYMOUS"/>
         <intercept-url pattern="/post/*" method="GET" access="ROLE_USER,ROLE_ANONYMOUS"/>
