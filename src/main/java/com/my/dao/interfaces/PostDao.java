@@ -18,4 +18,5 @@ public interface PostDao {
 
     public void updatePost(Post post);
 
+    void deletePost(Post post);
 }

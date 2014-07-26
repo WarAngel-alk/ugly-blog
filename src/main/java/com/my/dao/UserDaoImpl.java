@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserDaoImpl extends HibernateTemplate implements UserDao {
 
@@ -38,5 +39,10 @@ public class UserDaoImpl extends HibernateTemplate implements UserDao {
     @Transactional(readOnly = true)
     public User getUser(long id) {
         return get(User.class, id);
+    }
+
+    @Override
+    public User getUser(String username) {
+        return ((List<User>) find("from User where name = ?", username)).get(0);
     }
 }
