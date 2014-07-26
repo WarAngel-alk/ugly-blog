@@ -9,9 +9,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:spring-tiles.xml
-            classpath:spring-mvc.xml
             classpath:spring-config.xml
+            classpath:spring-tiles.xml
             classpath:spring-mvc.xml
             classpath:spring-persistence.xml
             classpath:spring-security.xml
@@ -47,6 +46,7 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring-config.xml</param-value>
         </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
