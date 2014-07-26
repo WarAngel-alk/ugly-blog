@@ -44,8 +44,6 @@ public class UserController {
             Model model) {
         userDao.addUser(user);
 
-        model.addAttribute("user", user);
-
         return "redirect:user/" + user.getId();
     }
 
