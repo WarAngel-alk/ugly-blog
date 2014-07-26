@@ -33,7 +33,9 @@
     <global-method-security secured-annotations="enabled"/>
 
     <authentication-manager>
-        <authentication-provider user-service-ref="userService"/>
+        <authentication-provider user-service-ref="userService">
+            <password-encoder hash="bcrypt"/>
+        </authentication-provider>
     </authentication-manager>
 
     <jdbc-user-service
