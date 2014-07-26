@@ -2,11 +2,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <div>
     <s:url value="/user" var="addUserUrl"/>
-    <form:form action="${addUserUrl}" method="post" commandName="user">
+    <form:form action="${addUserUrl}" method="put" commandName="user">
         Name: <form:input path="name"/><br/>
-        Password: <input type="text" name="pass"/><br/>
+        Password: <form:password path="pass"/><br/>
         Email: <form:input path="email"/><br/>
-        Avatar path: <input type="text" name="avatarPath"/><br/>
+        Avatar path: <form:input path="avatarPath"/><br/>
         <form:button>
             Sign up
         </form:button>
