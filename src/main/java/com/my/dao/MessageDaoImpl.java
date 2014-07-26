@@ -76,4 +76,13 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
         return (Long) save(message);
     }
 
+    @Override
+    public void deleteMessage(long id) {
+        executeWithNativeSession(session ->
+                session.createQuery("delete from Message where id = :id")
+                        .setParameter("id", id)
+                        .executeUpdate()
+        );
+    }
+
 }
