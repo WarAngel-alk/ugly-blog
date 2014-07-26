@@ -7,6 +7,8 @@ DELETE FROM user_post_mark;
 DELETE FROM comment;
 DELETE FROM post;
 DELETE FROM message;
-DELETE FROM USER;
+DELETE FROM user_role;
+DELETE FROM user;
+DELETE FROM role;
 
 COMMIT;

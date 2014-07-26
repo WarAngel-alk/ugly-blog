@@ -17,7 +17,7 @@ public class User implements Serializable, DomainObject {
     @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;
 
-    @Column(name = "pass", nullable = false, unique = false, length = 32)
+    @Column(name = "pass", nullable = false, unique = false, length = 60)
     private String pass;
 
     @Column(name = "regDate", nullable = false, unique = false)
