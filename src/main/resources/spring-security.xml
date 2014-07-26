@@ -7,20 +7,23 @@
                  http://www.springframework.org/schema/security 
                  http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http pattern="/" security="none"/>
-    <http pattern="/post" security="none"/>
-    <http pattern="/post/*" security="none"/>
     <http pattern="/resources/**" security="none"/>
 
-    <http access-denied-page="/error/403">
-        <intercept-url pattern="/mail/**" method="GET" access="ROLE_USER"/>
-        <intercept-url pattern="/post/*/comment" access="ROLE_USER"/>
-        <intercept-url pattern="/user/*" access="ROLE_USER"/>
-        <intercept-url pattern="/signup" method="GET" access="ROLE_ANONYMOUS"/>
-        <intercept-url pattern="/**" access="ROLE_ADMIN"/>
+    <http access-denied-page="/error/403" use-expressions="true">
+        <intercept-url pattern="/" access="permitAll()"/>
+        <intercept-url pattern="/home" access="permitAll()"/>
+        <intercept-url pattern="/post**" access="permitAll()"/>
+        <intercept-url pattern="/error**" access="permitAll()"/>
+        <intercept-url pattern="/login*" access="isAnonymous()"/>
+        <intercept-url pattern="/signup*" access="isAnonymous()"/>
+        <intercept-url pattern="/mail/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/post/*/comment*" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/user*" method="GET" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/user*" method="PUT" access="isAnonymous()"/>
+        <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/login" default-target-url="/"
-                    authentication-failure-url="/login.jsp"/>
+                    authentication-failure-url="/login?error=true"/>
         <logout logout-url="/logout" logout-success-url="/"/>
 
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
@@ -38,7 +41,7 @@
             data-source-ref="dataSource"
             users-by-username-query=
                     "SELECT
-                        name, pass, true
+                        name as username, pass as password, true as enabled
                     FROM user
                     WHERE name = ?"
             authorities-by-username-query=
