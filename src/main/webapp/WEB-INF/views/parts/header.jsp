@@ -1,5 +1,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div id="header">
     <a href="<s:url value="/home"/>">
         <div class="header_logo">
@@ -10,13 +11,29 @@
     <span id="header_title">Ugly blog</span>
 
     <div class="header_icons">
-        <a href="<s:url value="/logout"/>">
-            <img class="header_image"
-                 src="<s:url value="/resources/images/header_logout.png"/>" width="64" height="64"/>
-        </a>
-        <a href="<s:url value="/mail/in"/>">
-            <img class="header_image"
-                 src="<s:url value="/resources/images/header_mail.png"/>" width="64" height="64"/>
-        </a>
+        <sec:authorize access="isAnonymous()">
+            <a href="<s:url value="/login"/>">
+                <img class="header_image"
+                     src="<s:url value="/resources/images/header_login.png"/>" width="64"
+                     height="64"/>
+            </a>
+            <a href="<s:url value="/signup"/>">
+                <img class="header_image"
+                     src="<s:url value="/resources/images/header_signup.png"/>" width="64"
+                     height="64"/>
+            </a>
+        </sec:authorize>
+        <sec:authorize access="isAuthenticated()">
+            <a href="<s:url value="/logout"/>">
+                <img class="header_image"
+                     src="<s:url value="/resources/images/header_logout.png"/>" width="64"
+                     height="64"/>
+            </a>
+            <a href="<s:url value="/mail/in"/>">
+                <img class="header_image"
+                     src="<s:url value="/resources/images/header_mail.png"/>" width="64"
+                     height="64"/>
+            </a>
+        </sec:authorize>
     </div>
 </div>
