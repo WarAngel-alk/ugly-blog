@@ -48,9 +48,12 @@
                     WHERE name = ?"
             authorities-by-username-query=
                     "SELECT
-                        U.name, R.role
-                    FROM user as U
-                        INNER JOIN role as R
-                        ON R.user_id = U.user_id
-                        AND U.name = ?"/>
+                        U.name AS username,
+                        R.role AS authority
+                    FROM user AS U
+                        INNER JOIN user_role AS UR
+                            ON UR.user_id = U.user_id
+                            AND U.name = ?
+                        INNER JOIN role AS R
+                            ON UR.role_id = R.id;"/>
 </beans:beans> 
