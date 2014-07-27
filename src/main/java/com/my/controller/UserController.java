@@ -10,19 +10,24 @@ import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.servlet.ServletContext;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Iterator;
 
 @Controller
 public class UserController {
 
-    private static final String AVATAR_DIRECTORY_PATH = "/recources/images/avatars/";
+    private static final String AVATAR_DIRECTORY_PATH = "/resources/images/avatars/";
+
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @RequestMapping(value = "/signup*", method = RequestMethod.GET)
     public String showSignupForm(Model model) {
@@ -58,7 +63,8 @@ public class UserController {
         } else {
             try {
                 String avatarFilename = saveImageLocal(user.getAvatarPath(),
-                        AVATAR_DIRECTORY_PATH, String.valueOf(System.currentTimeMillis()));
+                        servletContext.getRealPath(AVATAR_DIRECTORY_PATH), String.valueOf(System.currentTimeMillis()));
+                user.setAvatarPath(avatarFilename);
             } catch (DownloadAvatarException e1) {
                 model.addAttribute("avatarErrorMessage", e1.getMessage());
                 return "signup";
@@ -74,11 +80,12 @@ public class UserController {
 
         ImageInputStream iis = null;
         try {
-            URI uri = new URI(remotePath);
+            URL url = new URL(remotePath);
             String format = null;
             ImageReader reader = null;
 
-            iis = ImageIO.createImageInputStream(new File(uri));
+//            InputStream is = new Ur
+            iis = ImageIO.createImageInputStream(url.openStream());
             Iterator<ImageReader> readerIterator = ImageIO.getImageReaders(iis);
             if (readerIterator.hasNext()) {
                 reader = readerIterator.next();
@@ -87,9 +94,9 @@ public class UserController {
                 throw new DownloadAvatarException("Can not define image type.");
             }
 
-            File saveFile = new File(localDir + fileName + "." + format);
+            File saveFile = new File(localDir + System.getProperty("file.separator") + fileName + "." + format);
 
-            BufferedImage bufImg = reader.read(0);
+            BufferedImage bufImg = ImageIO.read(iis);
 
             boolean whiteSuccess = ImageIO.write(bufImg, format, saveFile);
             if (!whiteSuccess) {
@@ -97,7 +104,7 @@ public class UserController {
             } else {
                 return saveFile.getName();
             }
-        } catch (URISyntaxException e1) {
+        } catch (MalformedURLException e1) {
             throw new DownloadAvatarException("Invalid file URL.", e1);
         } catch (IOException e2) {
             throw new DownloadAvatarException("Error while file downloading.", e2);
