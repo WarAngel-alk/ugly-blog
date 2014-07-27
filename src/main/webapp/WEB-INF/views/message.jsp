@@ -17,7 +17,7 @@
         <s:url value="/mail/send" var="sendMessageUrl"/>
         <form:form action="${sendMessageUrl}" method="put" commandName="newMessage">
             Receiver name:<br/>
-            <input type="text" name="receiver_name"/><br/>
+            <input type="text" name="receiver_name" value="${message.sender.name}"/><br/>
             Subject:<br/>
             <form:input type="text" path="subject"/><br/>
             Text:<br/>
