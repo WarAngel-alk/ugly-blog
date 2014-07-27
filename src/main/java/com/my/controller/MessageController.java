@@ -55,12 +55,14 @@ public class MessageController {
         Message message = messageDao.getMessage(id);
         model.addAttribute("message", message);
 
+        model.addAttribute("newMessage", new Message());
+
         return "message";
     }
 
     @RequestMapping(value = "/mail/send", method = RequestMethod.GET)
     public String showSendMessageForm(Model model) {
-        model.addAttribute("message", new Message());
+        model.addAttribute("newMessage", new Message());
 
         return "sendMessage";
     }
