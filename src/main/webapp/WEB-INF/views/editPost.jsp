@@ -1,8 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
     <s:url value="/post" var="postUrl"/>
-    <form:form commandName="post" action="${postUrl}" method="put">
+    <c:set var="formMethod" value="${(post.id == 0) ? 'put' : 'post'}"/>
+    <form:form commandName="post" action="${postUrl}" method="${formMethod}">
         Title:<br/>
         <form:input path="title"/><br/>
         Text:<br/>
