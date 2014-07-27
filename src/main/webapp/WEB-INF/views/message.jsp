@@ -13,7 +13,7 @@
     <div class="bordered_element">
         Answer:<br/>
         <s:url value="/mail/send" var="sendMessageUrl"/>
-        <form action="${sendMessageUrl}" method="post">
+        <form action="${sendMessageUrl}" method="put">
             Receiver name:<br/>
             <input type="text" name="receiver_name"/><br/>
             Subject:<br/>
