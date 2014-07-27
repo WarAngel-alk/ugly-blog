@@ -36,7 +36,7 @@
     <c:url value="/post/${post.id}/comment" var="addCommentUrl"/>
     <div class="bordered_element">
         Add new comment:
-        <form:form commandName="newComment" method="post"
+        <form:form commandName="newComment" method="put"
                    action="${addCommentUrl}">
             Text:<br>
             <form:textarea path="text"/><br>
