@@ -1,14 +1,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <div>
-    <s:url value="/mail/send" var="sendMessageUrl"/>
-    <form action="${sendMessageUrl}" method="post">
-        Receiver name:<br/>
-        <input type="text" name="receiver_name"/><br/>
-        Subject:<br/>
-        <input type="text" name="subject"/><br/>
-        Text:<br/>
-        <textarea name="text"></textarea><br/>
-        <input type="submit" value="Send"/>
-    </form>
+    <div class="bordered_element">
+        Answer:<br/>
+        <s:url value="/mail/send" var="sendMessageUrl"/>
+        <form:form action="${sendMessageUrl}" method="put" commandName="newMessage">
+            Receiver name:<br/>
+            <input type="text" name="receiver_name"/><br/>
+            Subject:<br/>
+            <form:input type="text" path="subject"/><br/>
+            Text:<br/>
+            <form:textarea path="text"/>
+            <form:button>
+                Answer
+            </form:button>
+        </form:form>
+    </div>
 </div>
