@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -29,6 +32,8 @@ public class MessageController {
         List<Message> messageList = messageDao.getIncomingMessagesForPage(curUser, 1);
         model.addAttribute("messageList", messageList);
 
+        model.addAttribute("isInbox", true);
+
         return "mailbox";
     }
 
@@ -40,6 +45,8 @@ public class MessageController {
         List<Message> messageList = messageDao.getOutcomingMessagesForPage(curUser, 1);
         model.addAttribute("messageList", messageList);
 
+        model.addAttribute("isInbox", false);
+
         return "mailbox";
     }
 
@@ -48,12 +55,14 @@ public class MessageController {
         Message message = messageDao.getMessage(id);
         model.addAttribute("message", message);
 
+        model.addAttribute("newMessage", new Message());
+
         return "message";
     }
 
     @RequestMapping(value = "/mail/send", method = RequestMethod.GET)
     public String showSendMessageForm(Model model) {
-        model.addAttribute("message", new Message());
+        model.addAttribute("newMessage", new Message());
 
         return "sendMessage";
     }
@@ -70,7 +79,7 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/mail/message/{id}", method = RequestMethod.DELETE)
-    public String deleteMessage(@RequestParam("id") long id, Model model) {
+    public String deleteMessage(@PathVariable("id") long id, Model model) {
         messageDao.deleteMessage(id);
 
         return "redirect:/mail/in";
