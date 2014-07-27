@@ -1,4 +1,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div>
     <div class="bordered_element">
         <p><i>${message.date}</i></p>
@@ -13,14 +15,16 @@
     <div class="bordered_element">
         Answer:<br/>
         <s:url value="/mail/send" var="sendMessageUrl"/>
-        <form action="${sendMessageUrl}" method="put">
+        <form:form action="${sendMessageUrl}" method="put" commandName="newMessage">
             Receiver name:<br/>
             <input type="text" name="receiver_name"/><br/>
             Subject:<br/>
-            <input type="text" name="subject"/><br/>
+            <form:input type="text" path="subject"/><br/>
             Text:<br/>
-            <textarea name="text"></textarea><br/>
-            <input type="submit" value="Send"/>
-        </form>
+            <form:textarea path="text"/>
+            <form:button>
+                Answer
+            </form:button>
+        </form:form>
     </div>
 </div>
