@@ -32,6 +32,8 @@ public class MessageController {
         List<Message> messageList = messageDao.getIncomingMessagesForPage(curUser, 1);
         model.addAttribute("messageList", messageList);
 
+        model.addAttribute("isInbox", true);
+
         return "mailbox";
     }
 
@@ -42,6 +44,8 @@ public class MessageController {
 
         List<Message> messageList = messageDao.getOutcomingMessagesForPage(curUser, 1);
         model.addAttribute("messageList", messageList);
+
+        model.addAttribute("isInbox", false);
 
         return "mailbox";
     }
