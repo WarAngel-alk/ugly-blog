@@ -42,7 +42,14 @@ public class UserDaoImpl extends HibernateTemplate implements UserDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getUser(String username) {
         return ((List<User>) find("from User where name = ?", username)).get(0);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void updateUser(User user) {
+        merge(user);
     }
 }
