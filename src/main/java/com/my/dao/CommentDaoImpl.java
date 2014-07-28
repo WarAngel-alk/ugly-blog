@@ -9,10 +9,17 @@ import java.util.Date;
 
 public class CommentDaoImpl extends HibernateTemplate implements CommentDao {
 
-    @Transactional(readOnly = false)
     @Override
+    @Transactional(readOnly = false)
     public long addComment(Comment comment) {
         comment.setPostDate(new Date());
         return (Long) save(comment);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Comment getComment(long id) {
+        return get(Comment.class, id);
+    }
+
 }
