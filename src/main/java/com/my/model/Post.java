@@ -1,5 +1,7 @@
 package com.my.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -32,13 +34,32 @@ public class Post implements Serializable, DomainObject {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    // TODO: fill query!
-//    @Formula("select count(*) from Post.marks as marks where marks.mark = true")
-//    private int positiveMarks;
+    @Formula(value =
+            "(SELECT " +
+                    "count(marks.mark) " +
+                    "FROM user_post_mark AS marks WHERE " +
+                    "marks.post_id = post_id AND marks.mark = 1)")
+    private int positiveMarks;
 
-    //    TODO: fill query!
-//    @Formula("select count(*) from Post.marks as marks where marks.mark = false")
-//    private int negativeMarks;
+    @Formula(value =
+            "(SELECT " +
+                    "count(marks.mark) " +
+                    "FROM user_post_mark AS marks WHERE " +
+                    "marks.post_id = post_id AND marks.mark = 0)")
+    private int negativeMarks;
+
+    @Formula("(SELECT " +
+            "(SELECT " +
+            "count(marks.mark) " +
+            "FROM user_post_mark AS marks WHERE " +
+            "marks.post_id = post_id AND marks.mark = 1) " +
+            "- " +
+            "(SELECT " +
+            "count(marks.mark) " +
+            "FROM user_post_mark AS marks WHERE " +
+            "marks.post_id = post_id AND marks.mark = 0)" +
+            ")")
+    private int rating;
 
     public Post() {
     }
@@ -83,32 +104,28 @@ public class Post implements Serializable, DomainObject {
         return sb.toString();
     }
 
-    public int getRating() {
-        int rating = 0;
-        for (UserPostMark mark : marks) {
-            if (mark.isMark()) ++rating;
-            else --rating;
-        }
-
-        return rating;
+    public int getPositiveMarks() {
+        return positiveMarks;
     }
 
-    public int getPositiveMarks() {
-        int marks = 0;
-        for (UserPostMark mark : this.marks) {
-            if (mark.isMark()) ++marks;
-        }
-
-        return marks;
+    public void setPositiveMarks(int positiveMarks) {
+        this.positiveMarks = positiveMarks;
     }
 
     public int getNegativeMarks() {
-        int marks = 0;
-        for (UserPostMark mark : this.marks) {
-            if (!mark.isMark()) ++marks;
-        }
+        return negativeMarks;
+    }
 
-        return marks;
+    public void setNegativeMarks(int negativeMarks) {
+        this.negativeMarks = negativeMarks;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public boolean isUserVoted(User user) {
