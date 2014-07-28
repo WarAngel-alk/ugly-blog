@@ -13,6 +13,8 @@
         <intercept-url pattern="/" access="permitAll()"/>
         <intercept-url pattern="/home" access="permitAll()"/>
         <intercept-url pattern="/post/*" method="GET" access="permitAll()"/>
+        <intercept-url pattern="/post/*/vote" method="PUT" access="isAuthenticated()"/>
+        <intercept-url pattern="/post/*/comment/*/vote" method="PUT" access="isAuthenticated()"/>
         <intercept-url pattern="/error**" access="permitAll()"/>
         <intercept-url pattern="/login*" access="isAnonymous()"/>
         <intercept-url pattern="/signup*" access="isAnonymous()"/>
