@@ -73,6 +73,26 @@ public class Post implements Serializable, DomainObject {
         this.title = title;
     }
 
+    public int countPositiveMarks() {
+        int count = 0;
+        for (UserPostMark mark : this.marks) {
+            if (mark.isMark()) count++;
+        }
+        return count;
+    }
+
+    public int countNegativeMarks() {
+        int count = 0;
+        for (UserPostMark mark : this.marks) {
+            if (!mark.isMark()) count++;
+        }
+        return count;
+    }
+
+    public int countRating() {
+        return countPositiveMarks() - countNegativeMarks();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,7 +148,7 @@ public class Post implements Serializable, DomainObject {
         this.rating = rating;
     }
 
-    public boolean isUserVoted(User user) {
+    public boolean didUserVote(User user) {
         for (UserPostMark mark : marks) {
             if (mark.getUser().getId() == user.getId())
                 return true;

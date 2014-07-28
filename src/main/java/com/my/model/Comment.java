@@ -76,6 +76,26 @@ public class Comment implements Serializable, DomainObject {
         this.text = text;
     }
 
+    public int countPositiveMarks() {
+        int count = 0;
+        for (UserCommentMark mark : this.marks) {
+            if (mark.isMark()) count++;
+        }
+        return count;
+    }
+
+    public int countNegativeMarks() {
+        int count = 0;
+        for (UserCommentMark mark : this.marks) {
+            if (!mark.isMark()) count++;
+        }
+        return count;
+    }
+
+    public int countRating() {
+        return countPositiveMarks() - countNegativeMarks();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
