@@ -1,5 +1,7 @@
 package com.my.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -29,13 +31,32 @@ public class Comment implements Serializable, DomainObject {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<UserCommentMark> marks;
 
-//    // TODO: fill query!
-//    @Formula("")
-//    private int positiveMarks;
-//
-//    // TODO: fill query!
-//    @Formula("")
-//    private int negativeMarks;
+    @Formula(value =
+            "(SELECT " +
+                    "count(marks.mark) " +
+                    "FROM user_comment_mark AS marks WHERE" +
+                    " marks.comment_id = comment_id AND marks.mark = 1)")
+    private int positiveMarks;
+
+    @Formula(value =
+            "(SELECT " +
+                    "count(marks.mark) " +
+                    "FROM user_comment_mark AS marks WHERE" +
+                    " marks.comment_id = comment_id AND marks.mark = 0)")
+    private int negativeMarks;
+
+    @Formula("(SELECT " +
+            "(SELECT " +
+            "count(marks.mark) " +
+            "FROM user_comment_mark AS marks WHERE " +
+            "marks.comment_id = comment_id AND marks.mark = 1) " +
+            "- " +
+            "(SELECT " +
+            "count(marks.mark) " +
+            "FROM user_comment_mark AS marks WHERE " +
+            "marks.comment_id = comment_id AND marks.mark = 0)" +
+            ")")
+    private int rating;
 
     public Comment() {
     }
@@ -90,21 +111,27 @@ public class Comment implements Serializable, DomainObject {
 
 
     public int getPositiveMarks() {
-        int marks = 0;
-        for (UserCommentMark mark : this.marks) {
-            if (mark.isMark()) ++marks;
-        }
+        return positiveMarks;
+    }
 
-        return marks;
+    public void setPositiveMarks(int positiveMarks) {
+        this.positiveMarks = positiveMarks;
     }
 
     public int getNegativeMarks() {
-        int marks = 0;
-        for (UserCommentMark mark : this.marks) {
-            if (!mark.isMark()) ++marks;
-        }
+        return negativeMarks;
+    }
 
-        return marks;
+    public void setNegativeMarks(int negativeMarks) {
+        this.negativeMarks = negativeMarks;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public long getId() {
