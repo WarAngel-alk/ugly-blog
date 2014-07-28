@@ -96,6 +96,14 @@ public class Comment implements Serializable, DomainObject {
         return countPositiveMarks() - countNegativeMarks();
     }
 
+    public boolean didUserVote(User user) {
+        for (UserCommentMark mark : marks) {
+            if (mark.getUser().getId() == user.getId())
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
