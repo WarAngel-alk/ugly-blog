@@ -5,6 +5,8 @@
 <head>
     <title>Ugly blog</title>
 
+    <s:url value="/" var="deployPath" scope="request"/>
+
     <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap.min.css"/>">
 
     <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap-theme.min.css"/>">
