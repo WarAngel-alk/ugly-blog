@@ -6,4 +6,5 @@ public interface CommentDao {
 
     public long addComment(Comment comment);
 
+    Comment getComment(long id);
 }
