@@ -36,6 +36,8 @@ public class MessageController {
         model.addAttribute("messageList", messageList);
 
         model.addAttribute("isInbox", true);
+        model.addAttribute("isOutbox", false);
+        model.addAttribute("isNewMessage", false);
 
         return "mailbox";
     }
@@ -48,7 +50,9 @@ public class MessageController {
         List<Message> messageList = messageDao.getOutcomingMessagesForPage(curUser, 1);
         model.addAttribute("messageList", messageList);
 
+        model.addAttribute("isInbox", false);
         model.addAttribute("isOutbox", true);
+        model.addAttribute("isNewMessage", false);
 
         return "mailbox";
     }
@@ -69,6 +73,8 @@ public class MessageController {
     public String showSendMessageForm(Model model) {
         model.addAttribute("newMessage", new Message());
 
+        model.addAttribute("isInbox", false);
+        model.addAttribute("isOutbox", false);
         model.addAttribute("isNewMessage", true);
 
         return "sendMessage";
