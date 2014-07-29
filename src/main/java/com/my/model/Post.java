@@ -23,7 +23,7 @@ public class Post implements Serializable, DomainObject {
 
     @Column(name = "title", unique = false, nullable = false, length = 255)
     @Length(max = 255, message = "Post title should not be longer than 255 characters")
-    @NotEmpty
+    @NotEmpty(message = "Post title may not be empty")
     private String title;
 
     @Column(name = "text", nullable = false, unique = false, length = 10000)
