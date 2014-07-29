@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -70,10 +73,25 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/mail/send", method = RequestMethod.PUT)
-    public String sendMessage(@ModelAttribute("message") Message message, Model model) {
+    public String sendMessage(@ModelAttribute("newMessage") @Valid Message message,
+                              BindingResult bindResult,
+                              // @RequestParam String receiverName,
+                              Model model) {
+        if (bindResult.hasErrors()) {
+            return "sendMessage";
+        }
+
+        if (userDao.isUsernameFree(message.getReceiver().getName())) {
+            bindResult.addError(new FieldError("message", "receiver", "Receiver not exist"));
+            return "sendMessage";
+        }
+
         String curUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         User curUser = userDao.getUser(curUserName);
         message.setSender(curUser);
+
+        User receiver = userDao.getUser(message.getReceiver().getName());
+        message.setReceiver(receiver);
 
         messageDao.sendMessage(message);
 
