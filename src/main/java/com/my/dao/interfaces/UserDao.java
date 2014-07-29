@@ -11,4 +11,8 @@ public interface UserDao {
     User getUser(String username);
 
     void updateUser(User user);
+
+    boolean isUsernameFree(String username);
+
+    boolean isEmailFree(String email);
 }
