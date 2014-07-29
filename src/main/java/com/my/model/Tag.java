@@ -18,7 +18,7 @@ public class Tag implements Serializable, DomainObject {
 
     @Column(name = "name", length = 100)
     @Length(max = 100, message = "Tag should not be longer than 100 characters")
-    @NotEmpty
+    @NotEmpty(message = "Tag name may not be empty")
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
