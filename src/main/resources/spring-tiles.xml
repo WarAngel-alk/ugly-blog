@@ -7,7 +7,7 @@
     <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
 
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-        <property name="definitions" value="/WEB-INF/views/tiles.xml"/>
+        <property name="definitions" value="/WEB-INF/views/**/tiles.xml"/>
     </bean>
 
 </beans>
