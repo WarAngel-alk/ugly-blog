@@ -110,10 +110,9 @@ public class Post implements Serializable, DomainObject {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + postDate.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + text.hashCode();
+        int result = postDate != null ? postDate.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
         return result;
     }
 
