@@ -31,7 +31,7 @@ public class Message implements Serializable, DomainObject {
 
     @Column(name = "text", nullable = false, unique = false, length = 10000)
     @Length(max = 10000, message = "Message for more than 10k symbols? O_O Leo Tolstoy, relogin please")
-    @NotEmpty
+    @NotEmpty(message = "Message text may not be empty")
     private String text;
 
     @Column(name = "isRead", nullable = false, unique = false)
