@@ -26,7 +26,7 @@ public class Comment implements Serializable, DomainObject {
 
     @Column(name = "text", nullable = false, unique = false, length = 5000)
     @Length(max = 5000, message = "Max comment length is 5000 characters")
-    @NotEmpty(message = "Comment should contain any text")
+    @NotEmpty(message = "Comment text may not be empty")
     private String text;
 
     @ManyToOne(cascade = CascadeType.ALL)
