@@ -58,7 +58,9 @@ public class MessageController {
         Message message = messageDao.getMessage(id);
         model.addAttribute("message", message);
 
-        model.addAttribute("newMessage", new Message());
+        Message newMessage = new Message();
+        newMessage.setReceiver(message.getSender());
+        model.addAttribute("newMessage", newMessage);
 
         return "message";
     }
