@@ -1,6 +1,12 @@
 package com.my.model;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,18 +21,26 @@ public class User implements Serializable, DomainObject {
     private long id;
 
     @Column(name = "name", nullable = false, unique = true, length = 50)
+    @Length(max = 50, message = "Name should not be longer than 255 characters")
+    @Pattern(regexp = "[\\w\\d][\\w\\d\\\\._?,-]*[\\w\\d]", message =
+            "Name should starts and ends with alphanumeric character and contains only alphanumeric and ? , . _ -")
+    @NotEmpty
     private String name;
 
     @Column(name = "pass", nullable = false, unique = false, length = 60)
+    @NotEmpty
     private String pass;
 
     @Column(name = "regDate", nullable = false, unique = false)
     private Date registrationDate;
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
+    @Email
+    @NotEmpty
     private String email;
 
     @Column(name = "avatarPath", nullable = true, unique = false)
+    @URL
     private String avatarPath;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
