@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -58,9 +59,24 @@ public class UserController {
 
     @RequestMapping(value = "/user*", method = RequestMethod.PUT)
     public String addUser(
-            @ModelAttribute("user") @Valid User user, BindingResult bindResult,
+            @ModelAttribute("user") @Valid User user,
+            BindingResult bindResult,
             Model model) {
         if (bindResult.hasErrors()) {
+            return "signup";
+        }
+
+        boolean anyErrors = false;
+        if (!userDao.isUsernameFree(user.getName())) {
+            bindResult.addError(new FieldError("user", "name", "There is an exiting user with such name"));
+            anyErrors = true;
+        }
+        if (!userDao.isEmailFree(user.getEmail())) {
+            bindResult.addError(new FieldError("user", "email", "There is an exiting user with such email"));
+            anyErrors = true;
+        }
+
+        if (anyErrors) {
             return "signup";
         }
 
@@ -72,7 +88,7 @@ public class UserController {
                         servletContext.getRealPath(AVATAR_DIRECTORY_PATH), String.valueOf(System.currentTimeMillis()));
                 user.setAvatarPath(avatarFilename);
             } catch (DownloadAvatarException e1) {
-                model.addAttribute("avatarErrorMessage", e1.getMessage());
+                bindResult.addError(new FieldError("user", "avatarPath", e1.getMessage()));
                 return "signup";
             }
         }
