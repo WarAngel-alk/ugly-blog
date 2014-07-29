@@ -82,11 +82,11 @@ public class Message implements Serializable, DomainObject {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + sender.hashCode();
-        result = 31 * result + receiver.hashCode();
-        result = 31 * result + date.hashCode();
-        result = 31 * result + text.hashCode();
+        int result = sender != null ? sender.hashCode() : 0;
+        result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (subject != null ? subject.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
         return result;
     }
 
