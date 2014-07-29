@@ -5,6 +5,8 @@
     <s:url value="/post" var="postUrl"/>
     <c:set var="formMethod" value="${(post.id == 0) ? 'put' : 'post'}"/>
     <form:form commandName="post" action="${postUrl}" method="${formMethod}">
+        <div><form:errors cssClass="alert-danger" path="title"/></div>
+        <div><form:errors cssClass="alert-danger" path="text"/></div>
         Title:<br/>
         <form:input path="title"/><br/>
         Text:<br/>
