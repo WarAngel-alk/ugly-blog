@@ -95,11 +95,10 @@ public class User implements Serializable, DomainObject {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
-        result = 31 * result + pass.hashCode();
-        result = 31 * result + registrationDate.hashCode();
-        result = 31 * result + email.hashCode();
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (pass != null ? pass.hashCode() : 0);
+        result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 
