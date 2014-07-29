@@ -8,10 +8,10 @@
         <div class="bordered_element">
             <a href="<s:url value="/mail/message/${message.id}"/>">
 
-                <s:if test="${currentUserName eq message.receiver.name and !message.read}">
+                <s:if test="${isInbox and !message.read}">
                     <b>${message.subject}</b>
                 </s:if>
-                <s:if test="${currentUserName ne message.receiver.name or message.read}">
+                <s:if test="${!isInbox or message.read}">
                     ${message.subject}
                 </s:if>
                 - ${message.date}
