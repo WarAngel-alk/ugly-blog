@@ -1,6 +1,8 @@
 package com.my.model;
 
 import org.hibernate.annotations.Formula;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,9 +22,12 @@ public class Post implements Serializable, DomainObject {
     private Date postDate;
 
     @Column(name = "title", unique = false, nullable = false, length = 255)
+    @Length(max = 255, message = "Post title should not be longer than 255 characters")
+    @NotEmpty
     private String title;
 
     @Column(name = "text", nullable = false, unique = false, length = 10000)
+    @Length(max = 10000, message = "Max post length is 10000 symbols")
     private String text;
 
     @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
