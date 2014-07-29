@@ -45,7 +45,7 @@ public class MessageController {
         List<Message> messageList = messageDao.getOutcomingMessagesForPage(curUser, 1);
         model.addAttribute("messageList", messageList);
 
-        model.addAttribute("isInbox", false);
+        model.addAttribute("isOutbox", true);
 
         return "mailbox";
     }
@@ -63,6 +63,8 @@ public class MessageController {
     @RequestMapping(value = "/mail/send", method = RequestMethod.GET)
     public String showSendMessageForm(Model model) {
         model.addAttribute("newMessage", new Message());
+
+        model.addAttribute("isNewMessage", true);
 
         return "sendMessage";
     }
