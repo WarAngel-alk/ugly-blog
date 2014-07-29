@@ -17,7 +17,8 @@
 <body>
 <div id="container">
     <t:insertAttribute name="header"/>
-    <t:insertAttribute name="side"/>
+    <t:insertAttribute name="mailboxHeader" ignore="true"/>
+    <t:insertAttribute name="side" ignore="true"/>
     <t:insertAttribute name="content"/>
 </div>
 
