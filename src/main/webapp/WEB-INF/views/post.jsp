@@ -48,6 +48,7 @@
         Add new comment:
         <form:form commandName="newComment" method="put"
                    action="${addCommentUrl}">
+            <div><form:errors cssClass="alert-danger" path="text"/></div>
             Text:<br>
             <form:textarea path="text"/><br>
             <form:button>
