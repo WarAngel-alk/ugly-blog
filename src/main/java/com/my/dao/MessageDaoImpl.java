@@ -86,4 +86,10 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
         );
     }
 
+    @Override
+    @Transactional(readOnly = false)
+    public void updateMessage(Message message) {
+        update(message);
+    }
+
 }
