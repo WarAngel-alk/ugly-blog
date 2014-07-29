@@ -26,7 +26,9 @@
         <div class="bordered_element">
             <p>Date: ${comment.postDate}</p>
 
-            <p>Author: ${comment.author.name}</p>
+            <p>Author: <a
+                    href="<s:url value="/user/${comment.author.id}"/>">${comment.author.name}</a>
+            </p>
 
             <p>${comment.text}</p>
 
