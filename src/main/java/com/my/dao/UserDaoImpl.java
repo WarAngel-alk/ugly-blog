@@ -52,4 +52,28 @@ public class UserDaoImpl extends HibernateTemplate implements UserDao {
     public void updateUser(User user) {
         merge(user);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isUsernameFree(String username) {
+        Long usersWithSaveName = (Long) executeWithNativeSession(session ->
+                session.createQuery("select count(*) from User where name = :username")
+                        .setParameter("username", username)
+                        .list()
+                        .get(0));
+
+        return usersWithSaveName == 0;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isEmailFree(String email) {
+        Long usersWithSaveEmail = (Long) executeWithNativeSession(session ->
+                session.createQuery("select count(*) from User where email = :email")
+                        .setParameter("email", email)
+                        .list()
+                        .get(0));
+
+        return usersWithSaveEmail == 0;
+    }
 }
