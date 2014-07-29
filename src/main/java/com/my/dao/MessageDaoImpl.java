@@ -29,7 +29,7 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
     public List<Message> getIncomingMessagesForPage(User user, int page, int messagePerPage) {
         return this.<List<Message>>executeWithNativeSession(
                 session -> session
-                        .createQuery("from Message where receiver = :receiver")
+                        .createQuery("from Message where receiver = :receiver and deletedByReceiver = false")
                         .setParameter("receiver", user)
                         .setFirstResult((page - 1) * messagePerPage)
                         .setMaxResults(messagePerPage)
@@ -52,7 +52,7 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
     public List<Message> getOutcomingMessagesForPage(User user, int page, int messagePerPage) {
         return this.<List<Message>>executeWithNativeSession(
                 session -> session
-                        .createQuery("from Message where sender = :sender")
+                        .createQuery("from Message where sender = :sender and deletedBySender = false")
                         .setParameter("sender", user)
                         .setFirstResult((page - 1) * messagePerPage)
                         .setMaxResults(messagePerPage)
