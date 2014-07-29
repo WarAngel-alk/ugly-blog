@@ -1,5 +1,8 @@
 package com.my.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +17,8 @@ public class Tag implements Serializable, DomainObject {
     private long id;
 
     @Column(name = "name", length = 100)
+    @Length(max = 100, message = "Tag should not be longer than 100 characters")
+    @NotEmpty
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
