@@ -1,0 +1,23 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+    <definition name="mailbox_template" extends="template">
+        <put-attribute name="mailboxHeader" value="/WEB-INF/views/parts/mailboxHeader.jsp"/>
+    </definition>
+
+    <definition name="mailbox" extends="mailbox_template">
+        <put-attribute name="content" value="/WEB-INF/views/mailbox/mailbox.jsp"/>
+    </definition>
+
+    <definition name="message" extends="mailbox_template">
+        <put-attribute name="content" value="/WEB-INF/views/mailbox/message.jsp"/>
+    </definition>
+
+    <definition name="sendMessage" extends="mailbox_template">
+        <put-attribute name="content" value="/WEB-INF/views/mailbox/sendMessage.jsp"/>
+    </definition>
+
+</tiles-definitions>

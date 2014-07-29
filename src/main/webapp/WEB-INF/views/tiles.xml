@@ -36,18 +36,6 @@
         <put-attribute name="content" value="/WEB-INF/views/user.jsp"/>
     </definition>
 
-    <definition name="mailbox" extends="template">
-        <put-attribute name="content" value="/WEB-INF/views/mailbox.jsp"/>
-    </definition>
-
-    <definition name="message" extends="template">
-        <put-attribute name="content" value="/WEB-INF/views/message.jsp"/>
-    </definition>
-
-    <definition name="sendMessage" extends="template">
-        <put-attribute name="content" value="/WEB-INF/views/sendMessage.jsp"/>
-    </definition>
-
     <definition name="error/403" extends="template">
         <put-attribute name="content" value="/WEB-INF/views/errors/403.jsp"/>
     </definition>
