@@ -5,12 +5,14 @@ import com.my.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.servlet.ServletContext;
+import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -56,8 +58,12 @@ public class UserController {
 
     @RequestMapping(value = "/user*", method = RequestMethod.PUT)
     public String addUser(
-            @ModelAttribute("user") User user,
+            @ModelAttribute("user") @Valid User user, BindingResult bindResult,
             Model model) {
+        if (bindResult.hasErrors()) {
+            return "signup";
+        }
+
         if (user.getAvatarPath() == null || user.getAvatarPath().trim().length() == 0) {
             user.setAvatarPath(null);
         } else {
