@@ -19,6 +19,7 @@
         <hibernate.version>4.3.5.Final</hibernate.version>
         <tiles.version>3.0.4</tiles.version>
         <spring.security.version>3.2.3.RELEASE</spring.security.version>
+        <hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
     </properties>
 
     <name>Ugly blog</name>
@@ -109,6 +110,19 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <!--Validation -->
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <!-- Testing -->
