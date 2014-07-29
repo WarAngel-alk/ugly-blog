@@ -77,6 +77,7 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteMessage(long id) {
         executeWithNativeSession(session ->
                 session.createQuery("delete from Message where id = :id")
