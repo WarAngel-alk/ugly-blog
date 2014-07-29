@@ -1,5 +1,8 @@
 package com.my.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,9 +26,12 @@ public class Message implements Serializable, DomainObject {
     private Date date;
 
     @Column(name = "subject", nullable = true, unique = false, length = 255)
+    @Length(min = 0, max = 255, message = "Message title should not be longer than 255 characters")
     private String subject;
 
     @Column(name = "text", nullable = false, unique = false, length = 10000)
+    @Length(max = 10000, message = "Message for more than 10k symbols? O_O Leo Tolstoy, relogin please")
+    @NotEmpty
     private String text;
 
     @Column(name = "isRead", nullable = false, unique = false)
