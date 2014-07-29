@@ -59,6 +59,13 @@ public class MessageController {
         Message message = messageDao.getMessage(id);
         model.addAttribute("message", message);
 
+        String curUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User curUser = userDao.getUser(curUserName);
+        if (curUser.equals(message.getReceiver())) {
+            message.setRead(true);
+            messageDao.updateMessage(message);
+        }
+
         Message newMessage = new Message();
         newMessage.setReceiver(message.getSender());
         model.addAttribute("newMessage", newMessage);
