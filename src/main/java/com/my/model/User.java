@@ -24,23 +24,23 @@ public class User implements Serializable, DomainObject {
     @Length(max = 50, message = "Name should not be longer than 255 characters")
     @Pattern(regexp = "[\\w\\d][\\w\\d\\\\._?,-]*[\\w\\d]", message =
             "Name should starts and ends with alphanumeric character and contains only alphanumeric and ? , . _ -")
-    @NotEmpty
+    @NotEmpty(message = "Name may not be empty")
     private String name;
 
     @Column(name = "pass", nullable = false, unique = false, length = 60)
-    @NotEmpty
+    @NotEmpty(message = "Password may not be empty")
     private String pass;
 
     @Column(name = "regDate", nullable = false, unique = false)
     private Date registrationDate;
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
-    @Email
-    @NotEmpty
+    @Email(message = "Invalid email address")
+    @NotEmpty(message = "Email may not be empty")
     private String email;
 
     @Column(name = "avatarPath", nullable = true, unique = false)
-    @URL
+    @URL(message = "Invalid avatar URL")
     private String avatarPath;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
