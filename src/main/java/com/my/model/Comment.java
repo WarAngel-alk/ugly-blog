@@ -1,6 +1,8 @@
 package com.my.model;
 
 import org.hibernate.annotations.Formula;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,6 +25,8 @@ public class Comment implements Serializable, DomainObject {
     private Date postDate;
 
     @Column(name = "text", nullable = false, unique = false, length = 5000)
+    @Length(max = 5000, message = "Max comment length is 5000 characters")
+    @NotEmpty(message = "Comment should contain any text")
     private String text;
 
     @ManyToOne(cascade = CascadeType.ALL)
