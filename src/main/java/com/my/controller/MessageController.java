@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -106,11 +103,21 @@ public class MessageController {
         return "redirect:/mail/out";
     }
 
+    @ResponseBody
     @RequestMapping(value = "/mail/message/{id}", method = RequestMethod.DELETE)
-    public String deleteMessage(@PathVariable("id") long id, Model model) {
-        messageDao.deleteMessage(id);
+    public String deleteMessage(@PathVariable("id") long id, Model model,
+                                @RequestParam boolean byReceiver) {
+        Message message = messageDao.getMessage(id);
 
-        return "redirect:/mail/in";
+        if (byReceiver) {
+            message.setDeletedByReceiver(true);
+        } else {
+            message.setDeletedBySender(true);
+        }
+
+        messageDao.updateMessage(message);
+
+        return "";
     }
 
 }
