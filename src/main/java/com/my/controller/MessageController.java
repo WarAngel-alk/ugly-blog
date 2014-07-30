@@ -89,12 +89,19 @@ public class MessageController {
                               BindingResult bindResult,
                               // @RequestParam String receiverName,
                               Model model) {
+        boolean anyErrors = false;
         if (bindResult.hasErrors()) {
-            return "sendMessage";
+            anyErrors = true;
         }
-
         if (userDao.isUsernameFree(message.getReceiver().getName())) {
             bindResult.addError(new FieldError("message", "receiver", "Receiver not exist"));
+            anyErrors = true;
+        }
+
+        if (anyErrors) {
+            model.addAttribute("isInbox", false);
+            model.addAttribute("isOutbox", false);
+            model.addAttribute("isNewMessage", true);
             return "sendMessage";
         }
 
