@@ -105,3 +105,28 @@
     margin: 0;
     float: right;
 }
+
+.message-body {
+    border: 30px solid #e8fff0;
+    font-size: 16px;
+    padding: 5px 30px;
+}
+
+.message-info {
+    font-style: italic;
+    font-size: 16px;
+    text-align: right;
+}
+
+.message-subject {
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.message-answer-label {
+    padding: 0;
+    border-left: 60px solid #e8fff0;
+    border-right: 60px solid #e8fff0;
+    background-color: #e8fff0;
+}
