@@ -92,3 +92,16 @@
     background-color: #f6ffe0;
     margin-bottom: 0;
 }
+
+.mailbox-line {
+    line-height: 25px;
+    border: 1px solid black;
+}
+
+.delete-message-btn {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    margin: 0;
+    float: right;
+}
