@@ -72,3 +72,23 @@
 .bordered_element {
     border: 1px solid black;
 }
+
+.new-message-form {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 30px solid #e8fff0;
+}
+
+.form-unit {
+    margin: 5px 0;
+}
+
+.active-mailbox-header-link {
+    font-weight: bold;
+}
+
+.message-header {
+    font-size: 14px;
+    background-color: #f6ffe0;
+    margin-bottom: 0;
+}
