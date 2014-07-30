@@ -60,9 +60,9 @@
     <script language="javascript" type="text/javascript">
         function postVote(mark, postId) {
             $.ajax({
-                type: "PUT",
+                type: "POST",
                 url: ${deployPath} +"post/" + postId + "/vote",
-                data: {mark: mark},
+                data: {mark: mark, _method: "PUT"},
                 success: function (response) {
                     var responseElements = response.split(',');
 
@@ -77,9 +77,9 @@
 
         function commentVote(mark, postId, commentId) {
             $.ajax({
-                type: "PUT",
+                type: "POST",
                 url: ${deployPath} +"post/" + postId + "/comment/" + commentId + "/vote",
-                data: {mark: mark},
+                data: {mark: mark, _method: "PUT"},
                 success: function (response) {
                     var responseElements = response.split(',');
 
