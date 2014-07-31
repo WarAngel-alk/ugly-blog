@@ -23,6 +23,8 @@
             <div><form:input path="avatarPath" cssClass="form-control" placeholder="Avatar URL"/></div>
             <div><form:errors cssClass="alert-danger form-control" path="avatarPath"/></div>
         </div>
-        <input type="submit" class="btn btn-success" value="Sign up"/>
+        <div class="form-unit">
+            <input type="submit" class="btn btn-success form-control" value="Sign up"/>
+        </div>
     </form:form>
 </div>
