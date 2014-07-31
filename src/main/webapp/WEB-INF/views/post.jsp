@@ -1,53 +1,38 @@
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="col-md-9">
-    <div class="post">
-        <div class="post-date"><fmt:formatDate value="${post.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/></div>
-        <div class="post-title">${post.title}</div>
 
-        <div class="post-content">${post.text}</div>
-
-        <div class="post-info container">
-            <div class="post-marks col-md-4">
-                Positive: <span id="post_${post.id}_positive">${post.positiveMarks}</span>;
-                Negative: <span id="post_${post.id}_negative">${post.negativeMarks}</span>
-                Vote
-                <span onclick="postVote(true, ${post.id})">up</span>
-                |
-                <span onclick="postVote(false, ${post.id})">down</span>
-            </div>
-            <div class="post-comments col-md-2 col-md-offset-4">
-                Comments: ${fn:length(post.comments)}
-            </div>
-        </div>
-    </div>
+    <tags:post/>
 
     <div class="comments">
         <c:forEach items="${post.comments}" var="comment">
             <div class="comment">
                 <div class="comment-title row">
-                    <div class="comment-avatar">
-                        <s:url var="commentAuthorUrl" value="/user/${comment.author.id}"/>
-                        <a href="${commentAuthorUrl}">
-                            <c:set var="avatarFilename"
-                                   value="${(fn:length(comment.author.avatarPath) ne 0) ? comment.author.avatarPath : 'default_avatar.png' }"/>
-                            <s:url var="avatarPath" value="/resources/images/avatars/${avatarFilename}"/>
-                            <img src="${avatarPath}" class="comment-author-avatar" width="50" height="50"/>
-                        </a>
-                    </div>
-                    <div class="comment-info">
-                        <div class="comment-date">
-                            <fmt:formatDate value="${comment.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
-                        </div>
-                        <div class="comment-author">
+                    <div class="col-md-4">
+                        <div class="comment-avatar">
                             <s:url var="commentAuthorUrl" value="/user/${comment.author.id}"/>
-                            <a href="${commentAuthorUrl}">${comment.author.name}</a>
+                            <a href="${commentAuthorUrl}">
+                                <c:set var="avatarFilename"
+                                       value="${(fn:length(comment.author.avatarPath) ne 0) ? comment.author.avatarPath : 'default_avatar.png' }"/>
+                                <s:url var="avatarPath" value="/resources/images/avatars/${avatarFilename}"/>
+                                <img src="${avatarPath}" class="comment-author-avatar" width="50" height="50"/>
+                            </a>
+                        </div>
+                        <div class="comment-info">
+                            <div class="comment-date">
+                                <fmt:formatDate value="${comment.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
+                            </div>
+                            <div class="comment-author">
+                                <s:url var="commentAuthorUrl" value="/user/${comment.author.id}"/>
+                                <a href="${commentAuthorUrl}">${comment.author.name}</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="comment-voting">
+                    <div class="comment-voting col-md-4 col-md-offset-4">
                         Positive: <span id="comment_${comment.id}_positive">${comment.positiveMarks}</span>;
                         Negative: <span id="comment_${comment.id}_negative">${comment.negativeMarks}</span>
                         Vote
@@ -59,8 +44,6 @@
                 <div class="comment-content">
                         ${comment.text}
                 </div>
-
-
             </div>
         </c:forEach>
     </div>
