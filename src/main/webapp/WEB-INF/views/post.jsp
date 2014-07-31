@@ -1,60 +1,70 @@
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
-<div>
-    <div class="bordered_element">
-        <p><i>${post.postDate}</i></p>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<div class="col-md-9">
 
-        <p><b>${post.title}</b></p>
+    <tags:post postText="${post.text}"/>
 
-        <p>${post.text}</p>
-
-        <p>
-            Positive: <span id="post_${post.id}_positive">${post.positiveMarks}</span>;
-            Negative: <span id="post_${post.id}_negative">${post.negativeMarks}</span>
-            Vote
-            <span onclick="postVote(true, ${post.id})">up</span>
-            |
-            <span onclick="postVote(false, ${post.id})">down</span>
-        </p>
-
-        <p>Comments: ${fn:length(post.comments)}</p>
+    <div class="comments">
+        <c:forEach items="${post.comments}" var="comment">
+            <div class="comment">
+                <div class="comment-title row">
+                    <div class="col-md-4">
+                        <div class="comment-avatar">
+                            <s:url var="commentAuthorUrl" value="/user/${comment.author.id}"/>
+                            <a href="${commentAuthorUrl}">
+                                <c:set var="avatarFilename"
+                                       value="${(fn:length(comment.author.avatarPath) ne 0) ? comment.author.avatarPath : 'default_avatar.png' }"/>
+                                <s:url var="avatarPath" value="/resources/images/avatars/${avatarFilename}"/>
+                                <img src="${avatarPath}" class="comment-author-avatar" width="50" height="50"/>
+                            </a>
+                        </div>
+                        <div class="comment-info">
+                            <div class="comment-date">
+                                <fmt:formatDate value="${comment.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
+                            </div>
+                            <div class="comment-author">
+                                <s:url var="commentAuthorUrl" value="/user/${comment.author.id}"/>
+                                <a href="${commentAuthorUrl}">${comment.author.name}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-voting col-md-4 col-md-offset-4">
+                        Positive: <span id="comment_${comment.id}_positive">${comment.positiveMarks}</span>;
+                        Negative: <span id="comment_${comment.id}_negative">${comment.negativeMarks}</span>
+                        Vote
+                        <span onclick="commentVote(true, ${post.id}, ${comment.id})">up</span>
+                        |
+                        <span onclick="commentVote(false, ${post.id}, ${comment.id})">down</span>
+                    </div>
+                </div>
+                <div class="comment-content">
+                        ${comment.text}
+                </div>
+            </div>
+        </c:forEach>
     </div>
 
-    <c:forEach items="${post.comments}" var="comment">
-        <div class="bordered_element">
-            <p>Date: ${comment.postDate}</p>
-
-            <p>Author: <a
-                    href="<s:url value="/user/${comment.author.id}"/>">${comment.author.name}</a>
-            </p>
-
-            <p>${comment.text}</p>
-
-            <p>
-                Positive: <span id="comment_${comment.id}_positive">${comment.positiveMarks}</span>;
-                Negative: <span id="comment_${comment.id}_negative">${comment.negativeMarks}</span>
-                Vote
-                <span onclick="commentVote(true, ${post.id}, ${comment.id})">up</span>
-                |
-                <span onclick="commentVote(false, ${post.id}, ${comment.id})">down</span>
-            </p>
-        </div>
-    </c:forEach>
-
     <c:url value="/post/${post.id}/comment" var="addCommentUrl"/>
-    <div class="bordered_element">
-        Add new comment:
-        <form:form commandName="newComment" method="put"
-                   action="${addCommentUrl}">
-            <div><form:errors cssClass="alert-danger" path="text"/></div>
-            Text:<br>
-            <form:textarea path="text"/><br>
-            <form:button>
-                Send
-            </form:button>
-        </form:form>
+    <div class="col-md-6">
+        <div class="form-label">
+            Add new comment:
+        </div>
+        <div class="form">
+            <form:form commandName="newComment" method="put" action="${addCommentUrl}" cssClass="form-group">
+                <div class="form-unit">
+                    Text:
+                    <form:textarea path="text" cssClass="form-control"/>
+                    <form:errors cssClass="alert-danger form-control" path="text"/>
+                </div>
+                <div class="form-unit">
+                    <input class="btn btn-success form-control" type="submit">
+                </div>
+            </form:form>
+        </div>
     </div>
 
     <s:url var="messageDeleteJsUrl" value="/resources/js/voting.js"/>
