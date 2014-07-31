@@ -1,19 +1,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div>
-    Name: ${user.name}<br/>
-    Email: ${user.email}<br/>
-    Registration date: ${user.registrationDate}<br/>
-    <c:if test="${user.avatarPath ne null and fn:length(user.avatarPath) ne 0 }">
-        <s:url value="/resources/images/avatars/{avatarPath}" var="avatarImgPath">
-            <s:param name="avatarPath" value="${user.avatarPath}"/>
-        </s:url>
-    </c:if>
-    <c:if test="${user.avatarPath eq null or fn:length(user.avatarPath) eq 0 }">
-        <s:url value="/resources/images/avatars/{avatarPath}" var="avatarImgPath">
-            <s:param name="avatarPath" value="default_avatar.png"/>
-        </s:url>
-    </c:if>
-    Avatar: <img src="${avatarImgPath}" width="64" height="64"/>
+    <div class="user-avatar">
+        <c:set var="avatarFilename"
+               value="${(fn:length(user.avatarPath) ne 0) ? user.avatarPath : 'default_avatar.png' }"/>
+        <s:url var="avatarPath" value="/resources/images/avatars/${avatarFilename}"/>
+        <img src="${avatarPath}" width="84" height="84"/>
+    </div>
+    <div class="user-info">
+        <div class="user-name">
+            Username: ${user.name}
+        </div>
+        <div class="user-email">
+            Email: ${user.email}
+        </div>
+        <div class="user-date">
+            Date of registration: <fmt:formatDate value="${user.registrationDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
+        </div>
+    </div>
 </div>
