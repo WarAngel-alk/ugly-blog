@@ -23,18 +23,7 @@
         </div>
     </s:forEach>
 
-
-    <script language="javascript" type="text/javascript">
-        function deleteMessage(messageId, byReceiver) {
-            $.ajax({
-                type: "POST",
-                url: deployPath + "mail/message/" + messageId,
-                data: {byReceiver: byReceiver, _method: 'DELETE'},
-                success: function (response) {
-                    var message = document.getElementById("message_" + messageId);
-                    document.getElementById("message_" + messageId).parentNode.removeChild(message);
-                }
-            });
-        }
+    <s:url var="messageDeleteJsUrl" value="/resources/js/deleteMessage.js"/>
+    <script language="javascript" type="text/javascript" src="${messageDeleteJsUrl}">
     </script>
 </div>
