@@ -2,9 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="col-md-9">
     <div class="post row">
-        <div class="post-date">${post.postDate}</div>
+        <div class="post-date"><fmt:formatDate value="${post.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/></div>
         <div class="post-title">${post.title}</div>
 
         <div class="post-content">${post.text}</div>
@@ -39,7 +40,7 @@
                     </div>
                     <div class="comment-info">
                         <div class="comment-date">
-                                ${comment.postDate}
+                            <fmt:formatDate value="${comment.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
                         </div>
                         <div class="comment-author">
                             <s:url var="commentAuthorUrl" value="/user/${comment.author.id}"/>
