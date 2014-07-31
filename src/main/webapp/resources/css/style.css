@@ -174,7 +174,10 @@
 .comment {
     border: 1px solid #1a5a09;
     border-radius: 15px;
-    padding: 3px 20px;
+    padding-top: 3px;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-bottom: 3px;
     margin: 3px 0;
 }
 
@@ -187,13 +190,17 @@
     border: 3px double #1566ff;
 }
 
+.comment-title {
+    padding: 0;
+}
+
 .comment-info {
     display: inline-block;
 }
 
 .comment-voting {
     display: inline-block;
-    float: right;
+    text-align: right;
 }
 
 .comment-date {
