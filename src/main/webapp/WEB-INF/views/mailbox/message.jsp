@@ -20,10 +20,8 @@
             ${message.text}
         </div>
     </div>
-    <div class="col-md-6 col-md-offset-3 message-answer-label">
-        <div style="background-color: #e8fff0">
-            <h3>Answer:</h3>
-        </div>
+    <div class="col-md-6 col-md-offset-3 form-label">
+        Answer:
     </div>
     <%@ include file="newMessageForm.jsp" %>
 

@@ -78,6 +78,15 @@
     margin: 5px 0;
 }
 
+.form-label {
+    background-color: #d1f5cf;
+    font-size: 18px;
+    padding-top: 0;
+    padding-right: 10px;
+    padding-left: 25px;
+    padding-bottom: 0;
+}
+
 .active-mailbox-header-link {
     font-weight: bold;
 }
