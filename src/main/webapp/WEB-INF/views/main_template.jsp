@@ -6,6 +6,9 @@
     <title>Ugly blog</title>
 
     <s:url value="/" var="deployPath" scope="request"/>
+    <script language="javascript" type="text/javascript">
+        var deployPath = ${deployPath};
+    </script>
 
     <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap.min.css"/>">
 
