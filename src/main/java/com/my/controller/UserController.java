@@ -43,7 +43,7 @@ public class UserController {
             @RequestParam(value = "error", required = false) boolean error,
             Model model) {
         if (error) {
-            model.addAttribute("errorMessage", "Something is wrong");
+            model.addAttribute("errorMessage", "There isn't such user or password is incorrect");
         }
         return "login";
     }
