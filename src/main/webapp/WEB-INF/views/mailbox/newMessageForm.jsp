@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<div class="col-md-6 col-md-offset-3 new-message-form">
+<div class="col-md-6 col-md-offset-3 form">
     <s:url value="/mail/send" var="sendMessageUrl"/>
     <form:form action="${sendMessageUrl}" method="put" commandName="newMessage"
                cssClass="form-group">
