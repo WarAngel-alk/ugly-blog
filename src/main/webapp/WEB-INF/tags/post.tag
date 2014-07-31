@@ -1,10 +1,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="tags" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="a" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ attribute name="postText" %>
+<%@ attribute name="post" type="com.my.model.Post" %>
 <div class="post">
     <div class="post-date"><fmt:formatDate value="${post.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/></div>
     <div class="post-title">${post.title}</div>
 
-    <div class="post-content">${post.text}</div>
+    <div class="post-content">${postText}</div>
 
     <div class="post-info container">
         <div class="post-marks col-md-4">

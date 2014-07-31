@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="col-md-9">
 
-    <tags:post/>
+    <tags:post postText="${post.text}"/>
 
     <div class="comments">
         <c:forEach items="${post.comments}" var="comment">
