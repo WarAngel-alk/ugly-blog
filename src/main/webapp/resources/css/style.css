@@ -160,18 +160,24 @@
 }
 
 .post-info {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .post-voting {
     display: inline-block;
+    font-size: 22px;
+    line-height: 24px;
+    vertical-align: middle;
 }
 
-.post-vote-up {
+.post-vote {
     display: inline;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
 }
 
-.post-vote-down {
+.post-comments {
     display: inline;
 }
 

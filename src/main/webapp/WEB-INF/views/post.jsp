@@ -38,10 +38,12 @@
                         <sec:authorize access="isAnonymous()">
                             <c:url value="/resources/images/vote_up_disabled.png" var="voteUpUrl"/>
                             <c:url value="/resources/images/vote_down_disabled.png" var="voteDownUrl"/>
-                            <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"/>
+                            <img id="comment-${comment.id}-vote-up" class="comment-vote" src="${voteUpUrl}"
+                                 width="20" height="20"/>
                             <span id="comment-${comment.id}-rating"
                                   title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
-                            <img id="comment-${comment.id}-vote-down" class="comment-vote-down" src="${voteDownUrl}"/>
+                            <img id="comment-${comment.id}-vote-down" class="comment-vote" src="${voteDownUrl}"
+                                 width="20" height="20"/>
                         </sec:authorize>
 
                         <sec:authorize access="isAuthenticated()">
@@ -52,22 +54,23 @@
                                        var="voteUpUrl"/>
                                 <c:url value="/resources/images/vote_down_${vote.mark ? 'inactive' : 'active'}.png"
                                        var="voteDownUrl"/>
-                                <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"/>
+                                <img id="comment-${comment.id}-vote-up" class="comment-vote" src="${voteUpUrl}"
+                                     width="20" height="20"/>
                                 <span id="comment-${comment.id}-rating"
                                       title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
-                                <img id="comment-${comment.id}-vote-down" class="comment-vote-down"
-                                     src="${voteDownUrl}"/>
+                                <img id="comment-${comment.id}-vote-down" class="comment-vote"
+                                     src="${voteDownUrl}" width="20" height="20"/>
                             </c:if>
 
                             <c:if test="${vote eq null}">
                                 <c:url value="/resources/images/vote_up_inactive.png" var="voteUpUrl"/>
                                 <c:url value="/resources/images/vote_down_inactive.png" var="voteDownUrl"/>
-                                <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"
-                                     onclick="commentVote(true, ${post.id}, ${comment.id})"/>
+                                <img id="comment-${comment.id}-vote-up" class="comment-vote" src="${voteUpUrl}"
+                                     onclick="commentVote(true, ${post.id}, ${comment.id})" width="20" height="20"/>
                                 <span id="comment-${comment.id}-rating"
                                       title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
-                                <img id="comment-${comment.id}-vote-down" class="comment-vote-down" src="${voteDownUrl}"
-                                     onclick="commentVote(false, ${post.id}, ${comment.id})"/>
+                                <img id="comment-${comment.id}-vote-down" class="comment-vote" src="${voteDownUrl}"
+                                     onclick="commentVote(false, ${post.id}, ${comment.id})" width="20" height="20"/>
                             </c:if>
 
                         </sec:authorize>
