@@ -20,7 +20,7 @@ public class Comment implements Serializable, DomainObject {
     @Id
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Post post;
 
     @Column(name = "postDate", nullable = false, unique = false)
@@ -31,7 +31,7 @@ public class Comment implements Serializable, DomainObject {
     @NotEmpty(message = "Comment text may not be empty")
     private String text;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User author;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
