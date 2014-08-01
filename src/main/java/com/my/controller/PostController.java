@@ -65,9 +65,9 @@ public class PostController {
     public String addPost(@ModelAttribute("post") Post post,
                           @RequestParam("tagsString") String tagsString,
                           Model model) {
-        processTags(post, tagsString);
-
         postDao.addPost(post);
+
+        processTags(post, tagsString);
 
         return "redirect:/post/" + post.getId();
     }
