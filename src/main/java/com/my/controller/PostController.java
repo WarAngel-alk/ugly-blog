@@ -56,6 +56,8 @@ public class PostController {
         model.addAttribute("post", post);
         model.addAttribute("isNewPost", false);
 
+        model.addAttribute("tagsString", post.getTagsString());
+
         return "editPost";
     }
 
