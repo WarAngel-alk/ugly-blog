@@ -14,4 +14,8 @@
     <script language="javascript" type="text/javascript" src="${votingJsUrl}">
     </script>
 
+    <c:url var="deletePostJsUrl" value="/resources/js/deletePost.js"/>
+    <script language="javascript" type="text/javascript" src="${deletePostJsUrl}">
+    </script>
+
 </div>
