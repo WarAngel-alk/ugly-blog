@@ -25,18 +25,21 @@
                 </c:if>
             </div>
         </div>
-        <div class="post-title-icons">
-            <s:url var="postEditUrl" value="/post/${post.id}/edit"/>
-            <a href="${postEditUrl}">
-                <s:url var="editIconUrl" value="/resources/images/edit_icon.png"/>
-                <img class="post-title-icon" src="${editIconUrl}" width="20" height="20"/>
-            </a>
-            <a href="#" onclick="deletePost(${post.id})">
-                <button class="btn btn-danger post-title-icon">
-                    X
-                </button>
-            </a>
-        </div>
+
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <div class="post-title-icons">
+                <s:url var="postEditUrl" value="/post/${post.id}/edit"/>
+                <a href="${postEditUrl}">
+                    <s:url var="editIconUrl" value="/resources/images/edit_icon.png"/>
+                    <img class="post-title-icon" src="${editIconUrl}" width="20" height="20"/>
+                </a>
+                <a href="#" onclick="deletePost(${post.id})">
+                    <button class="btn btn-danger post-title-icon">
+                        X
+                    </button>
+                </a>
+            </div>
+        </sec:authorize>
     </div>
 
     <div class="post-content">${postText}</div>
