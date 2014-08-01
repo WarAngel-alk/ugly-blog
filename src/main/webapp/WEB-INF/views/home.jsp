@@ -9,4 +9,9 @@
                value="${textLongerThan1000 ? fn:substring(post.text, 0, 1000) : post.text}"/>
         <tags:post postText="${postText}${textLongerThan1000 ? '...' : ''}" post="${post}" isHomePage="${true}"/>
     </c:forEach>
+
+    <c:url var="votingJsUrl" value="/resources/js/voting.js"/>
+    <script language="javascript" type="text/javascript" src="${votingJsUrl}">
+    </script>
+
 </div>
