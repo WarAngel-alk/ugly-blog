@@ -219,6 +219,14 @@
     text-align: right;
 }
 
+.comment-vote-up {
+    display: inline;
+}
+
+.comment-vote-down {
+    display: inline;
+}
+
 .comment-date {
     font-size: 10px;
     font-style: italic;
