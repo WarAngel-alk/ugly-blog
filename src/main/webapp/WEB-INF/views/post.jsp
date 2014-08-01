@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div class="col-md-9">
 
     <tags:post postText="${post.text}" post="${post}" isHomePage="${false}"/>
@@ -33,14 +34,44 @@
                         </div>
                     </div>
                     <div class="comment-voting col-md-4 col-md-offset-4">
-                        <c:url value="/resources/images/vote_up_inactive.png" var="voteUpUrl"/>
-                        <c:url value="/resources/images/vote_down_inactive.png" var="voteDownUrl"/>
-                        <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"
-                             onclick="commentVote(true, ${post.id}, ${comment.id})"/>
-                        <span id="comment-${comment.id}-rating"
-                              title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
-                        <img id="comment-${comment.id}-vote-down" class="comment-vote-down" src="${voteDownUrl}"
-                             onclick="commentVote(false, ${post.id}, ${comment.id})"/>
+
+                        <sec:authorize access="isAnonymous()">
+                            <c:url value="/resources/images/vote_up_inactive.png" var="voteUpUrl"/>
+                            <c:url value="/resources/images/vote_down_inactive.png" var="voteDownUrl"/>
+                            <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"/>
+                            <span id="comment-${comment.id}-rating"
+                                  title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
+                            <img id="comment-${comment.id}-vote-down" class="comment-vote-down" src="${voteDownUrl}"/>
+                        </sec:authorize>
+
+                        <sec:authorize access="isAuthenticated()">
+                            <s:eval expression="comment.getCurrentUserVote()" var="vote"/>
+
+                            <c:if test="${vote ne null}">
+                                <c:url value="/resources/images/vote_up_${vote.mark ? 'active' : 'inactive'}.png"
+                                       var="voteUpUrl"/>
+                                <c:url value="/resources/images/vote_down_${vote.mark ? 'inactive' : 'active'}.png"
+                                       var="voteDownUrl"/>
+                                <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"/>
+                                <span id="comment-${comment.id}-rating"
+                                      title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
+                                <img id="comment-${comment.id}-vote-down" class="comment-vote-down"
+                                     src="${voteDownUrl}"/>
+                            </c:if>
+
+                            <c:if test="${vote eq null}">
+                                <c:url value="/resources/images/vote_up_inactive.png" var="voteUpUrl"/>
+                                <c:url value="/resources/images/vote_down_inactive.png" var="voteDownUrl"/>
+                                <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"
+                                     onclick="commentVote(true, ${post.id}, ${comment.id})"/>
+                                <span id="comment-${comment.id}-rating"
+                                      title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
+                                <img id="comment-${comment.id}-vote-down" class="comment-vote-down" src="${voteDownUrl}"
+                                     onclick="commentVote(false, ${post.id}, ${comment.id})"/>
+                            </c:if>
+
+                        </sec:authorize>
+
                     </div>
                 </div>
                 <div class="comment-content">
