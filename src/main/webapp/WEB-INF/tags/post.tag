@@ -35,13 +35,15 @@
 
     <div class="post-info container">
         <div class="row">
-            <div class="post-marks col-md-4">
-                Positive: <span id="post_${post.id}_positive">${post.positiveMarks}</span>;
-                Negative: <span id="post_${post.id}_negative">${post.negativeMarks}</span>
-                Vote
-                <span onclick="postVote(true, ${post.id})">up</span>
-                |
-                <span onclick="postVote(false, ${post.id})">down</span>
+            <div class="post-voting col-md-2">
+                <c:url value="/resources/images/vote_up_inactive.png" var="inactiveVoteUpUrl"/>
+                <c:url value="/resources/images/vote_down_inactive.png" var="inactiveVoteDownUrl"/>
+                <img id="post-${post.id}-vote-up" class="post-vote-up" src="${inactiveVoteUpUrl}"
+                     onclick="postVote(true, ${post.id})"/>
+                <span id="post-${post.id}-rating"
+                      title="Positive: ${post.positiveMarks} Negative: ${post.negativeMarks}">${post.rating}</span>
+                <img id="post-${post.id}-vote-down" class="post-vote-down" src="${inactiveVoteDownUrl}"
+                     onclick="postVote(false, ${post.id})"/>
             </div>
             <div class="post-comments col-md-2 col-md-offset-4">
                 Comments: ${fn:length(post.comments)}

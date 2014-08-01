@@ -163,6 +163,18 @@
     font-size: 18px;
 }
 
+.post-voting {
+    display: inline-block;
+}
+
+.post-vote-up {
+    display: inline;
+}
+
+.post-vote-down {
+    display: inline;
+}
+
 .post-tags {
     font-size: 14px;
 }

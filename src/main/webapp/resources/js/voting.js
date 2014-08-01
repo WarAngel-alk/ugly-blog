@@ -8,9 +8,20 @@ function postVote(mark, postId) {
 
             var positiveMarks = responseElements[0];
             var negativeMarks = responseElements[1];
+            var rating = responseElements[2];
 
-            document.getElementById("post_" + postId + "_positive").innerText = positiveMarks;
-            document.getElementById("post_" + postId + "_negative").innerText = negativeMarks;
+            var activeVoteUpUrl = deployPath + 'resources/images/vote_up_active.png';
+            var activeVoteDownUrl = deployPath + 'resources/images/vote_down_active.png';
+
+            if (mark) {
+                document.getElementById("post-" + postId + "-vote-up").setAttribute("src", activeVoteUpUrl);
+            } else {
+                document.getElementById("post-" + postId + "-vote-down").setAttribute("src", activeVoteDownUrl);
+            }
+
+            var postRatingElem = document.getElementById("post-" + postId + "-rating");
+            postRatingElem.setAttribute("title", "Positive: " + positiveMarks + " Negative: " + negativeMarks);
+            postRatingElem.innerText = rating;
         }
     });
 }
