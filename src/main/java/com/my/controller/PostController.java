@@ -45,12 +45,17 @@ public class PostController {
     @RequestMapping(value = "/post/add", method = RequestMethod.GET)
     public String showAddPostForm(Model model) {
         model.addAttribute("post", new Post());
+        model.addAttribute("isNewPost", true);
         return "editPost";
     }
 
     @RequestMapping(value = "/post/{id}/edit", method = RequestMethod.GET)
     public String showEditPostForm(@PathVariable("id") long id, Model model) {
-        model.addAttribute("post", postDao.getPost(id));
+        Post post = postDao.getPost(id);
+
+        model.addAttribute("post", post);
+        model.addAttribute("isNewPost", false);
+
         return "editPost";
     }
 
