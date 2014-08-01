@@ -163,6 +163,10 @@
     font-size: 18px;
 }
 
+.post-tags {
+    font-size: 14px;
+}
+
 .comments {
     margin-top: 5px;
     margin-right: 10px;
@@ -211,4 +215,19 @@
 .comment-author {
     font-size: 16px;
     font-weight: bold;
+}
+
+.user-avatar {
+    display: inline-block;
+    border: 1px solid blue;
+    margin: 2px;
+    vertical-align: top;
+}
+
+.user-info {
+    display: inline-block;
+    font-size: 18px;
+    line-height: 30px;
+    padding: 0 5px;
+    margin: 0;
 }

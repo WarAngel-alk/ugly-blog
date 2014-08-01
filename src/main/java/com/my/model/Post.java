@@ -30,7 +30,7 @@ public class Post implements Serializable, DomainObject {
     @Length(max = 10000, message = "Max post length is 10000 symbols")
     private String text;
 
-    @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "posts")
     private List<Tag> tags;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -216,4 +216,17 @@ public class Post implements Serializable, DomainObject {
         this.marks = marks;
     }
 
+    public String getTagsString() {
+        StringBuilder tagsStringBuilder = new StringBuilder();
+        List<Tag> tags = this.tags;
+        for (int i = 0; i < tags.size(); i++) {
+            Tag tag = tags.get(i);
+            tagsStringBuilder.append(tag.getName());
+            if (i < tags.size() - 1) {
+                tagsStringBuilder.append(", ");
+            }
+        }
+
+        return new String(tagsStringBuilder);
+    }
 }
