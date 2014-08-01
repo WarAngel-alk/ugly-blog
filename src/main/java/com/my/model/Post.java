@@ -3,6 +3,8 @@ package com.my.model;
 import org.hibernate.annotations.Formula;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -158,6 +160,20 @@ public class Post implements Serializable, DomainObject {
                 return true;
         }
         return false;
+    }
+
+    public UserPostMark getCurrentUserVote() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+
+        String curUserName = authentication.getName();
+        for (UserPostMark mark : marks) {
+            if (mark.getUser().getName().equals(curUserName))
+                return mark;
+        }
+        return null;
     }
 
     public long getId() {
