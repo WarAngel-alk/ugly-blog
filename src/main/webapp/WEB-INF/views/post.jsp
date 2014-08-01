@@ -67,8 +67,8 @@
         </div>
     </div>
 
-    <s:url var="messageDeleteJsUrl" value="/resources/js/voting.js"/>
-    <script language="javascript" type="text/javascript" src="${messageDeleteJsUrl}">
+    <s:url var="votingJsUrl" value="/resources/js/voting.js"/>
+    <script language="javascript" type="text/javascript" src="${votingJsUrl}">
     </script>
 
 </div>
