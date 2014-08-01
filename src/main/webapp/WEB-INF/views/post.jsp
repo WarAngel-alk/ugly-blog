@@ -7,6 +7,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <div class="col-md-9">
 
+    <sec:authentication property="name" var="currentUserName"/>
+
     <tags:post postText="${post.text}" post="${post}" isHomePage="${false}"/>
 
     <div class="comments">
@@ -36,11 +38,15 @@
 
                     <div class="comment-buttons">
 
-                        <div class="comment-delete-panel">
-                            <button class="btn btn-danger comment-delete-btn" onclick="deleteComment(${post.id}, ${comment.id})">
-                                X
-                            </button>
-                        </div>
+                        <c:set value="${comment.author.name eq currentUserName}" var="isUsersComment"/>
+                        <sec:authorize access="hasRole('ROLE_ADMIN') or ${isUsersComment}">
+                            <div class="comment-delete-panel">
+                                <button class="btn btn-danger comment-delete-btn"
+                                        onclick="deleteComment(${post.id}, ${comment.id})">
+                                    X
+                                </button>
+                            </div>
+                        </sec:authorize>
 
                         <div class="comment-voting">
 
@@ -79,7 +85,8 @@
                                     <span id="comment-${comment.id}-rating"
                                           title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
                                     <img id="comment-${comment.id}-vote-down" class="comment-vote" src="${voteDownUrl}"
-                                         onclick="commentVote(false, ${post.id}, ${comment.id})" width="15" height="15"/>
+                                         onclick="commentVote(false, ${post.id}, ${comment.id})" width="15"
+                                         height="15"/>
                                 </c:if>
 
                             </sec:authorize>
