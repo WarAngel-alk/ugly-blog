@@ -148,11 +148,26 @@
     padding-left: 20px;
 }
 
-.post-title {
+.post-title-line {
     font-size: 16px;
     font-weight: bold;
     padding-left: 20px;
     padding-right: 100px;
+}
+
+.post-title {
+    display: inline;
+}
+
+.post-title-icons {
+    display: inline;
+    float: right;
+}
+
+.post-title-icon {
+    padding: 0;
+    margin: 2px;
+    border: 1px ridge #13206c;
 }
 
 .post-content {
@@ -225,11 +240,11 @@
     text-align: right;
 }
 
-.comment-vote-up {
+.comment-vote {
     display: inline;
 }
 
-.comment-vote-down {
+.comment-vote {
     display: inline;
 }
 
