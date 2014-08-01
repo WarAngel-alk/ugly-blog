@@ -237,8 +237,26 @@
     display: inline-block;
 }
 
-.comment-voting {
+.comment-buttons {
     display: inline-block;
+    float: right;
+}
+
+.comment-delete-panel {
+    display: inline;
+    text-align: left;
+}
+
+.comment-delete-btn {
+    padding: 0;
+    margin: 0 5px;
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+}
+
+.comment-voting {
+    display: inline;
     text-align: right;
 }
 
