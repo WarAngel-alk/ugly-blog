@@ -9,16 +9,34 @@
 <%@ attribute name="isHomePage" type="java.lang.Boolean" %>
 
 <div class="post">
-    <div class="post-date"><fmt:formatDate value="${post.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/></div>
-    <div class="post-title">
-        <c:if test="${isHomePage}">
-        <s:url var="postUrl" value="/post/${post.id}"/>
-        <a href="${postUrl}">
-            </c:if>
-            ${post.title}
-            <c:if test="${isHomePage}">
-        </a>
-        </c:if>
+    <div class="post-title-line">
+        <div style="display: inline-block;">
+            <div class="post-date">
+                <fmt:formatDate value="${post.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
+            </div>
+            <div class="post-title">
+                <c:if test="${isHomePage}">
+                <s:url var="postUrl" value="/post/${post.id}"/>
+                <a href="${postUrl}">
+                    </c:if>
+                    ${post.title}
+                    <c:if test="${isHomePage}">
+                </a>
+                </c:if>
+            </div>
+        </div>
+        <div class="post-title-icons">
+            <s:url var="postEditUrl" value="/post/${post.id}/edit"/>
+            <a href="${postEditUrl}">
+                <s:url var="editIconUrl" value="/resources/images/edit_icon.png"/>
+                <img class="post-title-icon" src="${editIconUrl}" width="20" height="20"/>
+            </a>
+            <a href="#" onclick="deletePost(${post.id})">
+                <button class="btn btn-danger post-title-icon">
+                    X
+                </button>
+            </a>
+        </div>
     </div>
 
     <div class="post-content">${postText}</div>

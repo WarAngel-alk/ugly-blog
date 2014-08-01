@@ -142,32 +142,34 @@
     margin: 10px;
 }
 
-.post-date {
-    font-size: 12px;
-    font-style: italic;
-    padding-left: 20px;
-}
-
 .post-title-line {
     font-size: 16px;
     font-weight: bold;
     padding-left: 20px;
-    padding-right: 100px;
+    padding-right: 10px;
+}
+
+.post-date {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    padding-left: 20px;
 }
 
 .post-title {
-    display: inline;
+
 }
 
 .post-title-icons {
-    display: inline;
+    display: inline-block;
     float: right;
 }
 
 .post-title-icon {
     padding: 0;
-    margin: 2px;
-    border: 1px ridge #13206c;
+    margin: 1px;
+    width: 20px;
+    height: 20px;
 }
 
 .post-content {
