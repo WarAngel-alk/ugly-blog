@@ -16,10 +16,10 @@ public class Message implements Serializable, DomainObject {
     @Id
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User sender;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User receiver;
 
     @Column(name = "date", nullable = false, unique = false)
