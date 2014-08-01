@@ -54,6 +54,7 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deletePost(Post post) {
         delete(post);
     }
