@@ -32,7 +32,7 @@ public class Post implements Serializable, DomainObject {
     @Length(max = 10000, message = "Max post length is 10000 symbols")
     private String text;
 
-    @ManyToMany(mappedBy = "posts")
+    @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
     private List<Tag> tags;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
