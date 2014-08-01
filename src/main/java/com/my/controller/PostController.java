@@ -136,4 +136,13 @@ public class PostController {
         return "redirect:/post/" + postId;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/post/{postId}/comment/{commentId}*", method = RequestMethod.DELETE)
+    public String deleteComment(@PathVariable long postId, @PathVariable long commentId) {
+        Comment comment = commentDao.getComment(commentId);
+        commentDao.deleteComment(comment);
+
+        return "";
+    }
+
 }
