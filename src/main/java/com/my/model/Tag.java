@@ -16,7 +16,7 @@ public class Tag implements Serializable, DomainObject {
     @Id
     private long id;
 
-    @Column(name = "name", length = 100)
+    @Column(name = "name", length = 100, nullable = false, unique = true)
     @Length(max = 100, message = "Tag should not be longer than 100 characters")
     @NotEmpty(message = "Tag name may not be empty")
     private String name;
@@ -43,7 +43,7 @@ public class Tag implements Serializable, DomainObject {
 
         Tag tag = (Tag) o;
 
-        return id == tag.id;
+        return name.equals(tag.name);
     }
 
     @Override
@@ -86,5 +86,4 @@ public class Tag implements Serializable, DomainObject {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
-
 }
