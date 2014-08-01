@@ -37,11 +37,11 @@
             <div class="post-voting col-md-2">
 
                 <sec:authorize access="isAnonymous()">
-                    <c:url value="/resources/images/vote_up_inactive.png" var="voteUpUrl"/>
-                    <c:url value="/resources/images/vote_down_inactive.png" var="voteDownUrl"/>
+                    <c:url value="/resources/images/vote_up_disabled.png" var="voteUpUrl"/>
+                    <c:url value="/resources/images/vote_down_disabled.png" var="voteDownUrl"/>
                     <img id="post-${post.id}-vote-up" class="post-vote-up" src="${voteUpUrl}"/>
-                <span id="post-${post.id}-rating"
-                      title="Positive: ${post.positiveMarks} Negative: ${post.negativeMarks}">${post.rating}</span>
+                    <span id="post-${post.id}-rating"
+                          title="Positive: ${post.positiveMarks} Negative: ${post.negativeMarks}">${post.rating}</span>
                     <img id="post-${post.id}-vote-down" class="post-vote-down" src="${voteDownUrl}"/>
                 </sec:authorize>
 

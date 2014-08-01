@@ -36,8 +36,8 @@
                     <div class="comment-voting col-md-4 col-md-offset-4">
 
                         <sec:authorize access="isAnonymous()">
-                            <c:url value="/resources/images/vote_up_inactive.png" var="voteUpUrl"/>
-                            <c:url value="/resources/images/vote_down_inactive.png" var="voteDownUrl"/>
+                            <c:url value="/resources/images/vote_up_disabled.png" var="voteUpUrl"/>
+                            <c:url value="/resources/images/vote_down_disabled.png" var="voteDownUrl"/>
                             <img id="comment-${comment.id}-vote-up" class="comment-vote-up" src="${voteUpUrl}"/>
                             <span id="comment-${comment.id}-rating"
                                   title="Positive: ${comment.positiveMarks} Negative: ${comment.negativeMarks}">${comment.rating}</span>
