@@ -22,4 +22,9 @@ public class CommentDaoImpl extends HibernateTemplate implements CommentDao {
         return get(Comment.class, id);
     }
 
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteComment(Comment comment) {
+        delete(comment);
+    }
 }
