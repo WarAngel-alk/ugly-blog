@@ -123,4 +123,8 @@
     <script language="javascript" type="text/javascript" src="${deletePostJsUrl}">
     </script>
 
+    <c:url var="deleteCommentJsUrl" value="/resources/js/deleteComment.js"/>
+    <script language="javascript" type="text/javascript" src="${deleteCommentJsUrl}">
+    </script>
+
 </div>
