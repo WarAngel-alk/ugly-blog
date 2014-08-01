@@ -1,5 +1,5 @@
 function deleteComment(postId, commentId) {
-    if (confirm("Do you want to delete this post?")) {
+    if (confirm("Do you want to delete this comment?")) {
         $.ajax({
             type: "POST",
             url: deployPath + "post/" + postId + "/comment/" + commentId,
