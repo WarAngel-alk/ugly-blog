@@ -50,4 +50,11 @@ public class TagDaoImpl extends HibernateTemplate implements TagDao {
     public void updateTag(Tag tag) {
         merge(tag);
     }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteTag(Tag tag) {
+        delete(tag);
+    }
+
 }
