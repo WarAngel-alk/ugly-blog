@@ -90,16 +90,21 @@ public class PostController {
     }
 
     private void processTags(Post post, String tagsString) {
+        List<Tag> originalTagList = post.getTags();
+        List<String> postTagNames = null;
+
         if (!tagsString.isEmpty()) {
-            String[] tags = tagsString.split(",");
+            postTagNames = Arrays.asList(tagsString.split(","));
 
-            post.setTags(new ArrayList<Tag>(tags.length));
+            post.setTags(new ArrayList<Tag>(postTagNames.size()));
 
-            List<String> allNames = tagDao.getAllTagNames();
-            for (String sTag : tags) {
-                String tagName = sTag.trim();
+            List<String> allTagNames = tagDao.getAllTagNames();
+            for (int i = 0; i < postTagNames.size(); i++) {
+                String tagName = postTagNames.get(i);
+                tagName = tagName.trim();
+                postTagNames.set(i, tagName);
                 Tag tag = null;
-                if (allNames.contains(tagName)) {
+                if (allTagNames.contains(tagName)) {
                     tag = tagDao.getTag(tagName);
                     if (!tag.getPosts().contains(post)) {
                         tag.getPosts().add(post);
@@ -110,7 +115,15 @@ public class PostController {
                 }
 
                 post.getTags().add(tag);
-                tagDao.updateTag(tag);
+            }
+
+            for (Tag originalTag : originalTagList) {
+                if (!postTagNames.contains(originalTag.getName())) {
+                    originalTag.getPosts().remove(post);
+                    if (originalTag.getPosts().size() == 0) {
+                        tagDao.deleteTag(originalTag);
+                    }
+                }
             }
         }
     }
