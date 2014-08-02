@@ -64,9 +64,16 @@ public class PostController {
     }
 
     @RequestMapping(value = "/post", method = RequestMethod.PUT)
-    public String addPost(@ModelAttribute("post") Post post,
+    public String addPost(@ModelAttribute("post") @Valid Post post,
+                          BindingResult bindResult,
                           @RequestParam("tagsString") String tagsString,
                           Model model) {
+        if (bindResult.hasErrors()) {
+            model.addAttribute("isNewPost", true);
+            model.addAttribute("tagsString", tagsString);
+            return "editPost";
+        }
+
         postDao.addPost(post);
 
         processTags(post, tagsString);
