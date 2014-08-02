@@ -87,7 +87,6 @@ public class MessageController {
     @RequestMapping(value = "/mail/send", method = RequestMethod.PUT)
     public String sendMessage(@ModelAttribute("newMessage") @Valid Message message,
                               BindingResult bindResult,
-                              // @RequestParam String receiverName,
                               Model model) {
         boolean anyErrors = false;
         if (bindResult.hasErrors()) {
