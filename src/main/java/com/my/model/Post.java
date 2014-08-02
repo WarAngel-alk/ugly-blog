@@ -30,6 +30,7 @@ public class Post implements Serializable, DomainObject {
 
     @Column(name = "text", nullable = false, unique = false, length = 10000)
     @Length(max = 10000, message = "Max post length is 10000 symbols")
+    @NotEmpty(message = "Post text may not be empty")
     private String text;
 
     @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
