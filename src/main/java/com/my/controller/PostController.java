@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -123,8 +125,14 @@ public class PostController {
 
     @RequestMapping(value = "/post/{postId}/comment*", method = RequestMethod.PUT)
     public String addComment(@PathVariable("postId") long postId,
-                             @ModelAttribute("newComment") Comment comment,
+                             @ModelAttribute("newComment") @Valid Comment comment,
+                             BindingResult bindResult,
                              Model model) {
+        if (bindResult.hasErrors()) {
+            model.addAttribute("post", postDao.getPost(postId));
+            return "post";
+        }
+
         User author = userDao.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
         comment.setAuthor(author);
 
