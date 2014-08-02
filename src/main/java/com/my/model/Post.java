@@ -236,6 +236,11 @@ public class Post implements Serializable, DomainObject {
     public String getTagsString() {
         StringBuilder tagsStringBuilder = new StringBuilder();
         List<Tag> tags = this.tags;
+
+        if (tags == null) {
+            return "";
+        }
+
         for (int i = 0; i < tags.size(); i++) {
             Tag tag = tags.get(i);
             tagsStringBuilder.append(tag.getName());
