@@ -136,11 +136,10 @@ public class Comment implements Serializable, DomainObject {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + author.hashCode();
-        result = 31 * result + postDate.hashCode();
-        result = 31 * result + text.hashCode();
-        result = 31 * result + post.hashCode();
+        int result = post != null ? post.hashCode() : 0;
+        result = 31 * result + (postDate != null ? postDate.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
         return result;
     }
 
