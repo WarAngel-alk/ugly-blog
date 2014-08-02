@@ -21,7 +21,7 @@ public class Tag implements Serializable, DomainObject {
     @NotEmpty(message = "Tag name may not be empty")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Post> posts;
 
     public Tag() {
