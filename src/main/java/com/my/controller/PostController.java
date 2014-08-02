@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -83,17 +82,27 @@ public class PostController {
 
     @RequestMapping(value = "/post/{id}*", method = RequestMethod.POST)
     public String updatePost(
-            @ModelAttribute("post") Post post,
+            @ModelAttribute("post") @Valid Post post,
+            BindingResult bindResult,
             @RequestParam(value = "tagsString", defaultValue = "") String tagsString,
             @PathVariable("id") long id,
             Model model) {
-        Date postDate = postDao.getPost(post.getId()).getPostDate();
-        post.setPostDate(postDate);
+        if (bindResult.hasErrors()) {
+            model.addAttribute("isNewPost", false);
+            model.addAttribute("tagsString", tagsString);
+            return "editPost";
+        }
 
-        postDao.updatePost(post);
+        Post postForUpdate = postDao.getPost(post.getId());
 
-        processTags(post, tagsString);
-        return "redirect:/post/" + post.getId();
+        postForUpdate.setTitle(post.getTitle());
+        postForUpdate.setText(post.getText());
+
+        processTags(postForUpdate, tagsString);
+
+        postDao.updatePost(postForUpdate);
+
+        return "redirect:/post/" + postForUpdate.getId();
     }
 
     private void processTags(Post post, String tagsString) {
