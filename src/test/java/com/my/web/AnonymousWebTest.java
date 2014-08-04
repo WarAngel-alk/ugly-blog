@@ -42,13 +42,25 @@ public class AnonymousWebTest extends AbstractWebTest {
     }
 
     @Test
-    public void testDisabledVotingIconsForAnonymous() throws Exception {
+    public void testDisabledPostVotingIconsForAnonymous() throws Exception {
         driver.get(APP_ROOT_URL + "/home");
 
         List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='post-voting']/img[@class='post-vote']"));
 
         for (WebElement element : elementList) {
-            assertTrue(element.getAttribute("src").contains("disabled"));
+            assertTrue(element.getAttribute("src").contains("disabled.png"));
+            assertNull(element.getAttribute("onclick"));
+        }
+    }
+
+    @Test
+    public void testDisabledCommentVotingIconsForAnonymous() throws Exception {
+        driver.get(APP_ROOT_URL + "/home");
+
+        List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='comment-voting']/img[@class='comment-vote']"));
+
+        for (WebElement element : elementList) {
+            assertTrue(element.getAttribute("src").contains("disabled.png"));
             assertNull(element.getAttribute("onclick"));
         }
     }
