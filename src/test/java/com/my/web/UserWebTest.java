@@ -101,8 +101,25 @@ public class UserWebTest extends AbstractWebTest {
         WebElement newCommentSubmit = driver.findElement(By.xpath("//form[@id='newComment']//input[@type='submit']"));
     }
 
-    @Test
-    public void testName() throws Exception {
+    @Test(priority = 2)
+    public void testNewCommentAdding() throws Exception {
+        driver.get(getAbsolutePath("/home"));
+        // Click link to post page
+        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
 
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
+
+        WebElement newCommentText = driver.findElement(By.xpath("//form[@id='newComment']//textarea[@id='text']"));
+        WebElement newCommentSubmit = driver.findElement(By.xpath("//form[@id='newComment']//input[@type='submit']"));
+
+        newCommentText.sendKeys(TEST_COMMENT_TEXT);
+        newCommentSubmit.submit();
+
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
+
+        String source = driver.getPageSource();
+
+        WebElement newlyAddedComment = driver.findElement(By.xpath(
+                "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + TEST_COMMENT_TEXT + "')]"));
     }
 }
