@@ -1,32 +1,14 @@
 package com.my.web;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static org.testng.Assert.*;
 
-public class AnonymousWebTest {
-
-    private static String APP_ROOT_URL = "http://localhost:8080/blog";
-
-    private static WebDriver driver;
-
-    @BeforeClass
-    public void setUp() throws Exception {
-        driver = new HtmlUnitDriver();
-    }
-
-    @AfterClass
-    public void tearDown() throws Exception {
-        driver.quit();
-    }
+public class AnonymousWebTest extends AbstractWebTest {
 
     @Test
     public void testHomePageOpen() throws Exception {
