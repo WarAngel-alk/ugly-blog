@@ -72,7 +72,7 @@ public class AnonymousWebTest {
     }
 
     @Test
-    public void testLoginPageExists() throws Exception {
+    public void testLoginPage() throws Exception {
         driver.get(APP_ROOT_URL + "/home");
 
         WebElement headerLoginLink = driver.findElement(By.xpath("//a[contains(@href, 'login')]"));
@@ -83,6 +83,22 @@ public class AnonymousWebTest {
         WebElement loginField = driver.findElement(By.xpath("//input[@name='j_username']"));
         WebElement passwordField = driver.findElement(By.xpath("//input[@name='j_password']"));
         WebElement rememberMeCheckbox = driver.findElement(By.xpath("//input[@name='_spring_security_remember_me']"));
+        WebElement formSubmitBtn = driver.findElement(By.xpath("//div[contains(@class, 'form-unit')]/input[@type='submit']"));
+    }
+
+    @Test
+    public void testSignupPage() throws Exception {
+        driver.get(APP_ROOT_URL + "/home");
+
+        WebElement headerLoginLink = driver.findElement(By.xpath("//a[contains(@href, 'signup')]"));
+        headerLoginLink.click();
+
+        assertEquals(driver.getCurrentUrl(), APP_ROOT_URL + "/signup");
+
+        WebElement usernameField = driver.findElement(By.xpath("//input[@name='name']"));
+        WebElement passwordField = driver.findElement(By.xpath("//input[@name='pass']"));
+        WebElement emailField = driver.findElement(By.xpath("//input[@name='email']"));
+        WebElement avatarField = driver.findElement(By.xpath("//input[@name='avatarPath']"));
         WebElement formSubmitBtn = driver.findElement(By.xpath("//div[contains(@class, 'form-unit')]/input[@type='submit']"));
     }
 }
