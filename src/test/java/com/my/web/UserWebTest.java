@@ -58,7 +58,37 @@ public class UserWebTest extends AbstractWebTest {
         }
     }
 
-    @Test(dependsOnMethods = "testUserLogin")
+    @Test(priority = 2)
+    public void testCommentVotingIconsForUser() throws Exception {
+        driver.get(APP_ROOT_URL + "/home");
+
+        // Click link to post page
+        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
+
+        List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='comment-voting']/img[@class='comment-vote']"));
+
+        assertTrue(elementList.size() >= 2);
+        assertTrue(elementList.size() % 2 == 0);
+
+        for (int i = 0; i < elementList.size(); ) {
+            WebElement voteUp = elementList.get(i++);
+            WebElement voteDown = elementList.get(i++);
+            String voteUpSrc = voteUp.getAttribute("src");
+            String voteDownSrc = voteDown.getAttribute("src");
+
+            assertTrue(voteUpSrc.contains("_active.png") || voteUpSrc.contains("_inactive.png"));
+            assertTrue(voteDownSrc.contains("_active.png") || voteDownSrc.contains("_inactive.png"));
+
+            if (voteUpSrc.contains("_active.png") || voteDownSrc.contains("_active.png")) {
+                assertNull(voteUp.getAttribute("onclick"));
+                assertNull(voteDown.getAttribute("onclick"));
+            } else {
+                assertNotNull(voteUp.getAttribute("onclick"));
+                assertNotNull(voteDown.getAttribute("onclick"));
+            }
+        }
+    }
+
     public void testNewCommentFormExists() throws Exception {
         driver.get(getAbsolutePath("/home"));
         // Click link to post page
