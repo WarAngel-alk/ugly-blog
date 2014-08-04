@@ -153,4 +153,21 @@ public class UserWebTest extends AbstractWebTest {
         // Should throw NoSuchElementException because such comment have been deleted
         driver.findElement(By.xpath("div[@class='comment-content' and contains(text(), '" + TEST_COMMENT_TEXT + "')]"));
     }
+
+    @Test(priority = 2)
+    public void testHeaderLinks() throws Exception {
+        driver.get(getAbsolutePath("/home"));
+
+        List<WebElement> headerImages = driver.findElements(By.className("header_image"));
+
+        assertTrue(headerImages.size() == 3);
+
+        for (WebElement image : headerImages) {
+            String imageSrc = image.getAttribute("src");
+            assertTrue(
+                    imageSrc.contains("header_logo.png")
+                    || imageSrc.contains("header_mail.png")
+                    || imageSrc.contains("header_logout.png"));
+        }
+    }
 }
