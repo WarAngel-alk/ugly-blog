@@ -180,4 +180,19 @@ public class UserWebTest extends AbstractWebTest {
 
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/mail/in")));
     }
+
+    @Test(priority = 2)
+    public void testMessageLink() throws Exception {
+        driver.get(getAbsolutePath("/mail/in"));
+
+        driver.findElement(By.xpath("//a[contains(@href, '/mail/message/')]")).click();
+
+        assertTrue(driver.getCurrentUrl().contains("/mail/message/"));
+
+        driver.findElement(By.xpath("//form[@id='newMessage']"));
+        driver.findElement(By.xpath("//input[@id='receiver.name']"));
+        driver.findElement(By.xpath("//input[@id='subject']"));
+        driver.findElement(By.xpath("//textarea[@id='text']"));
+        driver.findElement(By.xpath("//input[@type='submit']"));
+    }
 }
