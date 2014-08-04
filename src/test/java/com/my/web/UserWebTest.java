@@ -12,6 +12,8 @@ import static org.testng.Assert.*;
 public class UserWebTest extends AbstractWebTest {
 
     private final String TEST_COMMENT_TEXT = "Test comment text";
+    private final String messageSubject = "TEST MESSAGE SUBJECT";
+    private final String messageText = "TEST MESSAGE TEXT";
 
     @Test(priority = 1)
     public void testUserLogin() throws Exception {
@@ -194,5 +196,39 @@ public class UserWebTest extends AbstractWebTest {
         driver.findElement(By.xpath("//input[@id='subject']"));
         driver.findElement(By.xpath("//textarea[@id='text']"));
         driver.findElement(By.xpath("//input[@type='submit']"));
+    }
+
+    @Test(priority = 2)
+    public void testAnswerForMessage() throws Exception {
+        driver.get(getAbsolutePath("/mail/in"));
+
+        driver.findElement(By.xpath("//a[contains(@href, '/mail/message/')]")).click();
+
+        assertTrue(driver.getCurrentUrl().contains("/mail/message/"));
+
+        WebElement subjectField = driver.findElement(By.xpath("//input[@id='subject']"));
+        WebElement textField = driver.findElement(By.xpath("//textarea[@id='text']"));
+        WebElement submitButton = driver.findElement(By.xpath("//input[@type='submit']"));
+
+        subjectField.sendKeys(messageSubject);
+        textField.sendKeys(messageText);
+        submitButton.submit();
+
+        // Go to newly sent message
+        driver.findElement(By.xpath(
+                "//a[" +
+                "    contains(@href, '/mail/message/')" +
+                "    and" +
+                "        contains(./span/text(), '" + messageSubject + "')" +
+                "    ]"))
+                .click();
+
+        WebElement messageSender = driver.findElement(By.xpath("//div[contains(@class, 'message-info')]/a"));
+        WebElement subject = driver.findElement(By.xpath("//div[contains(@class, 'message-subject')]"));
+        WebElement text = driver.findElement(By.xpath("//div[contains(@class, 'message-text')]"));
+
+        assertEquals(messageSender.getText(), "user_2");
+        assertEquals(subject.getText(), messageSubject);
+        assertEquals(text.getText(), messageText);
     }
 }
