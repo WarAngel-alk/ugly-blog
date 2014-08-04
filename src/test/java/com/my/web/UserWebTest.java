@@ -166,8 +166,18 @@ public class UserWebTest extends AbstractWebTest {
             String imageSrc = image.getAttribute("src");
             assertTrue(
                     imageSrc.contains("header_logo.png")
-                    || imageSrc.contains("header_mail.png")
-                    || imageSrc.contains("header_logout.png"));
+                            || imageSrc.contains("header_mail.png")
+                            || imageSrc.contains("header_logout.png"));
         }
+    }
+
+    @Test(priority = 2)
+    public void testMailboxLink() throws Exception {
+        driver.get(getAbsolutePath("/home"));
+
+        // Click on link to mailbox
+        driver.findElement(By.xpath("//img[contains(@src, 'header_mail.png')]")).click();
+
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/mail/in")));
     }
 }
