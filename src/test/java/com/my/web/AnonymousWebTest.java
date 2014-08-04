@@ -57,6 +57,9 @@ public class AnonymousWebTest extends AbstractWebTest {
     public void testDisabledCommentVotingIconsForAnonymous() throws Exception {
         driver.get(APP_ROOT_URL + "/home");
 
+        // Click link to post page
+        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
+
         List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='comment-voting']/img[@class='comment-vote']"));
 
         for (WebElement element : elementList) {
