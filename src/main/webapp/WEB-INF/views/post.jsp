@@ -103,24 +103,26 @@
         </c:forEach>
     </div>
 
-    <c:url value="/post/${post.id}/comment" var="addCommentUrl"/>
-    <div class="col-md-6">
-        <div class="form-label">
-            Add new comment:
+    <sec:authorize access="isAuthenticated()">
+        <c:url value="/post/${post.id}/comment" var="addCommentUrl"/>
+        <div class="col-md-6">
+            <div class="form-label">
+                Add new comment:
+            </div>
+            <div class="form">
+                <form:form commandName="newComment" method="put" action="${addCommentUrl}" cssClass="form-group">
+                    <div class="form-unit">
+                        Text:
+                        <form:textarea path="text" cssClass="form-control"/>
+                        <form:errors cssClass="alert-danger form-control" path="text"/>
+                    </div>
+                    <div class="form-unit">
+                        <input class="btn btn-success form-control" type="submit">
+                    </div>
+                </form:form>
+            </div>
         </div>
-        <div class="form">
-            <form:form commandName="newComment" method="put" action="${addCommentUrl}" cssClass="form-group">
-                <div class="form-unit">
-                    Text:
-                    <form:textarea path="text" cssClass="form-control"/>
-                    <form:errors cssClass="alert-danger form-control" path="text"/>
-                </div>
-                <div class="form-unit">
-                    <input class="btn btn-success form-control" type="submit">
-                </div>
-            </form:form>
-        </div>
-    </div>
+    </sec:authorize>
 
     <s:url var="votingJsUrl" value="/resources/js/voting.js"/>
     <script language="javascript" type="text/javascript" src="${votingJsUrl}">
