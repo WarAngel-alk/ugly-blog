@@ -54,8 +54,8 @@ public class AnonymousWebTest {
     public void testHomeToPostButton() throws Exception {
         driver.get(APP_ROOT_URL + "/home");
 
-        WebElement postTitleLink = driver.findElement(By.xpath("//a/button[@class='btn btn-default']"));
-        postTitleLink.click();
+        WebElement postPageButton = driver.findElement(By.xpath("//a/button[@class='btn btn-default']"));
+        postPageButton.click();
 
         assertTrue(driver.getCurrentUrl().contains(APP_ROOT_URL + "/post/"));
     }
@@ -68,6 +68,7 @@ public class AnonymousWebTest {
 
         for (WebElement element : elementList) {
             assertTrue(element.getAttribute("src").contains("disabled"));
+            assertNull(element.getAttribute("onclick"));
         }
     }
 }
