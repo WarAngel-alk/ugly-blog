@@ -4,8 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import java.util.List;
+
+import static org.testng.Assert.*;
 
 public class UserWebTest extends AbstractWebTest {
 
@@ -27,6 +28,18 @@ public class UserWebTest extends AbstractWebTest {
 
         assertNotNull(driver.manage().getCookieNamed("JSESSIONID"));
         assertNotNull(driver.manage().getCookieNamed("SPRING_SECURITY_REMEMBER_ME_COOKIE"));
+    }
+
+    @Test(dependsOnMethods = "testUserLogin")
+    public void testVotingIconsForUser() throws Exception {
+        driver.get(APP_ROOT_URL + "/home");
+
+        List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='post-voting']/img[@class='post-vote']"));
+
+        for (WebElement element : elementList) {
+            String srcAttribute = element.getAttribute("src");
+            assertTrue(srcAttribute.contains("vote_up_active.png") || srcAttribute.contains("vote_up_inactive.png"));
+        }
     }
 
 }
