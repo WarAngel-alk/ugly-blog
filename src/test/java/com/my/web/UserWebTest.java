@@ -38,16 +38,16 @@ public class UserWebTest extends AbstractWebTest {
 
         assertTrue(elementList.size() >= 2);
         assertTrue(elementList.size() % 2 == 0);
-        
+
         for (int i = 0; i < elementList.size(); ) {
             WebElement voteUp = elementList.get(i++);
             WebElement voteDown = elementList.get(i++);
-            String voteUpSrc = voteUp.getAttribute("src"); 
+            String voteUpSrc = voteUp.getAttribute("src");
             String voteDownSrc = voteDown.getAttribute("src");
 
             assertTrue(voteUpSrc.contains("active.png") || voteUpSrc.contains("inactive.png"));
             assertTrue(voteDownSrc.contains("active.png") || voteDownSrc.contains("inactive.png"));
-            
+
             if (voteUpSrc.contains("active.png") || voteDownSrc.contains("active.png")) {
                 assertNull(voteUp.getAttribute("onclick"));
                 assertNull(voteDown.getAttribute("onclick"));
@@ -58,4 +58,21 @@ public class UserWebTest extends AbstractWebTest {
         }
     }
 
+    @Test(dependsOnMethods = "testUserLogin")
+    public void testNewCommentFormExists() throws Exception {
+        driver.get(getAbsolutePath("/home"));
+        // Click link to post page
+        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
+
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post")));
+
+        WebElement newCommentForm = driver.findElement(By.xpath("//form[@id='newComment']"));
+        WebElement newCommentText = driver.findElement(By.xpath("//form[@id='newComment']//textarea[@id='text']"));
+        WebElement newCommentSubmit = driver.findElement(By.xpath("//form[@id='newComment']//input[@type='submit']"));
+    }
+
+    @Test
+    public void testName() throws Exception {
+
+    }
 }
