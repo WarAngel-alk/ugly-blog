@@ -36,9 +36,25 @@ public class UserWebTest extends AbstractWebTest {
 
         List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='post-voting']/img[@class='post-vote']"));
 
-        for (WebElement element : elementList) {
-            String srcAttribute = element.getAttribute("src");
-            assertTrue(srcAttribute.contains("vote_up_active.png") || srcAttribute.contains("vote_up_inactive.png"));
+        assertTrue(elementList.size() >= 2);
+        assertTrue(elementList.size() % 2 == 0);
+        
+        for (int i = 0; i < elementList.size(); ) {
+            WebElement voteUp = elementList.get(i++);
+            WebElement voteDown = elementList.get(i++);
+            String voteUpSrc = voteUp.getAttribute("src"); 
+            String voteDownSrc = voteDown.getAttribute("src");
+
+            assertTrue(voteUpSrc.contains("active.png") || voteUpSrc.contains("inactive.png"));
+            assertTrue(voteDownSrc.contains("active.png") || voteDownSrc.contains("inactive.png"));
+            
+            if (voteUpSrc.contains("active.png") || voteDownSrc.contains("active.png")) {
+                assertNull(voteUp.getAttribute("onclick"));
+                assertNull(voteDown.getAttribute("onclick"));
+            } else {
+                assertNotNull(voteUp.getAttribute("onclick"));
+                assertNotNull(voteDown.getAttribute("onclick"));
+            }
         }
     }
 
