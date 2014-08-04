@@ -13,7 +13,7 @@ public class UserWebTest extends AbstractWebTest {
 
     private final String TEST_COMMENT_TEXT = "Test comment text";
 
-    @Test
+    @Test(priority = 1)
     public void testUserLogin() throws Exception {
         driver.get(getAbsolutePath("/login"));
 
@@ -33,8 +33,8 @@ public class UserWebTest extends AbstractWebTest {
         assertNotNull(driver.manage().getCookieNamed("SPRING_SECURITY_REMEMBER_ME_COOKIE"));
     }
 
-    @Test(dependsOnMethods = "testUserLogin")
-    public void testVotingIconsForUser() throws Exception {
+    @Test(priority = 2)
+    public void testPostVotingIconsForUser() throws Exception {
         driver.get(APP_ROOT_URL + "/home");
 
         List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='post-voting']/img[@class='post-vote']"));
@@ -92,6 +92,7 @@ public class UserWebTest extends AbstractWebTest {
         }
     }
 
+    @Test(priority = 2)
     public void testNewCommentFormExists() throws Exception {
         driver.get(getAbsolutePath("/home"));
         // Click link to post page
