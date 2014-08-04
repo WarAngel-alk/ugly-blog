@@ -1,6 +1,7 @@
 package com.my.web;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -9,6 +10,8 @@ import java.util.List;
 import static org.testng.Assert.*;
 
 public class UserWebTest extends AbstractWebTest {
+
+    private final String TEST_COMMENT_TEXT = "Test comment text";
 
     @Test
     public void testUserLogin() throws Exception {
@@ -121,5 +124,32 @@ public class UserWebTest extends AbstractWebTest {
 
         WebElement newlyAddedComment = driver.findElement(By.xpath(
                 "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + TEST_COMMENT_TEXT + "')]"));
+    }
+
+    @Test(priority = 2, dependsOnMethods = "testNewCommentAdding", expectedExceptions = NoSuchElementException.class)
+    public void testOwnCommentDeleting() throws Exception {
+        driver.get(getAbsolutePath("/home"));
+        // Click link to post page
+        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
+
+        WebElement commentDeleteButton = driver.findElement(By.xpath(
+                "//div[@class='comment']" +
+                        "//button[" +
+                        "    contains(@class, 'comment-delete-btn')" +
+                        "        and " +
+                        "        ../../../../div[" +
+                        "            @class='comment-content' " +
+                        "                and text()='sss']" +
+                        "        ]"));
+
+        commentDeleteButton.click();
+
+        // Accept confirmation of comment deleting
+        driver.switchTo().alert().accept();
+
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
+
+        // Should throw NoSuchElementException because such comment have been deleted
+        driver.findElement(By.xpath("div[@class='comment-content' and contains(text(), '" + TEST_COMMENT_TEXT + "')]"));
     }
 }
