@@ -1,5 +1,6 @@
 package com.my.web;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -11,9 +12,9 @@ import static org.testng.Assert.*;
 
 public class UserWebTest extends AbstractWebTest {
 
-    private final String TEST_COMMENT_TEXT = "Test comment text";
-    private final String messageSubject = "TEST MESSAGE SUBJECT";
-    private final String messageText = "TEST MESSAGE TEXT";
+    private final String commentText = "Test comment text" + RandomStringUtils.randomNumeric(10);
+    private final String messageSubject = "TEST MESSAGE SUBJECT" + RandomStringUtils.randomNumeric(10);
+    private final String messageText = "TEST MESSAGE TEXT" + RandomStringUtils.randomNumeric(10);
 
     @Test(priority = 1)
     public void testUserLogin() throws Exception {
