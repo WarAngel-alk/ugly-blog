@@ -239,4 +239,36 @@ public class UserWebTest extends AbstractWebTest {
         assertEquals(subject.getText(), messageSubject);
         assertEquals(text.getText(), messageText);
     }
+
+    @Test(priority = 2, dependsOnMethods = "testAnswerForMessage")
+    public void testDeleteSentMessage() throws Exception {
+        driver.get(getAbsolutePath("/mail/out"));
+
+        // Click button for deleting message sent in previous test
+        driver.findElement(By.xpath(
+                "//div[" +
+                        "    contains(@class, 'mailbox-line')" +
+                        "    and contains(./div/a/span/text(), '" + messageSubject + "')" +
+                        "]/div/button[" +
+                        "    contains(@class, 'delete-message-btn')" +
+                        "]")).click();
+
+        driver.get(getAbsolutePath("/mail/out"));
+
+        boolean messageNotFound = false;
+        try {
+            // Should throw NoSuchElementException because such message have been deleted
+            driver.findElement(By.xpath(
+                    "//a[" +
+                            "    contains(@href, '/mail/message/')" +
+                            "    and" +
+                            "        contains(./span/text(), '" + messageSubject + "')" +
+                            "    ]"));
+        } catch (NoSuchElementException e1) {
+            messageNotFound = true;
+        }
+        if (!messageNotFound) {
+            assertTrue(false, "Message for deleting was found after deleting");
+        }
+    }
 }
