@@ -130,7 +130,7 @@ public class UserWebTest extends AbstractWebTest {
                 "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
     }
 
-    @Test(priority = 2, dependsOnMethods = "testNewCommentAdding", expectedExceptions = NoSuchElementException.class)
+    @Test(priority = 2, dependsOnMethods = "testNewCommentAdding")
     public void testOwnCommentDeleting() throws Exception {
         driver.get(getAbsolutePath("/home"));
         // Click link to post page
@@ -152,8 +152,16 @@ public class UserWebTest extends AbstractWebTest {
 
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
-        // Should throw NoSuchElementException because such comment have been deleted
-        driver.findElement(By.xpath("div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
+        boolean commentNotFound = false;
+        try {
+            // Should throw NoSuchElementException because such comment have been deleted
+            driver.findElement(By.xpath("div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
+        } catch (NoSuchElementException e1) {
+            commentNotFound = true;
+        }
+        if (!commentNotFound) {
+            assertTrue(false, "Comment for deleting was found after deleting");
+        }
     }
 
     @Test(priority = 2)
