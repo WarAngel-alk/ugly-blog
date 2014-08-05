@@ -58,4 +58,8 @@ public abstract class AbstractWebTest {
     public void logoutAfterClass() throws Exception {
 
     }
+
+    protected void logoutInternal() {
+        driver.get(getAbsolutePath("/logout"));
+    }
 }
