@@ -12,38 +12,38 @@ public class AnonymousWebTest extends AbstractWebTest {
 
     @Test
     public void testHomePageOpen() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
         assertEquals("Ugly blog", driver.getTitle());
 
         WebElement postTitleLink = driver.findElement(By.xpath("//div[@class='post-title']/a"));
         postTitleLink.click();
 
-        assertTrue(driver.getCurrentUrl().contains(APP_ROOT_URL + "/post/"));
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
     }
 
     @Test
     public void testHomeToPostLink() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
         WebElement postTitleLink = driver.findElement(By.xpath("//div[@class='post-title']/a"));
         postTitleLink.click();
 
-        assertTrue(driver.getCurrentUrl().contains(APP_ROOT_URL + "/post/"));
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
     }
 
     @Test
     public void testHomeToPostButton() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
         WebElement postPageButton = driver.findElement(By.xpath("//a/button[@class='btn btn-default']"));
         postPageButton.click();
 
-        assertTrue(driver.getCurrentUrl().contains(APP_ROOT_URL + "/post/"));
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
     }
 
     @Test
     public void testDisabledPostVotingIconsForAnonymous() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
         List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='post-voting']/img[@class='post-vote']"));
 
@@ -55,7 +55,7 @@ public class AnonymousWebTest extends AbstractWebTest {
 
     @Test
     public void testDisabledCommentVotingIconsForAnonymous() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
         // Click link to post page
         driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
@@ -70,12 +70,12 @@ public class AnonymousWebTest extends AbstractWebTest {
 
     @Test
     public void testLoginPage() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
         WebElement headerLoginLink = driver.findElement(By.xpath("//a[contains(@href, 'login')]"));
         headerLoginLink.click();
 
-        assertEquals(driver.getCurrentUrl(), APP_ROOT_URL + "/login");
+        assertEquals(driver.getCurrentUrl(), getAbsolutePath("/login"));
 
         WebElement loginField = driver.findElement(By.xpath("//input[@name='j_username']"));
         WebElement passwordField = driver.findElement(By.xpath("//input[@name='j_password']"));
@@ -85,12 +85,12 @@ public class AnonymousWebTest extends AbstractWebTest {
 
     @Test
     public void testSignupPage() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
         WebElement headerLoginLink = driver.findElement(By.xpath("//a[contains(@href, 'signup')]"));
         headerLoginLink.click();
 
-        assertEquals(driver.getCurrentUrl(), APP_ROOT_URL + "/signup");
+        assertEquals(driver.getCurrentUrl(), getAbsolutePath("/signup"));
 
         WebElement usernameField = driver.findElement(By.xpath("//input[@name='name']"));
         WebElement passwordField = driver.findElement(By.xpath("//input[@name='pass']"));
