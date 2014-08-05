@@ -4,6 +4,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -38,27 +39,13 @@ public class UserWebTest extends AbstractWebTest {
     private final String messageSubject = "TEST MESSAGE SUBJECT" + RandomStringUtils.randomNumeric(10);
     private final String messageText = "TEST MESSAGE TEXT" + RandomStringUtils.randomNumeric(10);
 
-    @Test(priority = 1)
-    public void testUserLogin() throws Exception {
-        driver.get(getAbsolutePath("/login"));
-
-        WebElement loginField = driver.findElement(By.xpath(loginPage_UsernameField));
-        WebElement passwordField = driver.findElement(By.xpath(loginPage_PasswordField));
-        WebElement rememberMeCheckbox = driver.findElement(By.xpath(loginPage_RememberMeCheckbox));
-        WebElement formSubmitBtn = driver.findElement(By.xpath(loginPage_SubmitFormButton));
-
-        loginField.sendKeys(user_username);
-        passwordField.sendKeys(user_password);
-        rememberMeCheckbox.click();
-        formSubmitBtn.submit();
-
-        assertEquals(driver.getCurrentUrl(), getAbsolutePath("/"));
-
-        assertNotNull(driver.manage().getCookieNamed("JSESSIONID"));
-        assertNotNull(driver.manage().getCookieNamed("SPRING_SECURITY_REMEMBER_ME_COOKIE"));
+    @BeforeClass
+    @Override
+    public void loginBeforeClass() throws Exception {
+        loginInternal(user_username, user_password, true);
     }
 
-    @Test(priority = 2)
+    @Test
     public void testPostVotingIconsForUser() throws Exception {
         driver.get(getAbsolutePath("/home"));
 
@@ -86,7 +73,7 @@ public class UserWebTest extends AbstractWebTest {
         }
     }
 
-    @Test(priority = 2)
+    @Test
     public void testCommentVotingIconsForUser() throws Exception {
         driver.get(getAbsolutePath("/home"));
 
@@ -117,7 +104,7 @@ public class UserWebTest extends AbstractWebTest {
         }
     }
 
-    @Test(priority = 2)
+    @Test
     public void testNewCommentFormExists() throws Exception {
         driver.get(getAbsolutePath("/home"));
 
@@ -130,7 +117,7 @@ public class UserWebTest extends AbstractWebTest {
         driver.findElement(By.xpath(post_newCommentForm_SubmitButton));
     }
 
-    @Test(priority = 2)
+    @Test
     public void testNewCommentAdding() throws Exception {
         driver.get(getAbsolutePath("/home"));
 
@@ -151,7 +138,7 @@ public class UserWebTest extends AbstractWebTest {
                 "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
     }
 
-    @Test(priority = 2, dependsOnMethods = "testNewCommentAdding")
+    @Test(dependsOnMethods = "testNewCommentAdding")
     public void testOwnCommentDeleting() throws Exception {
         driver.get(getAbsolutePath("/home"));
 
@@ -186,7 +173,7 @@ public class UserWebTest extends AbstractWebTest {
         }
     }
 
-    @Test(priority = 2)
+    @Test
     public void testHeaderLinks() throws Exception {
         driver.get(getAbsolutePath("/home"));
 
@@ -203,7 +190,7 @@ public class UserWebTest extends AbstractWebTest {
         }
     }
 
-    @Test(priority = 2)
+    @Test
     public void testMailboxLink() throws Exception {
         driver.get(getAbsolutePath("/home"));
 
@@ -213,7 +200,7 @@ public class UserWebTest extends AbstractWebTest {
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/mail/in")));
     }
 
-    @Test(priority = 2)
+    @Test
     public void testMessageLink() throws Exception {
         driver.get(getAbsolutePath("/mail/in"));
 
@@ -228,7 +215,7 @@ public class UserWebTest extends AbstractWebTest {
         driver.findElement(By.xpath(newMessageForm_submitButton));
     }
 
-    @Test(priority = 2)
+    @Test
     public void testAnswerForMessage() throws Exception {
         driver.get(getAbsolutePath("/mail/in"));
 
@@ -262,7 +249,7 @@ public class UserWebTest extends AbstractWebTest {
         assertEquals(text.getText(), messageText);
     }
 
-    @Test(priority = 2, dependsOnMethods = "testAnswerForMessage")
+    @Test(dependsOnMethods = "testAnswerForMessage")
     public void testDeleteSentMessage() throws Exception {
         driver.get(getAbsolutePath("/mail/out"));
 
@@ -275,7 +262,8 @@ public class UserWebTest extends AbstractWebTest {
                         "    contains(@class, 'delete-message-btn')" +
                         "]")).click();
 
-        driver.get(getAbsolutePath("/mail/out"));
+//        driver.get(getAbsolutePath("/mail/out"));
+        driver.navigate().refresh();
 
         boolean messageNotFound = false;
         try {

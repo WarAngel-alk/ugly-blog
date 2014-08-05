@@ -1,6 +1,8 @@
 package com.my.web;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
@@ -34,6 +36,22 @@ public abstract class AbstractWebTest {
     @BeforeClass
     public void loginBeforeClass() throws Exception {
 
+    }
+
+    protected void loginInternal(String username, String password, boolean rememberMe) {
+        driver.get(getAbsolutePath("/login"));
+
+        WebElement loginField = driver.findElement(By.xpath(loginPage_UsernameField));
+        WebElement passwordField = driver.findElement(By.xpath(loginPage_PasswordField));
+        WebElement rememberMeCheckbox = driver.findElement(By.xpath(loginPage_RememberMeCheckbox));
+        WebElement formSubmitBtn = driver.findElement(By.xpath(loginPage_SubmitFormButton));
+
+        loginField.sendKeys(username);
+        passwordField.sendKeys(password);
+        if (rememberMe) {
+            rememberMeCheckbox.click();
+        }
+        formSubmitBtn.submit();
     }
 
     @AfterClass
