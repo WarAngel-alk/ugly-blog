@@ -12,6 +12,28 @@ import static org.testng.Assert.*;
 
 public class UserWebTest extends AbstractWebTest {
 
+    private static final String loginPage_UsernameField = "//input[@name='j_username']";
+    private static final String loginPage_PasswordField = "//input[@name='j_password']";
+    private static final String loginPage_RememberMeCheckbox = "//input[@name='_spring_security_remember_me']";
+    private static final String loginPage_SubmitFormButton = "//div[contains(@class, 'form-unit')]/input[@type='submit']";
+    private static final String user_username = "user_2";
+    private static final String user_password = "user_2";
+    private static final String post_votingIcon = "//div[@class='post-voting']/img[@class='post-vote']";
+    private static final String home_postTitleLink = "//div[@class='post-title']/a";
+    private static final String post_comment_votingIcons = "//div[@class='comment-voting']/img[@class='comment-vote']";
+    private static final String post_newCommentForm = "//form[@id='newComment']";
+    private static final String post_newCommentForm_TextArea = "//form[@id='newComment']//textarea[@id='text']";
+    private static final String post_newCommentForm_SubmitButton = "//form[@id='newComment']//input[@type='submit']";
+    private static final String header_mailIcon = "//img[contains(@src, 'header_mail.png')]";
+    private static final String mailbox_messageLink = "//a[contains(@href, '/mail/message/')]";
+    private static final String newMessageForm = "//form[@id='newMessage']";
+    private static final String newMessageForm_receiverName = "//input[@id='receiver.name']";
+    private static final String newMessageForm_subjectField = "//input[@id='subject']";
+    private static final String newMessageForm_textField = "//textarea[@id='text']";
+    private static final String newMessageForm_submitButton = "//input[@type='submit']";
+    private static final String mailbox_message_senderLink = "//div[contains(@class, 'message-info')]/a";
+    private static final String mailbox_message_subject = "//div[contains(@class, 'message-subject')]";
+    private static final String mailbox_message_text = "//div[contains(@class, 'message-text')]";
     private final String commentText = "Test comment text" + RandomStringUtils.randomNumeric(10);
     private final String messageSubject = "TEST MESSAGE SUBJECT" + RandomStringUtils.randomNumeric(10);
     private final String messageText = "TEST MESSAGE TEXT" + RandomStringUtils.randomNumeric(10);
@@ -20,13 +42,13 @@ public class UserWebTest extends AbstractWebTest {
     public void testUserLogin() throws Exception {
         driver.get(getAbsolutePath("/login"));
 
-        WebElement loginField = driver.findElement(By.xpath("//input[@name='j_username']"));
-        WebElement passwordField = driver.findElement(By.xpath("//input[@name='j_password']"));
-        WebElement rememberMeCheckbox = driver.findElement(By.xpath("//input[@name='_spring_security_remember_me']"));
-        WebElement formSubmitBtn = driver.findElement(By.xpath("//div[contains(@class, 'form-unit')]/input[@type='submit']"));
+        WebElement loginField = driver.findElement(By.xpath(loginPage_UsernameField));
+        WebElement passwordField = driver.findElement(By.xpath(loginPage_PasswordField));
+        WebElement rememberMeCheckbox = driver.findElement(By.xpath(loginPage_RememberMeCheckbox));
+        WebElement formSubmitBtn = driver.findElement(By.xpath(loginPage_SubmitFormButton));
 
-        loginField.sendKeys("user_2");
-        passwordField.sendKeys("user_2");
+        loginField.sendKeys(user_username);
+        passwordField.sendKeys(user_password);
         rememberMeCheckbox.click();
         formSubmitBtn.submit();
 
@@ -38,9 +60,9 @@ public class UserWebTest extends AbstractWebTest {
 
     @Test(priority = 2)
     public void testPostVotingIconsForUser() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
-        List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='post-voting']/img[@class='post-vote']"));
+        List<WebElement> elementList = driver.findElements(By.xpath(post_votingIcon));
 
         assertTrue(elementList.size() >= 2);
         assertTrue(elementList.size() % 2 == 0);
@@ -66,12 +88,12 @@ public class UserWebTest extends AbstractWebTest {
 
     @Test(priority = 2)
     public void testCommentVotingIconsForUser() throws Exception {
-        driver.get(APP_ROOT_URL + "/home");
+        driver.get(getAbsolutePath("/home"));
 
         // Click link to post page
-        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
+        driver.findElement(By.xpath(home_postTitleLink)).click();
 
-        List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='comment-voting']/img[@class='comment-vote']"));
+        List<WebElement> elementList = driver.findElements(By.xpath(post_comment_votingIcons));
 
         assertTrue(elementList.size() >= 2);
         assertTrue(elementList.size() % 2 == 0);
@@ -98,44 +120,44 @@ public class UserWebTest extends AbstractWebTest {
     @Test(priority = 2)
     public void testNewCommentFormExists() throws Exception {
         driver.get(getAbsolutePath("/home"));
-        // Click link to post page
-        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
+
+        driver.findElement(By.xpath(home_postTitleLink)).click();
 
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post")));
 
-        WebElement newCommentForm = driver.findElement(By.xpath("//form[@id='newComment']"));
-        WebElement newCommentText = driver.findElement(By.xpath("//form[@id='newComment']//textarea[@id='text']"));
-        WebElement newCommentSubmit = driver.findElement(By.xpath("//form[@id='newComment']//input[@type='submit']"));
+        driver.findElement(By.xpath(post_newCommentForm));
+        driver.findElement(By.xpath(post_newCommentForm_TextArea));
+        driver.findElement(By.xpath(post_newCommentForm_SubmitButton));
     }
 
     @Test(priority = 2)
     public void testNewCommentAdding() throws Exception {
         driver.get(getAbsolutePath("/home"));
-        // Click link to post page
-        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
+
+        driver.findElement(By.xpath(home_postTitleLink)).click();
 
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
-        WebElement newCommentText = driver.findElement(By.xpath("//form[@id='newComment']//textarea[@id='text']"));
-        WebElement newCommentSubmit = driver.findElement(By.xpath("//form[@id='newComment']//input[@type='submit']"));
+        WebElement newCommentText = driver.findElement(By.xpath(post_newCommentForm_TextArea));
+        WebElement newCommentSubmit = driver.findElement(By.xpath(post_newCommentForm_SubmitButton));
 
         newCommentText.sendKeys(commentText);
         newCommentSubmit.submit();
 
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
-        String source = driver.getPageSource();
-
-        WebElement newlyAddedComment = driver.findElement(By.xpath(
+        // Newly added comment
+        driver.findElement(By.xpath(
                 "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
     }
 
     @Test(priority = 2, dependsOnMethods = "testNewCommentAdding")
     public void testOwnCommentDeleting() throws Exception {
         driver.get(getAbsolutePath("/home"));
-        // Click link to post page
-        driver.findElement(By.xpath("//div[@class='post-title']/a")).click();
 
+        driver.findElement(By.xpath(home_postTitleLink)).click();
+
+        // Button for deleting comment added in previous test
         WebElement commentDeleteButton = driver.findElement(By.xpath(
                 "//div[@class='comment']" +
                         "//button[" +
@@ -186,7 +208,7 @@ public class UserWebTest extends AbstractWebTest {
         driver.get(getAbsolutePath("/home"));
 
         // Click on link to mailbox
-        driver.findElement(By.xpath("//img[contains(@src, 'header_mail.png')]")).click();
+        driver.findElement(By.xpath(header_mailIcon)).click();
 
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/mail/in")));
     }
@@ -195,28 +217,28 @@ public class UserWebTest extends AbstractWebTest {
     public void testMessageLink() throws Exception {
         driver.get(getAbsolutePath("/mail/in"));
 
-        driver.findElement(By.xpath("//a[contains(@href, '/mail/message/')]")).click();
+        driver.findElement(By.xpath(mailbox_messageLink)).click();
 
         assertTrue(driver.getCurrentUrl().contains("/mail/message/"));
 
-        driver.findElement(By.xpath("//form[@id='newMessage']"));
-        driver.findElement(By.xpath("//input[@id='receiver.name']"));
-        driver.findElement(By.xpath("//input[@id='subject']"));
-        driver.findElement(By.xpath("//textarea[@id='text']"));
-        driver.findElement(By.xpath("//input[@type='submit']"));
+        driver.findElement(By.xpath(newMessageForm));
+        driver.findElement(By.xpath(newMessageForm_receiverName));
+        driver.findElement(By.xpath(newMessageForm_subjectField));
+        driver.findElement(By.xpath(newMessageForm_textField));
+        driver.findElement(By.xpath(newMessageForm_submitButton));
     }
 
     @Test(priority = 2)
     public void testAnswerForMessage() throws Exception {
         driver.get(getAbsolutePath("/mail/in"));
 
-        driver.findElement(By.xpath("//a[contains(@href, '/mail/message/')]")).click();
+        driver.findElement(By.xpath(mailbox_messageLink)).click();
 
         assertTrue(driver.getCurrentUrl().contains("/mail/message/"));
 
-        WebElement subjectField = driver.findElement(By.xpath("//input[@id='subject']"));
-        WebElement textField = driver.findElement(By.xpath("//textarea[@id='text']"));
-        WebElement submitButton = driver.findElement(By.xpath("//input[@type='submit']"));
+        WebElement subjectField = driver.findElement(By.xpath(newMessageForm_subjectField));
+        WebElement textField = driver.findElement(By.xpath(newMessageForm_textField));
+        WebElement submitButton = driver.findElement(By.xpath(newMessageForm_submitButton));
 
         subjectField.sendKeys(messageSubject);
         textField.sendKeys(messageText);
@@ -231,9 +253,9 @@ public class UserWebTest extends AbstractWebTest {
                         "    ]"))
                 .click();
 
-        WebElement messageSender = driver.findElement(By.xpath("//div[contains(@class, 'message-info')]/a"));
-        WebElement subject = driver.findElement(By.xpath("//div[contains(@class, 'message-subject')]"));
-        WebElement text = driver.findElement(By.xpath("//div[contains(@class, 'message-text')]"));
+        WebElement messageSender = driver.findElement(By.xpath(mailbox_message_senderLink));
+        WebElement subject = driver.findElement(By.xpath(mailbox_message_subject));
+        WebElement text = driver.findElement(By.xpath(mailbox_message_text));
 
         assertEquals(messageSender.getText(), "user_2");
         assertEquals(subject.getText(), messageSubject);
