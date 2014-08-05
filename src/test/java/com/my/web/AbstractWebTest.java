@@ -11,6 +11,10 @@ import org.testng.annotations.BeforeSuite;
 
 public abstract class AbstractWebTest {
 
+    protected static WebDriver driver;
+
+    protected static String APP_ROOT_URL = "http://localhost:8080/blog";
+
     /* XPath queries constants */
 
     protected static final String user_username = "user_2";
@@ -46,9 +50,45 @@ public abstract class AbstractWebTest {
 
     /* End of XPath queries constants */
 
-    protected static WebDriver driver;
+    /* XPath generation methods */
 
-    protected static String APP_ROOT_URL = "http://localhost:8080/blog";
+    protected String commentContentByText(String text) {
+        return "//div[@class='comment']" +
+                "   //div[" +
+                "       @class='comment-content' " +
+                "       and contains(text(), '" + text + "')" +
+                "    ]";
+    }
+
+    protected String messageLinkBySubject(String subject) {
+        return "//a[" +
+                "    contains(@href, '/mail/message/')" +
+                "    and" +
+                "        contains(./span/text(), '" + subject + "')" +
+                "    ]";
+    }
+
+    protected String commentDeleteButtonByCommentText(String text) {
+        return "//div[@class='comment']" +
+                "//button[" +
+                "    contains(@class, 'comment-delete-btn')" +
+                "        and " +
+                "        ../../../../div[" +
+                "            @class='comment-content' " +
+                "                and contains(text(), '" + text + "')]" +
+                "        ]";
+    }
+
+    protected String messageDeleteButtonByMessageSubject(String subject) {
+        return "//div[" +
+                "    contains(@class, 'mailbox-line')" +
+                "    and contains(./div/a/span/text(), '" + subject + "')" +
+                "]/div/button[" +
+                "    contains(@class, 'delete-message-btn')" +
+                "]";
+    }
+
+    /* End of XPath generation methods */
 
     /**
      * relative path should starts with '/'.<br/>

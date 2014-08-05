@@ -112,8 +112,7 @@ public class UserWebTest extends AbstractWebTest {
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
         // Newly added comment
-        driver.findElement(By.xpath(
-                "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
+        driver.findElement(By.xpath(commentContentByText(commentText)));
     }
 
     @Test(dependsOnMethods = "testNewCommentAdding")
@@ -122,27 +121,19 @@ public class UserWebTest extends AbstractWebTest {
 
         driver.findElement(By.xpath(home_postTitleLink)).click();
 
-        // Button for deleting comment added in previous test
-        WebElement commentDeleteButton = driver.findElement(By.xpath(
-                "//div[@class='comment']" +
-                        "//button[" +
-                        "    contains(@class, 'comment-delete-btn')" +
-                        "        and " +
-                        "        ../../../../div[" +
-                        "            @class='comment-content' " +
-                        "                and contains(text(), '" + commentText + "')]" +
-                        "        ]"));
+        WebElement commentDeleteButton = driver.findElement(By.xpath(commentDeleteButtonByCommentText(commentText)));
         commentDeleteButton.click();
 
         // Accept confirmation of comment deleting
         driver.switchTo().alert().accept();
 
+        driver.navigate().refresh();
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
         boolean commentNotFound = false;
         try {
             // Should throw NoSuchElementException because such comment have been deleted
-            driver.findElement(By.xpath("div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
+            driver.findElement(By.xpath(commentContentByText(commentText)));
         } catch (NoSuchElementException e1) {
             commentNotFound = true;
         }
@@ -210,13 +201,7 @@ public class UserWebTest extends AbstractWebTest {
         submitButton.submit();
 
         // Go to newly sent message
-        driver.findElement(By.xpath(
-                "//a[" +
-                        "    contains(@href, '/mail/message/')" +
-                        "    and" +
-                        "        contains(./span/text(), '" + messageSubject + "')" +
-                        "    ]"))
-                .click();
+        driver.findElement(By.xpath(messageLinkBySubject(messageSubject))).click();
 
         WebElement messageSender = driver.findElement(By.xpath(mailbox_message_senderLink));
         WebElement subject = driver.findElement(By.xpath(mailbox_message_subject));
@@ -232,26 +217,14 @@ public class UserWebTest extends AbstractWebTest {
         driver.get(getAbsolutePath("/mail/out"));
 
         // Click button for deleting message sent in previous test
-        driver.findElement(By.xpath(
-                "//div[" +
-                        "    contains(@class, 'mailbox-line')" +
-                        "    and contains(./div/a/span/text(), '" + messageSubject + "')" +
-                        "]/div/button[" +
-                        "    contains(@class, 'delete-message-btn')" +
-                        "]")).click();
+        driver.findElement(By.xpath(messageDeleteButtonByMessageSubject(messageSubject))).click();
 
-//        driver.get(getAbsolutePath("/mail/out"));
         driver.navigate().refresh();
 
         boolean messageNotFound = false;
         try {
             // Should throw NoSuchElementException because such message have been deleted
-            driver.findElement(By.xpath(
-                    "//a[" +
-                            "    contains(@href, '/mail/message/')" +
-                            "    and" +
-                            "        contains(./span/text(), '" + messageSubject + "')" +
-                            "    ]"));
+            driver.findElement(By.xpath(messageLinkBySubject(messageSubject)));
         } catch (NoSuchElementException e1) {
             messageNotFound = true;
         }
