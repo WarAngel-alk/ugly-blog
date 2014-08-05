@@ -13,28 +13,6 @@ import static org.testng.Assert.*;
 
 public class UserWebTest extends AbstractWebTest {
 
-    private static final String loginPage_UsernameField = "//input[@name='j_username']";
-    private static final String loginPage_PasswordField = "//input[@name='j_password']";
-    private static final String loginPage_RememberMeCheckbox = "//input[@name='_spring_security_remember_me']";
-    private static final String loginPage_SubmitFormButton = "//div[contains(@class, 'form-unit')]/input[@type='submit']";
-    private static final String user_username = "user_2";
-    private static final String user_password = "user_2";
-    private static final String post_votingIcon = "//div[@class='post-voting']/img[@class='post-vote']";
-    private static final String home_postTitleLink = "//div[@class='post-title']/a";
-    private static final String post_comment_votingIcons = "//div[@class='comment-voting']/img[@class='comment-vote']";
-    private static final String post_newCommentForm = "//form[@id='newComment']";
-    private static final String post_newCommentForm_TextArea = "//form[@id='newComment']//textarea[@id='text']";
-    private static final String post_newCommentForm_SubmitButton = "//form[@id='newComment']//input[@type='submit']";
-    private static final String header_mailIcon = "//img[contains(@src, 'header_mail.png')]";
-    private static final String mailbox_messageLink = "//a[contains(@href, '/mail/message/')]";
-    private static final String newMessageForm = "//form[@id='newMessage']";
-    private static final String newMessageForm_receiverName = "//input[@id='receiver.name']";
-    private static final String newMessageForm_subjectField = "//input[@id='subject']";
-    private static final String newMessageForm_textField = "//textarea[@id='text']";
-    private static final String newMessageForm_submitButton = "//input[@type='submit']";
-    private static final String mailbox_message_senderLink = "//div[contains(@class, 'message-info')]/a";
-    private static final String mailbox_message_subject = "//div[contains(@class, 'message-subject')]";
-    private static final String mailbox_message_text = "//div[contains(@class, 'message-text')]";
     private final String commentText = "Test comment text" + RandomStringUtils.randomNumeric(10);
     private final String messageSubject = "TEST MESSAGE SUBJECT" + RandomStringUtils.randomNumeric(10);
     private final String messageText = "TEST MESSAGE TEXT" + RandomStringUtils.randomNumeric(10);
