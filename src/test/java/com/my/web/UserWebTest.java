@@ -119,7 +119,7 @@ public class UserWebTest extends AbstractWebTest {
         WebElement newCommentText = driver.findElement(By.xpath("//form[@id='newComment']//textarea[@id='text']"));
         WebElement newCommentSubmit = driver.findElement(By.xpath("//form[@id='newComment']//input[@type='submit']"));
 
-        newCommentText.sendKeys(TEST_COMMENT_TEXT);
+        newCommentText.sendKeys(commentText);
         newCommentSubmit.submit();
 
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
@@ -127,7 +127,7 @@ public class UserWebTest extends AbstractWebTest {
         String source = driver.getPageSource();
 
         WebElement newlyAddedComment = driver.findElement(By.xpath(
-                "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + TEST_COMMENT_TEXT + "')]"));
+                "//div[@class='comment']//div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
     }
 
     @Test(priority = 2, dependsOnMethods = "testNewCommentAdding", expectedExceptions = NoSuchElementException.class)
@@ -143,9 +143,8 @@ public class UserWebTest extends AbstractWebTest {
                         "        and " +
                         "        ../../../../div[" +
                         "            @class='comment-content' " +
-                        "                and text()='sss']" +
+                        "                and contains(text(), '" + commentText + "')]" +
                         "        ]"));
-
         commentDeleteButton.click();
 
         // Accept confirmation of comment deleting
@@ -154,7 +153,7 @@ public class UserWebTest extends AbstractWebTest {
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
         // Should throw NoSuchElementException because such comment have been deleted
-        driver.findElement(By.xpath("div[@class='comment-content' and contains(text(), '" + TEST_COMMENT_TEXT + "')]"));
+        driver.findElement(By.xpath("div[@class='comment-content' and contains(text(), '" + commentText + "')]"));
     }
 
     @Test(priority = 2)
@@ -218,10 +217,10 @@ public class UserWebTest extends AbstractWebTest {
         // Go to newly sent message
         driver.findElement(By.xpath(
                 "//a[" +
-                "    contains(@href, '/mail/message/')" +
-                "    and" +
-                "        contains(./span/text(), '" + messageSubject + "')" +
-                "    ]"))
+                        "    contains(@href, '/mail/message/')" +
+                        "    and" +
+                        "        contains(./span/text(), '" + messageSubject + "')" +
+                        "    ]"))
                 .click();
 
         WebElement messageSender = driver.findElement(By.xpath("//div[contains(@class, 'message-info')]/a"));
