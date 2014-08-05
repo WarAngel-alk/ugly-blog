@@ -1,9 +1,11 @@
 package com.my.web;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 public abstract class AbstractWebTest {
 
@@ -19,19 +21,23 @@ public abstract class AbstractWebTest {
         return APP_ROOT_URL + relativePath;
     }
 
-    @BeforeClass()
+    @BeforeSuite()
     public void setUp() throws Exception {
-        driver = new HtmlUnitDriver();
+        driver = new FirefoxDriver();
     }
 
-    @AfterClass()
+    @AfterSuite
     public void tearDown() throws Exception {
         driver.quit();
     }
 
-    @BeforeClass(dependsOnMethods = "setUp")
-    public void loginBeforeSuite() throws Exception {
+    @BeforeClass
+    public void loginBeforeClass() throws Exception {
 
     }
 
+    @AfterClass
+    public void logoutAfterClass() throws Exception {
+
+    }
 }
