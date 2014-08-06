@@ -51,6 +51,11 @@ public abstract class AbstractWebTest {
     protected static final String newMessageForm_textField = "//textarea[@id='text']";
     protected static final String newMessageForm_submitButton = "//input[@type='submit']";
 
+    protected static final String addPostForm_TitleField = "//form[@id='post']//input[@id='title']";
+    protected static final String addPostForm_TextField = "//form[@id='post']//textarea[@id='text']";
+    protected static final String addPostForm_TagsField = "//form[@id='post']//input[@name='tagsString']";
+    protected static final String addPostForm_SubmitButton = "//form[@id='post']//input[@type='submit']";
+
     /* End of XPath queries constants */
 
     /* XPath generation methods */
