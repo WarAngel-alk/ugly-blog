@@ -4,6 +4,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,6 +22,12 @@ public class UserWebTest extends AbstractWebTest {
     @Override
     public void loginBeforeClass() throws Exception {
         loginInternal(user_username, user_password, true);
+    }
+
+    @AfterClass
+    @Override
+    public void logoutAfterClass() throws Exception {
+        logoutInternal();
     }
 
     @Test
