@@ -11,4 +11,10 @@ public class AdminWebTest extends AbstractWebTest {
         loginInternal(admin_username, admin_password, true);
     }
 
+    @AfterClass
+    @Override
+    public void logoutAfterClass() throws Exception {
+        logoutInternal();
+    }
+
 }
