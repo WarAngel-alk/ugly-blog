@@ -77,6 +77,8 @@ public class PostController {
 
         processTags(post, tagsString);
 
+        postDao.updatePost(post);
+
         return "redirect:/post/" + post.getId();
     }
 
@@ -105,6 +107,9 @@ public class PostController {
         return "redirect:/post/" + postForUpdate.getId();
     }
 
+    /**
+     * Да, я не умею Hibernate. Когда-нибудь я вернусь к этому методу с чувством позора.
+     */
     private void processTags(Post post, String tagsString) {
         List<Tag> originalTagList = post.getTags();
         List<String> postTagNames = null;
@@ -133,11 +138,13 @@ public class PostController {
                 post.getTags().add(tag);
             }
 
-            for (Tag originalTag : originalTagList) {
-                if (!postTagNames.contains(originalTag.getName())) {
-                    originalTag.getPosts().remove(post);
-                    if (originalTag.getPosts().size() == 0) {
-                        tagDao.deleteTag(originalTag);
+            if (originalTagList != null) {
+                for (Tag originalTag : originalTagList) {
+                    if (!postTagNames.contains(originalTag.getName())) {
+                        originalTag.getPosts().remove(post);
+                        if (originalTag.getPosts().size() == 0) {
+                            tagDao.deleteTag(originalTag);
+                        }
                     }
                 }
             }
