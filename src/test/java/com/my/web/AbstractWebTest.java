@@ -104,6 +104,17 @@ public abstract class AbstractWebTest {
                 "    /a[contains(text(), '" + title + "')]";
     }
 
+    protected String postEditLinkByPostTitle(String title) {
+        return "//div[" +
+                "    contains(@class, 'post-title-icons')" +
+                "    and contains(" +
+                "        ../div/div[contains(@class, 'post-title')]/a/text()" +
+                "        , '" + title + "')" +
+                "]/a[" +
+                "    contains(@href, 'edit')" +
+                "]";
+    }
+
     /* End of XPath generation methods */
 
     /**
