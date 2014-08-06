@@ -31,6 +31,9 @@ public abstract class AbstractWebTest {
     protected static final String loginPage_RememberMeCheckbox = "//input[@name='_spring_security_remember_me']";
     protected static final String loginPage_SubmitFormButton = "//div[contains(@class, 'form-unit')]/input[@type='submit']";
 
+    protected static final String post_title = "//div[@class='post-title']";
+    protected static final String post_text = "//div[@class='post-content']";
+    protected static final String post_tagsString = "//div[contains(@class, 'post-tags')]/div[contains(@class, 'post-tag')]";
     protected static final String post_votingIcon = "//div[@class='post-voting']/img[@class='post-vote']";
 
     protected static final String post_comment_votingIcons = "//div[@class='comment-voting']/img[@class='comment-vote']";
