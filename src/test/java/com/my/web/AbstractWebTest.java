@@ -99,6 +99,11 @@ public abstract class AbstractWebTest {
                 "]";
     }
 
+    protected String postLinkByPostTitle(String title) {
+        return "//div[contains(@class, 'post-title')]" +
+                "    /a[contains(text(), '" + title + "')]";
+    }
+
     /* End of XPath generation methods */
 
     /**
