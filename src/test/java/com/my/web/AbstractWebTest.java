@@ -15,13 +15,16 @@ public abstract class AbstractWebTest {
 
     protected static String APP_ROOT_URL = "http://localhost:8080/blog";
 
+    protected static final String user_password = "user_2";
+    protected static final String user_username = "user_2";
+
+    protected static final String admin_username = "user_1";
+    protected static final String admin_password = "user_1";
+
     /* XPath queries constants */
 
-    protected static final String user_username = "user_2";
-    protected static final String user_password = "user_2";
-
-    protected static final String home_postTitleLink = "//div[@class='post-title']/a";
     protected static final String header_mailIcon = "//img[contains(@src, 'header_mail.png')]";
+    protected static final String home_postTitleLink = "//div[@class='post-title']/a";
 
     protected static final String loginPage_UsernameField = "//input[@name='j_username']";
     protected static final String loginPage_PasswordField = "//input[@name='j_password']";
