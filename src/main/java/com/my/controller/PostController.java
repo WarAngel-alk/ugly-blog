@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -187,6 +188,17 @@ public class PostController {
         commentDao.deleteComment(comment);
 
         return "";
+    }
+
+    @RequestMapping(value = "/posts/tag/{tagName}*", method = RequestMethod.GET)
+    public String showPostsByTag(@PathVariable String tagName, ModelMap model) {
+        Tag tag = tagDao.getTag(tagName);
+        List<Post> postsList = postDao.getPostsByTagForPage(tag, 1);
+
+        model.put("tipMessage", "All posts with tag <b>" + tagName + "</b>");
+        model.put("postList", postsList);
+
+        return "posts";
     }
 
 }
