@@ -288,3 +288,10 @@
     padding: 0 5px;
     margin: 0;
 }
+
+.posts-tip-label {
+    font-size: 20px;
+    padding: 5px 20px;
+    border-radius: 15px;
+    background-color: #fcfff2;
+}
