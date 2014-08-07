@@ -58,7 +58,7 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
                 session -> session
                         .createQuery("from Post where :tag in elements(tags)")
                         .setParameter("tag", tag)
-                        .setFirstResult(page * postsPerPage)
+                        .setFirstResult((page - 1) * postsPerPage)
                         .setMaxResults(postsPerPage)
                         .list()
         );
