@@ -16,7 +16,7 @@
         <div class="row message-subject">
             ${fn:length(message.subject) ne 0 ? message.subject : ''}
         </div>
-        <div class="row">
+        <div class="row message-text">
             ${message.text}
         </div>
     </div>
