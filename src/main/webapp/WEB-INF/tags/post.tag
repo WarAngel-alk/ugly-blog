@@ -80,7 +80,8 @@
                         <img id="post-${post.id}-vote-up" class="post-vote" src="${voteUpUrl}" width="20" height="20"/>
                         <span id="post-${post.id}-rating"
                               title="Positive: ${post.positiveMarks} Negative: ${post.negativeMarks}">${post.rating}</span>
-                        <img id="post-${post.id}-vote-down" class="post-vote" src="${voteDownUrl}" width="20" height="20"/>
+                        <img id="post-${post.id}-vote-down" class="post-vote" src="${voteDownUrl}" width="20"
+                             height="20"/>
                     </c:if>
 
                     <c:if test="${vote eq null}">
@@ -103,7 +104,10 @@
             </div>
         </div>
         <div class="row post-tags">
-            Tags: ${post.tagsString}
+            Tags:
+            <c:forEach var="tag" items="${post.tags}" varStatus="iter">
+                <a class="post-tag">${tag.name}</a>${!iter.last ? ', ' : ''}
+            </c:forEach>
         </div>
     </div>
 </div>
