@@ -133,10 +133,9 @@ public class UserWebTest extends AbstractWebTest {
         // Accept confirmation of comment deleting
         driver.switchTo().alert().accept();
 
-        driver.navigate().refresh();
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
-        boolean deletedCommentNotFound = reloadUntilFound(By.xpath(postLinkByPostTitle(commentContentByText(commentText))), 2000);
+        boolean deletedCommentNotFound = reloadUntilFound(By.xpath(postLinkByPostTitle(commentContentByText(commentText))), 3000);
         assertTrue(deletedCommentNotFound);
     }
 
