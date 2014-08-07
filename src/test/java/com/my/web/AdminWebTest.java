@@ -63,4 +63,52 @@ public class AdminWebTest extends AbstractWebTest {
             assertTrue(testTagsList.contains(tag.getText().trim()));
         }
     }
+
+    @Test(dependsOnMethods = "testAddPost")
+    public void testEditPost() throws Exception {
+        driver.get(getAbsolutePath("/home"));
+
+        // Click edit link on post added in previous method
+        driver.findElement(By.xpath(postEditLinkByPostTitle(testPostTitle))).click();
+
+        String newPostTitle = testPostTitle + "NEW"; 
+        String newPostText = testPostText + "NEW";
+        String newPostTags = testPostTags + ", tag3";
+
+        // Load add post form elements
+        WebElement titleField = driver.findElement(By.xpath(addPostForm_TitleField));
+        WebElement textField = driver.findElement(By.xpath(addPostForm_TextField));
+        WebElement tagsField = driver.findElement(By.xpath(addPostForm_TagsField));
+        WebElement submitButton = driver.findElement(By.xpath(addPostForm_SubmitButton));
+
+        // Check if fields are filled with post data
+        assertEquals(titleField.getAttribute("value"), testPostTitle);
+        assertEquals(textField.getText(), testPostText);
+        assertEquals(tagsField.getAttribute("value"), testPostTags);
+
+        // Fill fields with new values and click update button
+        titleField.clear();
+        textField.clear();
+        tagsField.clear();
+        titleField.sendKeys(newPostTitle);
+        textField.sendKeys(newPostText);
+        tagsField.sendKeys(newPostTags);
+        submitButton.submit();
+
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
+
+        WebElement postTitle = driver.findElement(By.xpath(post_title));
+        WebElement postText = driver.findElement(By.xpath(post_text));
+        List<WebElement> tags = driver.findElements(By.xpath(post_tagsString));
+
+        assertTrue(postTitle.getText().contains(newPostTitle));
+        assertTrue(postText.getText().contains(newPostText));
+
+        List<String> newTagsList = Arrays.asList(newPostTags.split(", "));
+
+        assertEquals(tags.size(), newTagsList.size());
+        for (WebElement tag : tags) {
+            assertTrue(newTagsList.contains(tag.getText().trim()));
+        }
+    }
 }
