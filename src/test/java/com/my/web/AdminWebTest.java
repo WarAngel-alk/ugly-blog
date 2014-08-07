@@ -14,7 +14,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class AdminWebTest extends AbstractWebTest {
-    
+
     private static final String testPostTitle = "TEST POST TITLE " + RandomStringUtils.randomNumeric(10);
     private static final String testPostText = "TEST POST TEXT " + RandomStringUtils.randomNumeric(10);
     private static final String testPostTags = "tag1, tag2";
@@ -41,7 +41,7 @@ public class AdminWebTest extends AbstractWebTest {
         WebElement textField = driver.findElement(By.xpath(addPostForm_TextField));
         WebElement tagsField = driver.findElement(By.xpath(addPostForm_TagsField));
         WebElement submitButton = driver.findElement(By.xpath(addPostForm_SubmitButton));
-        
+
         titleField.sendKeys(testPostTitle);
         textField.sendKeys(testPostText);
         tagsField.sendKeys(testPostTags);
@@ -71,7 +71,7 @@ public class AdminWebTest extends AbstractWebTest {
         // Click edit link on post added in previous method
         driver.findElement(By.xpath(postEditLinkByPostTitle(testPostTitle))).click();
 
-        String newPostTitle = testPostTitle + "NEW"; 
+        String newPostTitle = testPostTitle + "NEW";
         String newPostText = testPostText + "NEW";
         String newPostTags = testPostTags + ", tag3";
 
@@ -110,5 +110,21 @@ public class AdminWebTest extends AbstractWebTest {
         for (WebElement tag : tags) {
             assertTrue(newTagsList.contains(tag.getText().trim()));
         }
+    }
+
+    @Test(dependsOnMethods = "testEditPost")
+    public void testDeletePost() throws Exception {
+        driver.get(getAbsolutePath("/home"));
+
+        // Click delete link on post edited in previous method
+        driver.findElement(By.xpath(postDeleteLinkByPostTitle(testPostTitle + "NEW"))).click();
+
+        // Accept confirmation of post deleting
+        driver.switchTo().alert().accept();
+
+        assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/home")));
+
+        boolean deletedPostNotFound = reloadUntilFound(By.xpath(postLinkByPostTitle(testPostTitle + "NEW")), 2000);
+        assertTrue(deletedPostNotFound);
     }
 }
