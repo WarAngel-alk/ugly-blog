@@ -20,6 +20,10 @@
         <put-attribute name="content" value="/WEB-INF/views/post.jsp"/>
     </definition>
 
+    <definition name="posts" extends="template">
+        <put-attribute name="content" value="/WEB-INF/views/posts.jsp"/>
+    </definition>
+
     <definition name="editPost" extends="template">
         <put-attribute name="content" value="/WEB-INF/views/editPost.jsp"/>
     </definition>
