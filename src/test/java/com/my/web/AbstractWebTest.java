@@ -1,6 +1,7 @@
 package com.my.web;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -175,4 +176,19 @@ public abstract class AbstractWebTest {
     protected void logoutInternal() {
         driver.get(getAbsolutePath("/logout"));
     }
+
+    protected boolean reloadUntilFound(By criteria, long timeout) {
+        long startTime = System.currentTimeMillis();
+
+        while (System.currentTimeMillis() <= startTime + timeout) {
+            try {
+                driver.findElement(criteria);
+            } catch (NoSuchElementException e1) {
+                return true;
+            }
+            driver.navigate().refresh();
+        }
+        return false;
+    }
+
 }
