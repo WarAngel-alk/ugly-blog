@@ -33,7 +33,7 @@
                     <s:url var="editIconUrl" value="/resources/images/edit_icon.png"/>
                     <img class="post-title-icon" src="${editIconUrl}" width="20" height="20"/>
                 </a>
-                <a href="#" onclick="deletePost(${post.id})">
+                <a onclick="deletePost(${post.id})">
                     <button class="btn btn-danger post-title-icon">
                         X
                     </button>
