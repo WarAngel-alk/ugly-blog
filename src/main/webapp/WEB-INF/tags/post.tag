@@ -47,9 +47,9 @@
     <c:if test="${isHomePage}">
         <s:url var="postUrl" value="/post/${post.id}"/>
         <a href="${postUrl}">
-            <div class="btn btn-default">
+            <button class="btn btn-default">
                 To post page
-            </div>
+            </button>
         </a>
     </c:if>
 
