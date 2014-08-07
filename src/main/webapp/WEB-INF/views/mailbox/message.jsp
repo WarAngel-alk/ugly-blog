@@ -7,7 +7,7 @@
     <div class="col-md-6 col-md-offset-3 message-body">
         <div class="row message-info">
             <s:url value="/user/${message.id}" var="userUrl"/>
-            <a href="userUrl">
+            <a href="${userUrl}">
                 ${message.sender.name}
             </a>
             -
