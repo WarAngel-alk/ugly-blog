@@ -2,6 +2,7 @@ package com.my.dao;
 
 import com.my.dao.interfaces.PostDao;
 import com.my.model.Post;
+import com.my.model.Tag;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,35 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
                         .setFirstResult((page - 1) * postsPerPage)
                         .setMaxResults(postsPerPage)
                         .list());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Post> getPostsByTag(Tag tag) {
+        return this.<List<Post>>executeWithNativeSession(
+                session -> session
+                        .createQuery("from Post where :tag in elements(tags)")
+                        .setParameter("tag", tag)
+                        .list()
+        );
+    }
+
+    @Override
+    public List<Post> getPostsByTagForPage(Tag tag, int page) {
+        return getPostsByTagForPage(tag, page, DEFAULT_POSTS_PER_PAGE);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Post> getPostsByTagForPage(Tag tag, int page, int postsPerPage) {
+        return this.<List<Post>>executeWithNativeSession(
+                session -> session
+                        .createQuery("from Post where :tag in elements(tags)")
+                        .setParameter("tag", tag)
+                        .setFirstResult(page * postsPerPage)
+                        .setMaxResults(postsPerPage)
+                        .list()
+        );
     }
 
     @Override
