@@ -44,10 +44,10 @@ public class UserWebTest extends AbstractWebTest {
             String voteUpSrc = voteUp.getAttribute("src");
             String voteDownSrc = voteDown.getAttribute("src");
 
-            assertTrue(voteUpSrc.contains("active.png") || voteUpSrc.contains("inactive.png"));
-            assertTrue(voteDownSrc.contains("active.png") || voteDownSrc.contains("inactive.png"));
+            assertTrue(voteUpSrc.contains("_active.png") || voteUpSrc.contains("_inactive.png"));
+            assertTrue(voteDownSrc.contains("_active.png") || voteDownSrc.contains("_inactive.png"));
 
-            if (voteUpSrc.contains("active.png") || voteDownSrc.contains("active.png")) {
+            if (voteUpSrc.contains("_active.png") || voteDownSrc.contains("_active.png")) {
                 assertNull(voteUp.getAttribute("onclick"));
                 assertNull(voteDown.getAttribute("onclick"));
             } else {
