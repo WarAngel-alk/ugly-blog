@@ -10,11 +10,11 @@
         var deployPath = ${deployPath};
     </script>
 
-    <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap.min.css"/>">
+    <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap.min.css"/>"/>
 
-    <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap-theme.min.css"/>">
+    <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap-theme.min.css"/>"/>
 
-    <link rel="stylesheet" href="<s:url value="/resources/css/style.css"/>">
+    <link rel="stylesheet" href="<s:url value="/resources/css/style.css"/>"/>
 </head>
 
 <body>
