@@ -6,7 +6,7 @@
 
 <%@ attribute name="postText" %>
 <%@ attribute name="post" type="com.my.model.Post" %>
-<%@ attribute name="isHomePage" type="java.lang.Boolean" %>
+<%@ attribute name="isPostPage" type="java.lang.Boolean" %>
 
 <div class="post">
     <div class="post-title-line">
@@ -15,12 +15,12 @@
                 <fmt:formatDate value="${post.postDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
             </div>
             <div class="post-title">
-                <c:if test="${isHomePage}">
+                <c:if test="${!isPostPage}">
                 <s:url var="postUrl" value="/post/${post.id}"/>
                 <a href="${postUrl}">
                     </c:if>
                     ${post.title}
-                    <c:if test="${isHomePage}">
+                    <c:if test="${!isPostPage}">
                 </a>
                 </c:if>
             </div>
@@ -44,7 +44,7 @@
 
     <div class="post-content">${postText}</div>
 
-    <c:if test="${isHomePage}">
+    <c:if test="${!isPostPage}">
         <s:url var="postUrl" value="/post/${post.id}"/>
         <a href="${postUrl}">
             <button class="btn btn-default">

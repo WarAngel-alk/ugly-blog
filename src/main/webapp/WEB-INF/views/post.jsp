@@ -9,7 +9,7 @@
 
     <sec:authentication property="name" var="currentUserName"/>
 
-    <tags:post postText="${post.text}" post="${post}" isHomePage="${false}"/>
+    <tags:post postText="${post.text}" post="${post}" isPostPage="${true}"/>
 
     <div class="comments">
         <c:forEach items="${post.comments}" var="comment">

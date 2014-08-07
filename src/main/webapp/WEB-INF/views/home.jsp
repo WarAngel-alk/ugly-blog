@@ -7,7 +7,7 @@
         <c:set var="textLongerThan1000" value="${fn:length(post.text) gt 1000}"/>
         <c:set var="postText"
                value="${textLongerThan1000 ? fn:substring(post.text, 0, 1000) : post.text}"/>
-        <tags:post postText="${postText}${textLongerThan1000 ? '...' : ''}" post="${post}" isHomePage="${true}"/>
+        <tags:post postText="${postText}${textLongerThan1000 ? '...' : ''}" post="${post}" isPostPage="${false}"/>
     </c:forEach>
 
     <c:url var="votingJsUrl" value="/resources/js/voting.js"/>
