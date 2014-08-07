@@ -2,7 +2,6 @@ package com.my.web;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -137,16 +136,8 @@ public class UserWebTest extends AbstractWebTest {
         driver.navigate().refresh();
         assertTrue(driver.getCurrentUrl().contains(getAbsolutePath("/post/")));
 
-        boolean commentNotFound = false;
-        try {
-            // Should throw NoSuchElementException because such comment have been deleted
-            driver.findElement(By.xpath(commentContentByText(commentText)));
-        } catch (NoSuchElementException e1) {
-            commentNotFound = true;
-        }
-        if (!commentNotFound) {
-            assertTrue(false, "Comment for deleting was found after deleting");
-        }
+        boolean deletedCommentNotFound = reloadUntilFound(By.xpath(postLinkByPostTitle(commentContentByText(commentText))), 2000);
+        assertTrue(deletedCommentNotFound);
     }
 
     @Test
@@ -228,15 +219,7 @@ public class UserWebTest extends AbstractWebTest {
 
         driver.navigate().refresh();
 
-        boolean messageNotFound = false;
-        try {
-            // Should throw NoSuchElementException because such message have been deleted
-            driver.findElement(By.xpath(messageLinkBySubject(messageSubject)));
-        } catch (NoSuchElementException e1) {
-            messageNotFound = true;
-        }
-        if (!messageNotFound) {
-            assertTrue(false, "Message for deleting was found after deleting");
-        }
+        boolean deletedMessageNotFound = reloadUntilFound(By.xpath(postLinkByPostTitle(messageLinkBySubject(messageSubject))), 2000);
+        assertTrue(deletedMessageNotFound);
     }
 }
