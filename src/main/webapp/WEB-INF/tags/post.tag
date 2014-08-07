@@ -106,7 +106,8 @@
         <div class="row post-tags">
             Tags:
             <c:forEach var="tag" items="${post.tags}" varStatus="iter">
-                <a class="post-tag">${tag.name}</a>${!iter.last ? ', ' : ''}
+                <s:url var="tagUrl" value="/posts/tag/${tag.name}"/>
+                <a href="${tagUrl}" class="post-tag">${tag.name}</a>${!iter.last ? ', ' : ''}
             </c:forEach>
         </div>
     </div>
