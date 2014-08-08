@@ -26,14 +26,17 @@
 
     <definition name="editPost" extends="template">
         <put-attribute name="content" value="/WEB-INF/views/editPost.jsp"/>
+        <put-attribute name="side"/>
     </definition>
 
     <definition name="signup" extends="template">
         <put-attribute name="content" value="/WEB-INF/views/signup.jsp"/>
+        <put-attribute name="side"/>
     </definition>
 
     <definition name="login" extends="template">
         <put-attribute name="content" value="/WEB-INF/views/login.jsp"/>
+        <put-attribute name="side"/>
     </definition>
 
     <definition name="user" extends="template">

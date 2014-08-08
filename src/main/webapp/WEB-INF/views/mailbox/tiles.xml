@@ -6,6 +6,7 @@
 
     <definition name="mailbox_template" extends="template">
         <put-attribute name="mailboxHeader" value="/WEB-INF/views/parts/mailboxHeader.jsp"/>
+        <put-attribute name="side"/>
     </definition>
 
     <definition name="mailbox" extends="mailbox_template">
