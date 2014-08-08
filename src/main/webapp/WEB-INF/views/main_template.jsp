@@ -18,11 +18,13 @@
 </head>
 
 <body>
-<div id="container">
+<div id="page">
     <t:insertAttribute name="header"/>
     <t:insertAttribute name="mailboxHeader" ignore="true"/>
-    <t:insertAttribute name="side" ignore="true"/>
-    <t:insertAttribute name="content"/>
+    <div class="container-fluid">
+        <t:insertAttribute name="content"/>
+        <t:insertAttribute name="side" ignore="true" preparer="sidebarPreparer"/>
+    </div>
 </div>
 
 <script src="<s:url value="/resources/js/jquery.min.js"/>"></script>
