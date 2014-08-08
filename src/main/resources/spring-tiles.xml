@@ -6,8 +6,12 @@
 
     <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
 
+    <bean id="sidebarPreparer" class="com.my.tiles.SidebarPreparer"/>
+
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions" value="/WEB-INF/views/**/tiles.xml"/>
+        <property name="preparerFactoryClass"
+                  value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"/>
     </bean>
 
 </beans>
