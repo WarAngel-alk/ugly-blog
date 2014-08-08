@@ -4,15 +4,24 @@
 <div id="sidebar" class="col-md-3">
 
     <%-- Posts list --%>
-    <div class="sidebar-posts-list">
-
+    <div class="sidebar-posts">
+        <ul class="sidebar-posts-list">
+            <c:forEach var="post" items="${postList}">
+                <li class="sidebar-posts-item">
+                    <s:url var="postUrl" value="/post/${post.id}"/>
+                    <a href="${postUrl}">
+                            ${post.title}
+                    </a>
+                </li>
+            </c:forEach>
+        </ul>
     </div>
     <%-- End of Posts list --%>
 
     <%-- Tag cloud --%>
     <div class="sidebar-tag-cloud">
-        <div id="tags-canvas-container">
-            <canvas id="tags-canvas">
+        <div id="tags-cloud-container">
+            <canvas id="tags-cloud">
                 <p>Anything in here will be replaced on browsers that support the canvas element</p>
             </canvas>
         </div>
@@ -38,7 +47,7 @@
     <script type="text/javascript">
         window.onload = function () {
             try {
-                TagCanvas.Start('tags-canvas', 'tags', {
+                TagCanvas.Start('tags-cloud', 'tags', {
                     textColour: '#111111',
                     outlineColour: '#ff00ff',
                     reverse: true,
@@ -46,7 +55,7 @@
                     maxSpeed: 0.125
                 });
             } catch (e) {
-                document.getElementById('tags-canvas-container').style.display = 'none';
+                document.getElementById('tags-cloud-container').style.display = 'none';
             }
         };
     </script>
