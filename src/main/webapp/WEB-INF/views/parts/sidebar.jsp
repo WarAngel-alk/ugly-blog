@@ -1,4 +1,6 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div id="sidebar" class="col-md-3">
 
     <%-- Posts list --%>
@@ -16,9 +18,10 @@
         </div>
         <div id="tags">
             <ul>
-                <li><a href="http://www.google.com">Google</a></li>
-                <li><a href="http://www.google.com">Link</a></li>
-                <li><a href="http://www.google.com">Cloud</a></li>
+                <c:forEach var="tag" items="${tagList}">
+                    <s:url var="tagUrl" value="/posts/tag/${tag.name}"/>
+                    <li><a href="${tagUrl}">${tag.name}</a></li>
+                </c:forEach>
             </ul>
         </div>
     </div>
