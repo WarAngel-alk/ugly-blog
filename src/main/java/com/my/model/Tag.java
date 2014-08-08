@@ -1,5 +1,7 @@
 package com.my.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,6 +24,7 @@ public class Tag implements Serializable, DomainObject {
     private String name;
 
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private List<Post> posts;
 
     public Tag() {
