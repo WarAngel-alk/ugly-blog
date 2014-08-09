@@ -76,6 +76,10 @@ public class Post implements Serializable, DomainObject {
         this.title = title;
     }
 
+    public Post(Date postDate) {
+        this.postDate = postDate;
+    }
+
     public Post(String title, String text) {
         this.text = text;
         this.title = title;
