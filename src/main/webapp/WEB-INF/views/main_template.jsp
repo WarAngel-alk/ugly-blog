@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="<s:url value="/resources/css/bootstrap-theme.min.css"/>"/>
 
     <link rel="stylesheet" href="<s:url value="/resources/css/style.css"/>"/>
+
+    <script src="<s:url value="/resources/js/jquery.min.js"/>"></script>
+    <script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
 </head>
 
 <body>
@@ -27,7 +30,5 @@
     </div>
 </div>
 
-<script src="<s:url value="/resources/js/jquery.min.js"/>"></script>
-<script src="<s:url value="/resources/js/bootstrap.min.js"/>"></script>
 </body>
 </html>
