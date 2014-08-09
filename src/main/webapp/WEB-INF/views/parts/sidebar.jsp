@@ -38,7 +38,17 @@
 
     <%-- Archive --%>
     <div class="sidebar-archive">
-
+        <div id="archive-tree">
+            <ul>
+                <li data-jstree='{"selected":true}'>Root
+                    <ul>
+                        <li>Child</li>
+                        <li>Child</li>
+                        <li>Child</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <%-- End of Archive --%>
 
@@ -58,6 +68,22 @@
                 document.getElementById('tags-cloud-container').style.display = 'none';
             }
         };
+    </script>
+
+    <s:url var="jsTreeCss" value="/resources/css/jstree.min.css"/>
+    <link href="${jsTreeCss}" rel="stylesheet" type="text/css">
+
+    <s:url var="jsTree" value="/resources/js/jstree.min.js"/>
+    <script src="${jsTree}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#archive-tree').jstree({
+                "core": {
+                    "multiple": true
+                }
+            });
+        });
     </script>
 
 </div>
