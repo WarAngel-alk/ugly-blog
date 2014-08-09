@@ -94,6 +94,9 @@
 
     <script type="text/javascript">
         $(function () {
+            $.jstree.defaults.sort = function(node1, node2) {
+                return (node1 <= node2 ? 1 : -1);
+            };
             $('#archive-tree').jstree({
                 "plugins" : [ "sort" ]
             }).on("select_node.jstree", function (e, data) {
