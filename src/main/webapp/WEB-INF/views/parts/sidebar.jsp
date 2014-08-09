@@ -39,14 +39,30 @@
     <%-- Archive --%>
     <div class="sidebar-archive">
         <div id="archive-tree">
-            <ul>
-                <li data-jstree='{"selected":true}'>Root
-                    <ul>
-                        <li>Child</li>
-                        <li>Child</li>
-                        <li>Child</li>
-                    </ul>
-                </li>
+            <ul class="archive-tree-list">
+                <s:eval var="yearSet" expression="postMap.keySet()"/>
+                <c:forEach var="yearNumber" items="${yearSet}">
+                    <li id="${yearNumber}" class="archive-year-item" data-jstree='{"opened":true}'>${yearNumber}
+                        <ul class="archive-month-list">
+                            <s:eval var="monthSet" expression="postMap.get(yearNumber).keySet()"/>
+                            <c:forEach var="monthNumber" items="${monthSet}">
+                                <li id="${monthNumber}" class="archive-month-item">${monthNumber}
+                                    <ul class="archive-posts-list">
+                                        <s:eval var="postList" expression="postMap.get(yearNumber).get(monthNumber)"/>
+                                        <c:forEach var="post" items="${postList}">
+                                            <li class="archive-posts-item" <%--data-jstree='{"icon": "glyphicon glyphicon-leaf"}'--%>>
+                                                <s:url var="postUrl" value="/post/${post.id}"/>
+                                                <a href="${postUrl}">
+                                                    ${post.title}
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
     </div>
