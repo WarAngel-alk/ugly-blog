@@ -95,10 +95,13 @@
     <script type="text/javascript">
         $(function () {
             $('#archive-tree').jstree({
-                "core": {
-                    "multiple": true
-                }
-            });
+                "plugins" : [ "sort" ]
+            }).on("select_node.jstree", function (e, data) {
+                        var href = data.node.a_attr.href;
+                        if (href != '#') {
+                            document.location.href = href;
+                        }
+                })
         });
     </script>
 
