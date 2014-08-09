@@ -29,10 +29,6 @@
     padding-left: 30px;
 }
 
-#content {
-    margin: 5px;
-}
-
 .post_date {
     font-style: italic;
     font-size: 10pt;
@@ -294,4 +290,8 @@
     padding: 5px 20px;
     border-radius: 15px;
     background-color: #fcfff2;
+}
+
+#tags-cloud {
+    width: 100%;
 }
