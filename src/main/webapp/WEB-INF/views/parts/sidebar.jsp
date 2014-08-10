@@ -5,7 +5,10 @@
 
     <%-- Posts list --%>
     <div class="sidebar-posts">
-        <ul class="sidebar-posts-list">
+        <div class="sidebar-item-label">
+            TOP-10 posts
+        </div>
+        <ul id="sidebar-posts-list">
             <c:forEach var="post" items="${postList}">
                 <li class="sidebar-posts-item">
                     <s:url var="postUrl" value="/post/${post.id}"/>
@@ -20,6 +23,9 @@
 
     <%-- Tag cloud --%>
     <div class="sidebar-tag-cloud">
+        <div class="sidebar-item-label">
+            Posts by tag
+        </div>
         <div id="tags-cloud-container">
             <canvas id="tags-cloud">
                 <p>Anything in here will be replaced on browsers that support the canvas element</p>
@@ -38,6 +44,9 @@
 
     <%-- Archive --%>
     <div class="sidebar-archive">
+        <div class="sidebar-item-label">
+            Archive
+        </div>
         <div id="archive-tree">
             <ul class="archive-tree-list">
                 <s:eval var="yearSet" expression="postMap.keySet()"/>
