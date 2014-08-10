@@ -52,7 +52,9 @@ public abstract class PostUtil {
                 --month;
             }
 
-            yearMap.put(year, monthMap);
+            if (monthMap.size() != 0) {
+                yearMap.put(year, monthMap);
+            }
         }
 
         return yearMap;
