@@ -41,19 +41,22 @@
         <div id="archive-tree">
             <ul class="archive-tree-list">
                 <s:eval var="yearSet" expression="postMap.keySet()"/>
+                <s:url var="monthIconUrl" value="/resources/images/archive/month_icon.png"/>
+                <s:url var="postIconUrl" value="/resources/images/archive/post_icon.png"/>
                 <c:forEach var="yearNumber" items="${yearSet}">
                     <li id="${yearNumber}" class="archive-year-item" data-jstree='{"opened":true}'>${yearNumber}
                         <ul class="archive-month-list">
                             <s:eval var="monthSet" expression="postMap.get(yearNumber).keySet()"/>
                             <c:forEach var="monthNumber" items="${monthSet}">
-                                <li id="${monthNumber}" class="archive-month-item">${monthNumber}
+                                <li id="${monthNumber}" class="archive-month-item"
+                                    data-jstree='{"icon": "${monthIconUrl}"}'>${monthNumber}
                                     <ul class="archive-posts-list">
                                         <s:eval var="postList" expression="postMap.get(yearNumber).get(monthNumber)"/>
                                         <c:forEach var="post" items="${postList}">
-                                            <li class="archive-posts-item" <%--data-jstree='{"icon": "glyphicon glyphicon-leaf"}'--%>>
+                                            <li class="archive-posts-item" data-jstree='{"icon": "${postIconUrl}"}'>
                                                 <s:url var="postUrl" value="/post/${post.id}"/>
                                                 <a href="${postUrl}">
-                                                    ${post.title}
+                                                        ${post.title}
                                                 </a>
                                             </li>
                                         </c:forEach>
@@ -94,17 +97,17 @@
 
     <script type="text/javascript">
         $(function () {
-            $.jstree.defaults.sort = function(node1, node2) {
+            $.jstree.defaults.sort = function (node1, node2) {
                 return (node1 <= node2 ? 1 : -1);
             };
             $('#archive-tree').jstree({
-                "plugins" : [ "sort" ]
+                "plugins": [ "sort" ]
             }).on("select_node.jstree", function (e, data) {
                         var href = data.node.a_attr.href;
                         if (href != '#') {
                             document.location.href = href;
                         }
-                })
+                    })
         });
     </script>
 
