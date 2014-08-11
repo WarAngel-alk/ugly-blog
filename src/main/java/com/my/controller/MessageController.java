@@ -129,7 +129,11 @@ public class MessageController {
             message.setDeletedBySender(true);
         }
 
-        messageDao.updateMessage(message);
+        if (message.isDeletedByReceiver() && message.isDeletedBySender()) {
+            messageDao.deleteMessage(message.getId());
+        } else {
+            messageDao.updateMessage(message);
+        }
 
         return "";
     }
