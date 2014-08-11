@@ -21,7 +21,7 @@ public class HeaderPreparer implements ViewPreparer {
     public void execute(Request tilesContext, AttributeContext attributeContext) {
         // TODO: replace checking user authentication with security annotations (which?)
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
+        if (!auth.getPrincipal().equals("guest")) {
             String currentUserName = auth.getName();
             User currentUser = userDao.getUser(currentUserName);
             List<Message> usersMessages = currentUser.getIncomingMessages();
