@@ -10,6 +10,7 @@ import org.apache.tiles.preparer.ViewPreparer;
 import org.apache.tiles.request.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -33,5 +34,24 @@ public class SidebarPreparer implements ViewPreparer {
         tilesContext.getContext("request").put("postMap", postMap);
     }
 
+    public static int getMaxFrequency(Collection<Tag> tags) {
+        int max = 0;
+        for (Tag tag : tags) {
+            max = Math.max(tag.getPosts().size(), max);
+        }
+
+        return max;
+    }
+
+    public static double getRelativeTagFrequency(Tag tag, int maxFrequency) {
+        double frequency = ((double) tag.getPosts().size()) / maxFrequency;
+
+        if (frequency < 0.4) {
+            frequency = 0.4;
+        }
+
+        frequency = ((int) (frequency * 10)) / 10d;
+        return frequency;
+    }
 
 }

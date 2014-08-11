@@ -33,9 +33,15 @@
         </div>
         <div id="tags">
             <ul>
+
+                <s:eval var="maxFrequency" expression="T(com.my.tiles.SidebarPreparer).getMaxFrequency(tagList)"/>
                 <c:forEach var="tag" items="${tagList}">
                     <s:url var="tagUrl" value="/posts/tag/${tag.name}"/>
-                    <li><a href="${tagUrl}">${tag.name}</a></li>
+                    <s:eval var="tagWeight"
+                            expression="T(com.my.tiles.SidebarPreparer).getRelativeTagFrequency(tag, maxFrequency)"/>
+                    <li>
+                        <a href="${tagUrl}" data-weight="${tagWeight * 30}">${tag.name}</a>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
@@ -98,11 +104,13 @@
         window.onload = function () {
             try {
                 TagCanvas.Start('tags-cloud', 'tags', {
+                    weight: true,
+                    weightFrom: 'data-weight',
                     textColour: '#111111',
-                    outlineColour: '#ff00ff',
+                    outlineColour: '#115533',
                     reverse: true,
-                    depth: 0.8,
-                    maxSpeed: 0.125
+                    depth: 0.4,
+                    maxSpeed: 0.1
                 });
             } catch (e) {
                 document.getElementById('tags-cloud-container').style.display = 'none';
