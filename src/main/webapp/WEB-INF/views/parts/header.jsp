@@ -30,9 +30,8 @@
                      height="64"/>
             </a>
             <a href="<s:url value="/mail/in"/>">
-                <img class="header_image"
-                     src="<s:url value="/resources/images/header_mail.png"/>" width="64"
-                     height="64"/>
+                <s:url var="mailboxIconUrl" value="${headerMailboxRelativeUrl}"/>
+                <img class="header_image" src="${mailboxIconUrl}" width="64" height="64"/>
             </a>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <a href="<s:url value="/post/add"/>">
