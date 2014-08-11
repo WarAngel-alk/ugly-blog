@@ -20,4 +20,11 @@
             Date of registration: <fmt:formatDate value="${user.registrationDate}" pattern="HH:mm:ss - dd.MM.yyyy"/>
         </div>
     </div>
+    <div class="user-buttons">
+        <s:url var="sendMsgUrl" value="/mail/send?receiver=${user.name}"/>
+        <a href="${sendMsgUrl}">
+            <s:url var="sendMsgIconUrl" value="/resources/images/send_message.png"/>
+            <img class="user-send-message-btn" src="${sendMsgIconUrl}" width="24" height="24"/>
+        </a>
+    </div>
 </div>
