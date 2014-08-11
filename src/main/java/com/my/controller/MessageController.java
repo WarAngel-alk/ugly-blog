@@ -124,6 +124,7 @@ public class MessageController {
 
         if (byReceiver) {
             message.setDeletedByReceiver(true);
+            message.setRead(true);
         } else {
             message.setDeletedBySender(true);
         }
