@@ -2,7 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<div>
+<div class="col-md-9">
     <div class="user-avatar">
         <c:set var="avatarFilename"
                value="${(fn:length(user.avatarPath) ne 0) ? user.avatarPath : 'default_avatar.png' }"/>
