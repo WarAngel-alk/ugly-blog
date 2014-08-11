@@ -49,17 +49,25 @@
         </div>
         <div id="archive-tree">
             <ul class="archive-tree-list">
-                <s:eval var="yearSet" expression="postMap.keySet()"/>
                 <s:url var="monthIconUrl" value="/resources/images/archive/month_icon.png"/>
                 <s:url var="postIconUrl" value="/resources/images/archive/post_icon.png"/>
+
+                <s:eval var="yearSet" expression="postMap.keySet()"/>
                 <c:forEach var="yearNumber" items="${yearSet}">
-                    <li id="${yearNumber}" class="archive-year-item" data-jstree='{"opened":true}'>${yearNumber}
+
+                    <li id="${yearNumber}" class="archive-year-item" data-jstree='{"opened":true}'>
+                            ${yearNumber}
                         <ul class="archive-month-list">
+
                             <s:eval var="monthSet" expression="postMap.get(yearNumber).keySet()"/>
                             <c:forEach var="monthNumber" items="${monthSet}">
+                                <s:eval var="monthName"
+                                        expression="T(java.time.Month).of(monthNumber).getDisplayName(T(java.time.format.TextStyle).FULL, T(java.util.Locale).US)"/>
                                 <li id="${monthNumber}" class="archive-month-item"
-                                    data-jstree='{"icon": "${monthIconUrl}"}'>${monthNumber}
+                                    data-jstree='{"icon": "${monthIconUrl}"}'>
+                                        ${monthName}
                                     <ul class="archive-posts-list">
+
                                         <s:eval var="postList" expression="postMap.get(yearNumber).get(monthNumber)"/>
                                         <c:forEach var="post" items="${postList}">
                                             <li class="archive-posts-item" data-jstree='{"icon": "${postIconUrl}"}'>
@@ -69,12 +77,16 @@
                                                 </a>
                                             </li>
                                         </c:forEach>
+
                                     </ul>
                                 </li>
                             </c:forEach>
+
                         </ul>
                     </li>
+
                 </c:forEach>
+
             </ul>
         </div>
     </div>
