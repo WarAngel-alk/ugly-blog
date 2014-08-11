@@ -74,8 +74,13 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/mail/send", method = RequestMethod.GET)
-    public String showSendMessageForm(Model model) {
-        model.addAttribute("newMessage", new Message());
+    public String showSendMessageForm(@RequestParam(value = "receiver", required = false) String receiverName, Model model) {
+        Message message = new Message();
+        if (receiverName != null) {
+            message.setReceiver(new User(receiverName));
+        }
+
+        model.addAttribute("newMessage", message);
 
         model.addAttribute("isInbox", false);
         model.addAttribute("isOutbox", false);
