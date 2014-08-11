@@ -22,7 +22,7 @@
 
 <body>
 <div id="page">
-    <t:insertAttribute name="header"/>
+    <t:insertAttribute name="header" preparer="headerPreparer"/>
     <t:insertAttribute name="mailboxHeader" ignore="true"/>
     <div class="container-fluid">
         <t:insertAttribute name="content"/>
