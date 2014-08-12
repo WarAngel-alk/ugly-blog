@@ -23,15 +23,17 @@ public class SidebarPreparer implements ViewPreparer {
 
     @Override
     public void execute(Request tilesContext, AttributeContext attributeContext) {
-        List<Tag> tagList = tagDao.getAllTags();
-        // TODO: Replace with 10 most rated posts
-        List<Post> postList = postDao.getPostsForPage(1, 10);
+        // if this page requires sidebar
+        if (attributeContext.getAttribute("side").getValue() != null) {
+            List<Tag> tagList = tagDao.getAllTags();
+            List<Post> postList = postDao.getPostsForPage(1, 10);
 
-        Map<Integer, Map<Integer, List<Post>>> postMap = PostUtil.groupPostsByYearAndMonth(postDao.getPosts());
+            Map<Integer, Map<Integer, List<Post>>> postMap = PostUtil.groupPostsByYearAndMonth(postDao.getPosts());
 
-        tilesContext.getContext("request").put("tagList", tagList);
-        tilesContext.getContext("request").put("postList", postList);
-        tilesContext.getContext("request").put("postMap", postMap);
+            tilesContext.getContext("request").put("tagList", tagList);
+            tilesContext.getContext("request").put("postList", postList);
+            tilesContext.getContext("request").put("postMap", postMap);
+        }
     }
 
     public static int getMaxFrequency(Collection<Tag> tags) {
