@@ -37,6 +37,16 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Post> getMostRatedPosts(int amount) {
+        return this.<List<Post>>executeWithNativeSession(
+                session -> session
+                        .createQuery("from Post order by rating desc")
+                        .setMaxResults(amount)
+                        .list());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Post> getPostsByTag(Tag tag) {
         return this.<List<Post>>executeWithNativeSession(
                 session -> session
