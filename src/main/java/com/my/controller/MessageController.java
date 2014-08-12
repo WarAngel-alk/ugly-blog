@@ -93,12 +93,19 @@ public class MessageController {
     public String sendMessage(@ModelAttribute("newMessage") @Valid Message message,
                               BindingResult bindResult,
                               Model model) {
+        String receiverName = message.getReceiver().getName();
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+
         boolean anyErrors = false;
         if (bindResult.hasErrors()) {
             anyErrors = true;
         }
-        if (userDao.isUsernameFree(message.getReceiver().getName())) {
+        if (userDao.isUsernameFree(receiverName)) {
             bindResult.addError(new FieldError("message", "receiver", "Receiver not exist"));
+            anyErrors = true;
+        }
+        if (currentUserName.equals(receiverName)) {
+            bindResult.addError(new FieldError("message", "receiver", "You can not send message to yourself"));
             anyErrors = true;
         }
 
@@ -109,11 +116,10 @@ public class MessageController {
             return "sendMessage";
         }
 
-        String curUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User curUser = userDao.getUser(curUserName);
+        User curUser = userDao.getUser(currentUserName);
         message.setSender(curUser);
 
-        User receiver = userDao.getUser(message.getReceiver().getName());
+        User receiver = userDao.getUser(receiverName);
         message.setReceiver(receiver);
 
         messageDao.sendMessage(message);
