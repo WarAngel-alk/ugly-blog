@@ -26,7 +26,7 @@ public class SidebarPreparer implements ViewPreparer {
         // if this page requires sidebar
         if (attributeContext.getAttribute("side").getValue() != null) {
             List<Tag> tagList = tagDao.getAllTags();
-            List<Post> postList = postDao.getPostsForPage(1, 10);
+            List<Post> postList = postDao.getMostRatedPosts(10);
 
             Map<Integer, Map<Integer, List<Post>>> postMap = PostUtil.groupPostsByYearAndMonth(postDao.getPosts());
 
