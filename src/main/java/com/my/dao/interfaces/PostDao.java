@@ -13,6 +13,8 @@ public interface PostDao {
 
     public List<Post> getPostsForPage(int page, int postsPerPage);
 
+    public List<Post> getMostRatedPosts(int amount);
+
     public List<Post> getPostsByTag(Tag tag);
 
     public List<Post> getPostsByTagForPage(Tag tag, int page);
