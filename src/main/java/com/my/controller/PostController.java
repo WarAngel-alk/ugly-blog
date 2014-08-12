@@ -1,15 +1,12 @@
 package com.my.controller;
 
-import com.my.dao.interfaces.CommentDao;
 import com.my.dao.interfaces.PostDao;
 import com.my.dao.interfaces.TagDao;
 import com.my.dao.interfaces.UserDao;
 import com.my.model.Comment;
 import com.my.model.Post;
 import com.my.model.Tag;
-import com.my.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,9 +26,6 @@ public class PostController {
 
     @Autowired
     private UserDao userDao;
-
-    @Autowired
-    private CommentDao commentDao;
 
     @Autowired
     private TagDao tagDao;
@@ -160,36 +154,6 @@ public class PostController {
         return "redirect:/home";
     }
 
-    @RequestMapping(value = "/post/{postId}/comment*", method = RequestMethod.PUT)
-    public String addComment(@PathVariable("postId") long postId,
-                             @ModelAttribute("newComment") @Valid Comment comment,
-                             BindingResult bindResult,
-                             Model model) {
-        if (bindResult.hasErrors()) {
-            model.addAttribute("post", postDao.getPost(postId));
-            return "post";
-        }
-
-        User author = userDao.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-        comment.setAuthor(author);
-
-        Post post = postDao.getPost(postId);
-        comment.setPost(post);
-
-        commentDao.addComment(comment);
-
-        return "redirect:/post/" + postId;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/post/{postId}/comment/{commentId}*", method = RequestMethod.DELETE)
-    public String deleteComment(@PathVariable long postId, @PathVariable long commentId) {
-        Comment comment = commentDao.getComment(commentId);
-        commentDao.deleteComment(comment);
-
-        return "";
-    }
-
     @RequestMapping(value = "/posts/tag/{tagName}*", method = RequestMethod.GET)
     public String showPostsByTag(@PathVariable String tagName, ModelMap model) {
         Tag tag = tagDao.getTag(tagName);
@@ -201,4 +165,11 @@ public class PostController {
         return "posts";
     }
 
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public PostDao getPostDao() {
+        return postDao;
+    }
 }
