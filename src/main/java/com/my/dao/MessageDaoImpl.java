@@ -3,6 +3,9 @@ package com.my.dao;
 import com.my.dao.interfaces.MessageDao;
 import com.my.model.Message;
 import com.my.model.User;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,15 +14,16 @@ import java.util.List;
 
 public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
 
-    private static final int DEFAULT_MESSAGES_PER_PAGE = 20;
+    private static final int DEFAULT_MESSAGES_PER_PAGE = 10;
 
     @Override
     @Transactional(readOnly = true)
     public List<Message> getIncomingMessages(User user) {
-        return (List<Message>) find("from Message where receiver = ?", user);
+        return (List<Message>) find("from Message where receiver = ? and deletedByReceiver = false", user);
     }
 
     @Override
+    @Cacheable(value = "incomingMessages", key = "#user.id")
     public List<Message> getIncomingMessagesForPage(User user, int page) {
         return getIncomingMessagesForPage(user, page, DEFAULT_MESSAGES_PER_PAGE);
     }
@@ -43,6 +47,7 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
     }
 
     @Override
+    @Cacheable(value = "outcomingMessages", key = "#user.id")
     public List<Message> getOutcomingMessagesForPage(User user, int page) {
         return getOutcomingMessagesForPage(user, page, DEFAULT_MESSAGES_PER_PAGE);
     }
@@ -67,6 +72,10 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
 
     @Override
     @Transactional(readOnly = false)
+    @Caching(evict = {
+            @CacheEvict(value = "incomingMessages", allEntries = false, key = "#message.receiver.id"),
+            @CacheEvict(value = "outcomingMessages", allEntries = false, key = "#message.sender.id")
+    })
     public long sendMessage(Message message) {
         message.setDeletedBySender(false);
         message.setDeletedByReceiver(false);
@@ -88,6 +97,10 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
 
     @Override
     @Transactional(readOnly = false)
+    @Caching(evict = {
+            @CacheEvict(value = "incomingMessages", allEntries = false, key = "#message.receiver.id"),
+            @CacheEvict(value = "outcomingMessages", allEntries = false, key = "#message.sender.id")
+    })
     public void updateMessage(Message message) {
         update(message);
     }
