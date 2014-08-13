@@ -30,4 +30,11 @@
            eternal="false"
            timeToIdleSeconds="600" /> <!-- 10 minutes -->
 
+    <cache name="allTags"
+           maxElementsInMemory="0"
+           maxElementsOnDisk="1"
+           overflowToDisk="true"
+           eternal="true"
+           diskExpiryThreadIntervalSeconds="0" />
+
 </ehcache>
