@@ -77,13 +77,14 @@
     <!-- Caching (EhCache) -->
 
     <bean id="cacheManager"
-          class="org.springframework.cache.ehcache.EhCacheCacheManager" factory-bean="ehcache">
+          class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcache"/>
         <property name="transactionAware" value="true"/>
     </bean>
 
     <bean id="ehcache"
           class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="ehcache.xml"/>
+        <property name="configLocation" value="classpath:ehcache.xml"/>
     </bean>
 
 </beans>
