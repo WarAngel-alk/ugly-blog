@@ -5,6 +5,10 @@
             memoryStoreEvictionPolicy="LFU"
             eternal="false" />
 
+    <cache name="firstPagePosts"
+           maxElementsInMemory="1"
+           overflowToDisk="false"
+           eternal="true" />
     <cache name="incomingMessages"
            maxElementsInMemory="10"
            overflowToDisk="false"
