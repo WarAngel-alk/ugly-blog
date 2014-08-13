@@ -1,6 +1,8 @@
 package com.my.model;
 
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.Authentication;
@@ -34,12 +36,15 @@ public class Post implements Serializable, DomainObject {
     private String text;
 
     @ManyToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Tag> tags;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<UserPostMark> marks;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private List<Comment> comments;
 
     @Formula(value =
