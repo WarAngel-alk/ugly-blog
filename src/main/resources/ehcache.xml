@@ -5,36 +5,50 @@
             maxElementsInMemory="1"
             overflowToDisk="false"
             memoryStoreEvictionPolicy="LFU"
-            eternal="false" />
+            eternal="false"/>
 
     <cache name="firstPagePosts"
            maxElementsInMemory="1"
            overflowToDisk="false"
-           eternal="true" />
+           eternal="true"/>
 
     <cache name="topPosts"
            maxElementsInMemory="1"
            overflowToDisk="false"
            eternal="false"
-           timeToLiveSeconds="600" /> <!-- 10 minutes -->
+           timeToLiveSeconds="600"/>
+    <!-- 10 minutes -->
 
     <cache name="incomingMessages"
            maxElementsInMemory="10"
            overflowToDisk="false"
            eternal="false"
-           timeToIdleSeconds="600" /> <!-- 10 minutes -->
+           timeToIdleSeconds="600"/>
+    <!-- 10 minutes -->
 
     <cache name="outcomingMessages"
            maxElementsInMemory="10"
            overflowToDisk="false"
            eternal="false"
-           timeToIdleSeconds="600" /> <!-- 10 minutes -->
+           timeToIdleSeconds="600"/>
+    <!-- 10 minutes -->
 
     <cache name="allTags"
            maxElementsInMemory="0"
            maxElementsOnDisk="1"
            overflowToDisk="true"
            eternal="true"
-           diskExpiryThreadIntervalSeconds="0" />
+           diskExpiryThreadIntervalSeconds="0"/>
+
+    <!--
+        Temporary workaround to avoid loading all posts for archive displaying.
+        Should be replaced with lazy loading on client side. (task #13)
+    -->
+    <cache name="allPosts"
+           maxElementsInMemory="0"
+           maxElementsOnDisk="1"
+           overflowToDisk="true"
+           eternal="true"
+           diskExpiryThreadIntervalSeconds="0"/>
 
 </ehcache>
