@@ -89,6 +89,8 @@
             <version>2.0</version>
         </dependency>
 
+        <!-- Database caching -->
+
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
