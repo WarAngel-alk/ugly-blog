@@ -9,6 +9,13 @@
            maxElementsInMemory="1"
            overflowToDisk="false"
            eternal="true" />
+
+    <cache name="topPosts"
+           maxElementsInMemory="1"
+           overflowToDisk="false"
+           eternal="false"
+           timeToLiveSeconds="600" /> <!-- 10 minutes -->
+
     <cache name="incomingMessages"
            maxElementsInMemory="10"
            overflowToDisk="false"
