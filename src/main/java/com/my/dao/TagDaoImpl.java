@@ -12,12 +12,14 @@ import java.util.List;
 public class TagDaoImpl extends HibernateTemplate implements TagDao {
 
     @Override
+    @Transactional(readOnly = true)
     @Cacheable(value = "allTags")
     public List<Tag> getAllTags() {
         return (List<Tag>) find("from Tag");
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<String> getAllTagNames() {
         return (List<String>) find("select name from Tag");
     }
