@@ -1,0 +1,20 @@
+<ehcache>
+    <defaultCache
+            maxElementsInMemory="1"
+            overflowToDisk="false"
+            memoryStoreEvictionPolicy="LFU"
+            eternal="false" />
+
+    <cache name="incomingMessages"
+           maxElementsInMemory="10"
+           overflowToDisk="false"
+           eternal="false"
+           timeToIdleSeconds="600" /> <!-- 10 minutes -->
+
+    <cache name="outcomingMessages"
+           maxElementsInMemory="10"
+           overflowToDisk="false"
+           eternal="false"
+           timeToIdleSeconds="600" /> <!-- 10 minutes -->
+
+</ehcache>
