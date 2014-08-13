@@ -40,6 +40,7 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "topPosts", condition = "#amount == 10")
     public List<Post> getMostRatedPosts(int amount) {
         return this.<List<Post>>executeWithNativeSession(
                 session -> session
