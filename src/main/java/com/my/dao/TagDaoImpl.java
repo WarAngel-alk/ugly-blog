@@ -2,6 +2,8 @@ package com.my.dao;
 
 import com.my.dao.interfaces.TagDao;
 import com.my.model.Tag;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +12,7 @@ import java.util.List;
 public class TagDaoImpl extends HibernateTemplate implements TagDao {
 
     @Override
+    @Cacheable(value = "allTags")
     public List<Tag> getAllTags() {
         return (List<Tag>) find("from Tag");
     }
@@ -21,6 +24,7 @@ public class TagDaoImpl extends HibernateTemplate implements TagDao {
 
     @Override
     @Transactional(readOnly = false)
+    @CacheEvict(value = "allTags", allEntries = true)
     public Tag addTag(Tag tag) {
         return (Tag) save(tag);
     }
@@ -47,12 +51,14 @@ public class TagDaoImpl extends HibernateTemplate implements TagDao {
 
     @Override
     @Transactional(readOnly = false)
+    @CacheEvict(value = "allTags", allEntries = true)
     public void updateTag(Tag tag) {
         merge(tag);
     }
 
     @Override
     @Transactional(readOnly = false)
+    @CacheEvict(value = "allTags", allEntries = true)
     public void deleteTag(Tag tag) {
         delete(tag);
     }
