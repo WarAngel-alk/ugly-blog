@@ -5,6 +5,7 @@ import com.my.model.Post;
 import com.my.model.Tag;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "allPosts")
     public List<Post> getPosts() {
         return loadAll(Post.class);
     }
@@ -86,7 +88,10 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = "firstPagePosts", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "firstPagePosts", allEntries = true),
+            @CacheEvict(value = "allPosts", allEntries = true)
+    })
     public long addPost(Post post) {
         post.setPostDate(new Date());
         return (Long) save(post);
@@ -94,14 +99,20 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = "firstPagePosts", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "firstPagePosts", allEntries = true),
+            @CacheEvict(value = "allPosts", allEntries = true)
+    })
     public void updatePost(Post post) {
         merge(post);
     }
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = "firstPagePosts", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "firstPagePosts", allEntries = true),
+            @CacheEvict(value = "allPosts", allEntries = true)
+    })
     public void deletePost(Post post) {
         delete(post);
     }
