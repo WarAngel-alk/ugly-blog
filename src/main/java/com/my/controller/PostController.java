@@ -30,6 +30,27 @@ public class PostController {
     @Autowired
     private TagDao tagDao;
 
+    @RequestMapping(value = {"/", "/home", "/posts*"}, method = RequestMethod.GET)
+    public String showHomePage(Model model) {
+        return showPostListByPage(1, model);
+    }
+
+    @RequestMapping(value = "/posts/page/{page}", method = RequestMethod.GET)
+    public String showPostListByPage(@PathVariable int page, Model model) {
+        List<Post> postList = postDao.getPostsForPage(page);
+        int maxPages = postDao.getPagesCount();
+
+        if (postList.isEmpty()) {
+            model.addAttribute("tipMessage", "There isn't posts :(");
+        } else {
+            model.addAttribute("postList", postList);
+        }
+        model.addAttribute("currentPage", page);
+        model.addAttribute("maxPages", maxPages);
+
+        return "posts";
+    }
+
     @RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
     public String showPost(@PathVariable("id") long id, Model model) {
         model.addAttribute("post", postDao.getPost(id));
