@@ -12,10 +12,6 @@
                        value="/WEB-INF/views/parts/sidebar.jsp"/>
     </definition>
 
-    <definition name="home" extends="template">
-        <put-attribute name="content" value="/WEB-INF/views/home.jsp"/>
-    </definition>
-
     <definition name="post" extends="template">
         <put-attribute name="content" value="/WEB-INF/views/post.jsp"/>
     </definition>
