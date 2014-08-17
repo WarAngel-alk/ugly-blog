@@ -13,6 +13,15 @@
         <tags:post postText="${postText}${textLongerThan1000 ? '...' : ''}" post="${post}" isPostPage="${false}"/>
     </c:forEach>
 
+    <ul class="pagination pagination-lg posts-pagination">
+        <c:forEach begin="1" end="${maxPages}" var="pageNumber">
+            <s:url var="pageUrl" value="/posts/page/${pageNumber}"/>
+            <li class="${pageNumber eq currentPage ? 'active' : ''}">
+                <a href="${pageUrl}">${pageNumber}</a>
+            </li>
+        </c:forEach>
+    </ul>
+
     <s:url var="votingJsUrl" value="/resources/js/voting.js"/>
     <script language="javascript" type="text/javascript" src="${votingJsUrl}">
     </script>
