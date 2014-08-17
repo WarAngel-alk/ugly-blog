@@ -47,6 +47,16 @@
             </div>
         </s:forEach>
     </div>
+
+    <ul class="pagination pagination-md messages-pagination">
+        <c:forEach begin="1" end="${maxPages}" var="pageNumber">
+            <s:url var="pageUrl" value="/mail/${isInbox ? 'in' : 'out'}/page/${pageNumber}"/>
+            <li class="${pageNumber eq currentPage ? 'active' : ''}">
+                <a href="${pageUrl}">${pageNumber}</a>
+            </li>
+        </c:forEach>
+    </ul>
+
 </div>
 
 <s:url var="messageDeleteJsUrl" value="/resources/js/deleteMessage.js"/>
