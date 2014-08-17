@@ -10,20 +10,46 @@
     <http pattern="/resources/**" security="none"/>
 
     <http access-denied-page="/error/403" use-expressions="true">
+
+        <!-- Post list -->
         <intercept-url pattern="/" access="permitAll()"/>
         <intercept-url pattern="/home" access="permitAll()"/>
+        <intercept-url pattern="/posts*" method="GET" access="permitAll()"/>
+        <intercept-url pattern="/posts/page/*" method="GET" access="permitAll()"/>
+
+        <!-- Post page -->
         <intercept-url pattern="/post/*" method="GET" access="permitAll()"/>
+
+        <!-- Posts by tag -->
         <intercept-url pattern="/posts/tag/*" method="GET" access="permitAll()"/>
+
+        <!-- Voting -->
         <intercept-url pattern="/post/*/vote" method="PUT" access="isAuthenticated()"/>
         <intercept-url pattern="/post/*/comment/*/vote" method="PUT" access="isAuthenticated()"/>
+
+        <!-- Comment adding/deleting -->
         <intercept-url pattern="/post/*/comment/*" method="DELETE" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/post/*/comment*" method="PUT" access="hasRole('ROLE_USER')"/>
+
+        <!-- Error page -->
         <intercept-url pattern="/error**" access="permitAll()"/>
+
+        <!-- Login -->
         <intercept-url pattern="/login*" access="isAnonymous()"/>
+
+        <!-- Signup -->
         <intercept-url pattern="/signup*" access="isAnonymous()"/>
+
+        <!-- Mailbox -->
         <intercept-url pattern="/mail/**" access="hasRole('ROLE_USER')"/>
+
+        <!-- Viewsing user page -->
         <intercept-url pattern="/user/*" method="GET" access="hasRole('ROLE_USER')"/>
+
+        <!-- User registration -->
         <intercept-url pattern="/user*" method="PUT" access="isAnonymous()"/>
+
+        <!-- Any actions not mentioned supra are allowed only for admin -->
         <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/login" default-target-url="/"
