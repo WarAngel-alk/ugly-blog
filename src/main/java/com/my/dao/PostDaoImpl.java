@@ -117,4 +117,24 @@ public class PostDaoImpl extends HibernateTemplate implements PostDao {
         delete(post);
     }
 
+    @Override
+    public int getPagesCount() {
+        return getPagesCount(DEFAULT_POSTS_PER_PAGE);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getPagesCount(int postsPerPage) {
+        if (postsPerPage <= 0) {
+            throw new IllegalArgumentException("Number of posts per page should be greater than 0");
+        }
+
+        long postCount = (long) executeWithNativeSession(session ->
+                session.createQuery("select count(*) from Post")
+                        .list()
+                        .get(0)
+        );
+        return (int) Math.ceil(postCount / (float) postsPerPage);
+    }
+
 }
