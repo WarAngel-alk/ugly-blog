@@ -26,4 +26,12 @@ public interface MessageDao {
     void deleteMessage(long id);
 
     void updateMessage(Message message);
+
+    int getIncomingMessagesPagesCount(User receiver);
+
+    int getIncomingMessagesPagesCount(User receiver, int messagesPerPage);
+
+    int getOutcomingMessagesPagesCount(User sender);
+
+    int getOutcomingMessagesPagesCount(User sender, int messagesPerPage);
 }
