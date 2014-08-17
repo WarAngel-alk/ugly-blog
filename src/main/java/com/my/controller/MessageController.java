@@ -26,11 +26,25 @@ public class MessageController {
 
     @RequestMapping(value = "/mail/in", method = RequestMethod.GET)
     public String showIncomingMessages(Model model) {
+        return showIncomingMessagesByPage(1, model);
+    }
+
+    @RequestMapping(value = "/mail/out", method = RequestMethod.GET)
+    public String showOutcomingMessages(Model model) {
+        return showOutcomingMessagesByPage(1, model);
+    }
+
+    @RequestMapping(value = "/mail/in/page/{page}", method = RequestMethod.GET)
+    public String showIncomingMessagesByPage(@PathVariable int page, Model model) {
         String curUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         User curUser = userDao.getUser(curUserName);
 
-        List<Message> messageList = messageDao.getIncomingMessagesForPage(curUser, 1);
+        List<Message> messageList = messageDao.getIncomingMessagesForPage(curUser, page);
         model.addAttribute("messageList", messageList);
+
+        int maxPages = messageDao.getIncomingMessagesPagesCount(curUser);
+        model.addAttribute("maxPages", maxPages);
+        model.addAttribute("currentPage", page);
 
         model.addAttribute("isInbox", true);
         model.addAttribute("isOutbox", false);
@@ -39,13 +53,17 @@ public class MessageController {
         return "mailbox";
     }
 
-    @RequestMapping(value = "/mail/out", method = RequestMethod.GET)
-    public String showOutcomingMessages(Model model) {
+    @RequestMapping(value = "/mail/out/page/{page}", method = RequestMethod.GET)
+    public String showOutcomingMessagesByPage(@PathVariable int page, Model model) {
         String curUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         User curUser = userDao.getUser(curUserName);
 
-        List<Message> messageList = messageDao.getOutcomingMessagesForPage(curUser, 1);
+        List<Message> messageList = messageDao.getOutcomingMessagesForPage(curUser, page);
         model.addAttribute("messageList", messageList);
+
+        int maxPages = messageDao.getOutcomingMessagesPagesCount(curUser);
+        model.addAttribute("maxPages", maxPages);
+        model.addAttribute("currentPage", page);
 
         model.addAttribute("isInbox", false);
         model.addAttribute("isOutbox", true);
@@ -53,6 +71,7 @@ public class MessageController {
 
         return "mailbox";
     }
+
 
     @RequestMapping(value = "/mail/message/{id}", method = RequestMethod.GET)
     public String showMessage(@PathVariable("id") long id, Model model) {
