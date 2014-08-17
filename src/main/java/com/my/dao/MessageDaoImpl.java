@@ -105,4 +105,46 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
         update(message);
     }
 
+    @Override
+    public int getIncomingMessagesPagesCount(User receiver) {
+        return getIncomingMessagesPagesCount(receiver, DEFAULT_MESSAGES_PER_PAGE);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getIncomingMessagesPagesCount(User receiver, int messagesPerPage) {
+        if (messagesPerPage <= 0) {
+            throw new IllegalArgumentException("Number of messages per page should be greater than 0");
+        }
+
+        long messageCount = (long) executeWithNativeSession(session ->
+                session.createQuery("select count(*) from Message where receiver = :receiver and deletedByReceiver = false")
+                        .setParameter("receiver", receiver)
+                        .list()
+                        .get(0)
+        );
+        return (int) Math.ceil(messageCount / (float) messagesPerPage);
+    }
+
+    @Override
+    public int getOutcomingMessagesPagesCount(User sender) {
+        return getOutcomingMessagesPagesCount(sender, DEFAULT_MESSAGES_PER_PAGE);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getOutcomingMessagesPagesCount(User sender, int messagesPerPage) {
+        if (messagesPerPage <= 0) {
+            throw new IllegalArgumentException("Number of messages per page should be greater than 0");
+        }
+
+        long messageCount = (long) executeWithNativeSession(session ->
+                session.createQuery("select count(*) from Message where sender = :sender and deletedBySender = false")
+                        .setParameter("sender", sender)
+                        .list()
+                        .get(0)
+        );
+        return (int) Math.ceil(messageCount / (float) messagesPerPage);
+    }
+
 }
