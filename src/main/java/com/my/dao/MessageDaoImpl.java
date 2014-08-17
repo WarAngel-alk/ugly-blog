@@ -23,7 +23,7 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
     }
 
     @Override
-    @Cacheable(value = "incomingMessages", key = "#user.id")
+    @Cacheable(value = "incomingMessages", key = "#user.id", condition = "#page == 1")
     public List<Message> getIncomingMessagesForPage(User user, int page) {
         return getIncomingMessagesForPage(user, page, DEFAULT_MESSAGES_PER_PAGE);
     }
@@ -47,7 +47,7 @@ public class MessageDaoImpl extends HibernateTemplate implements MessageDao {
     }
 
     @Override
-    @Cacheable(value = "outcomingMessages", key = "#user.id")
+    @Cacheable(value = "outcomingMessages", key = "#user.id", condition = "#page == 1")
     public List<Message> getOutcomingMessagesForPage(User user, int page) {
         return getOutcomingMessagesForPage(user, page, DEFAULT_MESSAGES_PER_PAGE);
     }
