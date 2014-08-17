@@ -28,4 +28,9 @@ public interface PostDao {
     public void updatePost(Post post);
 
     void deletePost(Post post);
+
+    int getPagesCount();
+
+    int getPagesCount(int postsPerPage);
+
 }
